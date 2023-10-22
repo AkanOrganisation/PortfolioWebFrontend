@@ -1,0 +1,10 @@
+<div *ngIf="loading" class="loading">
+  <div class="loading__spinner">loading</div>
+</div>
+<div *ngIf="!loading && error" class="error">
+  <div class="error__message">{{error}}</div>
+
+  <div *ngIf="!loading && !error"  class="content">
+    <ng-content></ng-content>
+  </div>
+</div>

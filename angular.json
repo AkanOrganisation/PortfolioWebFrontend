@@ -63,7 +63,9 @@
               "browserTarget": "PortfolioWebFrontend:build:production"
             },
             "development": {
-              "browserTarget": "PortfolioWebFrontend:build:development"
+              "browserTarget": "PortfolioWebFrontend:build:development",
+              "host": "127.0.0.1",
+              "port": 4200
             }
           },
           "defaultConfiguration": "development"
