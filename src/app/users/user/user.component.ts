@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
-import {pipe, throwError} from 'rxjs';
 import {GraphQLErrorsService} from "../../services/graphql/graphql.errors";
 
 interface User {
@@ -27,6 +26,7 @@ export class UserComponent {
 
   login(event: Event, email: string, password: string) {
     event.preventDefault();
+    this.gqlErrors.clearErrors();
     this.apollo
     .mutate({
       mutation: gql`
