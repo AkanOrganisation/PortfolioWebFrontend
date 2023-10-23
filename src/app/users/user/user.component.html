@@ -1,10 +1,11 @@
-<div *ngIf="loading" class="loading">
-  <div class="loading__spinner">loading</div>
+<div *ngIf="!authenticated">
+  <form (submit)="login($event,email.value, password.value)">
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" #email required><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" #password required><br><br>
+    <input type="submit" value="Submit">
+  </form>
 </div>
-<div *ngIf="!loading && error" class="error">
-  <div class="error__message">{{error}}</div>
-
-  <div *ngIf="!loading && !error"  class="content">
-    <ng-content></ng-content>
-  </div>
-</div>
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error.message }}</div>

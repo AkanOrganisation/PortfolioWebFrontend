@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserComponent } from './users/user/user.component';
-import {CsrfInterceptor} from "./csrf.interceptor";
+import {CsrfInterceptor} from "./csrf/csrf.interceptor";
 
 @NgModule({
   declarations: [

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from './http.service';
+import { CsrfService } from './csrf/csrf.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   error: any;
   ready = false;
   constructor(
-    private httpService: HttpService
+    private httpService: CsrfService
   ) {}
 
   async ngOnInit() {
@@ -25,3 +25,4 @@ export class AppComponent implements OnInit {
   }
 
 }
+

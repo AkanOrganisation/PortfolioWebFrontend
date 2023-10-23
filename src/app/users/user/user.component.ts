@@ -7,6 +7,7 @@ import { Apollo, gql } from 'apollo-angular';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit{
+  authenticated = false;
   loading = true;
   error: any;
   user: any;
@@ -14,29 +15,70 @@ export class UserComponent implements OnInit{
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
+
+  }
+
+  login(event: Event, email: string, password: string) {
+    event.preventDefault();
+  this.apollo
+    .mutate({
+      mutation: gql`
+        mutation Login($email: String!, $password: String!) {
+          userLoginOrOut(email: $email, password: $password) {
+            success
+            errors {
+              field
+              messages
+            }
+          }
+        }
+      `,
+      variables: {
+        email,
+        password,
+      },
+    })
+    .subscribe(
+      ({ data, loading }) => {
+        this.loading = loading;
+        this.authenticated = false;
+        console.log(data);
+      },
+      (errors) => {
+        this.loading = false;
+        this.error = errors;
+      }
+    );
+  }
+
+
+  logout(){
     this.apollo
-      .watchQuery({
-        query: gql`
-          {
-            allClientsPublic {
-              edges {
-                  node {
-                      displayName
-                      id
-                  }
+      .mutate({
+        mutation: gql`
+          mutation {
+            userLoginOrOut( logout: true) {
+              success
+              errors{
+                field
+                messages
               }
             }
           }
         `,
       })
-      .valueChanges.subscribe((result: any) => {
-        this.user = result.data?.user;
-        this.loading = result.loading;
-        this.error = result.error;
-      }, (error: any) => {
-        this.error = error;
-        this.loading = false;
-    });
+      .subscribe(
+        ({ data, loading }) => {
+          this.loading = loading;
+          console.log(data);
+        },
+        (errors) => {
+          this.loading = false;
+          this.error = errors;
+        }
+      );
   }
 
+
+  protected readonly event = event;
 }
