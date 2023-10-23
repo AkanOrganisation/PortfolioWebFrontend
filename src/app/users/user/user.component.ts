@@ -1,26 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import {Component, OnInit} from '@angular/core';
+import {Apollo, gql} from 'apollo-angular';
+import {pipe, throwError} from 'rxjs';
+import {GraphQLErrorsService} from "../../services/graphql/graphql.errors";
+
+interface User {
+  email: string;
+}
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
-export class UserComponent implements OnInit{
+export class UserComponent {
   authenticated = false;
-  loading = true;
+  loading = false;
   error: any;
-  user: any;
+  user: User | null = null;
 
-  constructor(private apollo: Apollo) {}
-
-  ngOnInit() {
-
+  constructor(
+    private apollo: Apollo,
+    public gqlErrors: GraphQLErrorsService,
+  ) {
   }
+
 
   login(event: Event, email: string, password: string) {
     event.preventDefault();
-  this.apollo
+    this.apollo
     .mutate({
       mutation: gql`
         mutation Login($email: String!, $password: String!) {
@@ -39,46 +46,39 @@ export class UserComponent implements OnInit{
       },
     })
     .subscribe(
-      ({ data, loading }) => {
-        this.loading = loading;
-        this.authenticated = false;
-        console.log(data);
-      },
-      (errors) => {
-        this.loading = false;
-        this.error = errors;
+      (result: any) => {
+        this.authenticated = result.data.userLoginOrOut.success;
+        this.loading = result.loading;
+        this.gqlErrors.organizeErrors(result.data.userLoginOrOut.errors);
+        this.error =  result.error;
       }
     );
   }
 
 
-  logout(){
+  logout() {
     this.apollo
-      .mutate({
-        mutation: gql`
-          mutation {
-            userLoginOrOut( logout: true) {
-              success
-              errors{
-                field
-                messages
-              }
+    .mutate({
+      mutation: gql`
+        mutation {
+          userLoginOrOut( logout: true) {
+            success
+            errors{
+              field
+              messages
             }
           }
-        `,
-      })
-      .subscribe(
-        ({ data, loading }) => {
-          this.loading = loading;
-          console.log(data);
-        },
-        (errors) => {
-          this.loading = false;
-          this.error = errors;
         }
-      );
+      `,
+    })
+    .subscribe(
+      (result: any) => {
+        this.authenticated = !result.data.userLoginOrOut.success;
+        this.loading = result.loading;
+        this.gqlErrors.organizeErrors(result.data.userLoginOrOut.errors);
+        this.error = result.error;
+      }
+    );
   }
 
-
-  protected readonly event = event;
 }
