@@ -20,6 +20,9 @@
 
 </div>
 <div *ngIf="authenticated">
+  <div *ngFor="let error of gqlErrors.getErrorsForField('nonFieldErrors') || null">
+    {{ error }}
+  </div>
   <h1>Authenticated</h1>
   <button (click)="logout()">Logout</button>
 </div>

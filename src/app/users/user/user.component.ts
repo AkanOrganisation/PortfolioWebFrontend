@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Apollo, gql} from 'apollo-angular';
 import {GraphQLErrorsService} from "../../services/graphql/graphql.errors";
+import {CookieService} from "ngx-cookie-service";
 
 interface User {
   email: string;
@@ -11,8 +12,8 @@ interface User {
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
-export class UserComponent {
-  authenticated = false;
+export class UserComponent implements OnInit {
+  authenticated: boolean = false;
   loading = false;
   error: any;
   user: User | null = null;
@@ -20,7 +21,24 @@ export class UserComponent {
   constructor(
     private apollo: Apollo,
     public gqlErrors: GraphQLErrorsService,
+    private cookieService: CookieService,
   ) {
+  }
+
+  ngOnInit() {
+    this.apollo
+    .watchQuery({
+      query: gql`
+          query {
+              isAuthenticated
+          }
+      `,
+    })
+    .valueChanges.subscribe((result: any) => {
+      this.loading = result.loading;
+      this.error = result.error;
+      this.authenticated = !!(result.data.isAuthenticated);
+    });
   }
 
 
@@ -50,7 +68,8 @@ export class UserComponent {
         this.authenticated = result.data.userLoginOrOut.success;
         this.loading = result.loading;
         this.gqlErrors.organizeErrors(result.data.userLoginOrOut.errors);
-        this.error =  result.error;
+        this.error = result.error;
+
       }
     );
   }
@@ -73,7 +92,7 @@ export class UserComponent {
     })
     .subscribe(
       (result: any) => {
-        this.authenticated = !result.data.userLoginOrOut.success;
+        this.authenticated = (result.data.userLoginOrOut.success == true) ? false : this.authenticated;
         this.loading = result.loading;
         this.gqlErrors.organizeErrors(result.data.userLoginOrOut.errors);
         this.error = result.error;
