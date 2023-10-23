@@ -35,7 +35,7 @@ export class CsrfService {
   this.getCsrfToken(Constants.API_CSRF_ENDPOINT).subscribe(
     {
       next: (data) => {
-        this.cookieService.set('csrftoken', data);
+        this.cookieService.set(Constants.CSRF_COOKIE_NAME, data);
       },
       error: (error) => {
         console.error('Error setting CSRF token', error);
