@@ -1,19 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { map, pipe, throwError, catchError } from 'rxjs';
 import { AppComponent } from '../app.component';
+import { Constants } from '../constants';
+import { CookieService } from 'ngx-cookie-service';
+interface CsrfResponse {
+  csrfToken: string;
+}
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class CsrfService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    ) {}
 
-  setCsrfToken(token: string) {
-    document.cookie = `csrftoken=${token}; path=/`;
+  private getCsrfToken(url: string) {
+    return this.http.get<CsrfResponse>(url).pipe(
+      map((data) => {
+        return data.csrfToken;
+      }),
+      catchError((error) => {
+        console.log('Error fetching CSRF token',error);
+        return throwError(error);
+      })
+    );
   }
 
-  getCsrfToken(url: string) {
-   return firstValueFrom(this.http.get(url));
+  setCsrfToken(): void {
+  this.getCsrfToken(Constants.API_CSRF_ENDPOINT).subscribe(
+    {
+      next: (data) => {
+        this.cookieService.set('csrftoken', data);
+      },
+      error: (error) => {
+        console.error('Error setting CSRF token', error);
+        throwError(error);
+      }
+    }
+  )
 }
+
+
 }

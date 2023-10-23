@@ -6,11 +6,9 @@
 </head>
 <body>
 <div *ngIf="loading">Loading...</div>
-<div *ngIf="error">Error :(</div>
+<div *ngIf="error">{{ error }}</div>
 <div *ngIf="ready">
-  <p>Hello World</p>
-  <app-user>
-  </app-user>
+  <app-user></app-user>
 </div>
 </body>
 </html>
