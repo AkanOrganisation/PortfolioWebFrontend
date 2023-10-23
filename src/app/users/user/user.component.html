@@ -1,30 +1,30 @@
-<div *ngIf="!authenticated">
+<div *ngIf="user.loading">Loading...</div>
+<div *ngIf="!user.authenticated">
   <form (submit)="login($event,email.value, password.value)">
-    <div *ngFor="let error of gqlErrors.getErrorsForField('nonFieldErrors') || null">
+    <div *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors') || null">
       {{ error }}
     </div>
 
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" #email required><br>
-    <div *ngFor="let error of gqlErrors.getErrorsForField('email') || null">
+    <div *ngFor="let error of user.gqlErrors.getErrorsForField('email') || null">
       {{ error }}
     </div>
 
     <label for="password">Password:</label><br>
     <input type="password" id="password" name="password" #password required><br>
-    <div *ngFor="let error of gqlErrors.getErrorsForField('password') || null">
+    <div *ngFor="let error of user.gqlErrors.getErrorsForField('password') || null">
       {{ error }}
     </div>
     <input type="submit" value="Submit">
   </form>
 
 </div>
-<div *ngIf="authenticated">
-  <div *ngFor="let error of gqlErrors.getErrorsForField('nonFieldErrors') || null">
+<div *ngIf="user.authenticated">
+  <div *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors') || null">
     {{ error }}
   </div>
   <h1>Authenticated</h1>
   <button (click)="logout()">Logout</button>
 </div>
-<div *ngIf="loading">Loading...</div>
-<div *ngIf="error">{{ error }}</div>
+<div *ngIf="user.error">{{ user.error }}</div>

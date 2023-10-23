@@ -7,11 +7,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserComponent } from './users/user/user.component';
 import {CsrfInterceptor} from "./services/csrf/csrf.interceptor";
 import { CookieService } from 'ngx-cookie-service';
+import {User} from "./models";
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    UserComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +23,7 @@ import { CookieService } from 'ngx-cookie-service';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true },
     CookieService,
+    User,
   ],
   bootstrap: [AppComponent]
 })

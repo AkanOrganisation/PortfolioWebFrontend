@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { CsrfService } from './services/csrf/csrf.service';
 import { Constants } from './constants';
 @Component({
@@ -7,6 +7,7 @@ import { Constants } from './constants';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @Input() authenticated: boolean = false;
   title = Constants.TitleOfSite;
   loading = true;
   ready = false;

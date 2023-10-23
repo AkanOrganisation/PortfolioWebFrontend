@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class GraphQLErrorsService {
   errorsByField: { [key: string]: string[] } = {};
 
-  organizeErrors(errors: Array<{ field: string, messages: string[] }>) {
+  setErrors(errors: Array<{ field: string, messages: string[] }>) {
     if (!errors) {
       return;
     }
