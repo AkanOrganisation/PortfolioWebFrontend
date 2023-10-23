@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CsrfService } from './csrf/csrf.service';
+import { CsrfService } from './services/csrf/csrf.service';
 import { Constants } from './constants';
 @Component({
   selector: 'app-root',

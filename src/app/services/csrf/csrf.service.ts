@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, pipe, throwError, catchError } from 'rxjs';
-import { AppComponent } from '../app.component';
-import { Constants } from '../constants';
+import { AppComponent } from '../../app.component';
+import { Constants } from '../../constants';
 import { CookieService } from 'ngx-cookie-service';
 interface CsrfResponse {
   csrfToken: string;

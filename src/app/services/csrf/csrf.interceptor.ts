@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpInterceptor, HttpRequest, HttpHandler, HttpEvent} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Constants} from "../constants";
+import {Constants} from "../../constants";
 import {CookieService} from "ngx-cookie-service";
 
 @Injectable()

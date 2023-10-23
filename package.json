@@ -20,7 +20,7 @@
     "@angular/router": "^16.2.0",
     "@apollo/client": "^3.0.0",
     "apollo-angular": "^5.0.2",
-    "graphql": "^16",
+    "graphql": "^16.8.1",
     "ngx-cookie-service": "^16.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
