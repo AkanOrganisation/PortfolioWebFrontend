@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <title>{{title}}</title>
 </head>
-
+<header class="header">
+  <h1>{{title}}</h1>
+</header>
 <body>
-<div *ngIf="loading">Loading...</div>
+<div *ngIf="loading" class=loading-spinner></div>
 <div *ngIf="error">{{ error }}</div>
-<div *ngIf="ready">
-  <h1>{{ title }}</h1>
+<div *ngIf="ready && !loading">
   <app-user></app-user>
-
 </div>
 </body>
 
