@@ -10,7 +10,7 @@
 <body>
 <div *ngIf="loading" class=loading-spinner></div>
 <div *ngIf="error">{{ error }}</div>
-<div *ngIf="ready && !loading">
+<div *ngIf="ready">
   <app-user></app-user>
 </div>
 </body>
