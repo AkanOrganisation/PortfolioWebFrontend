@@ -22,4 +22,8 @@ export class GraphQLErrorsService {
   clearErrors() {
     this.errorsByField = {};
   }
+
+  addError(field: string, message: string) {
+    this.errorsByField[field].push(message);
+  }
 }

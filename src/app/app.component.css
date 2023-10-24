@@ -16,6 +16,7 @@ mat-sidenav {
 }
 
 .content {
+  background-color: #333333;
   height: calc(100vh - 98px);
   border-radius: 10px;
   margin: 16px;
@@ -34,6 +35,7 @@ mat-sidenav-container {
 }
 
 .menu-button {
+  color: #e6ebf1;
   width: 100%;
   display: flex;
   align-items: center;
@@ -46,13 +48,13 @@ mat-sidenav-container {
 }
 
 .menu-button:hover {
-  color: #e6ebf1;
+  color: bisque;
   background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 }
 
 .menu-button:active {
-  color: bisque;
+  color: saddlebrown;
   background: rgba(255, 255, 255, 0.1);
 }
 

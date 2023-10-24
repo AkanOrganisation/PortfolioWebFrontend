@@ -20,6 +20,10 @@ import {MatSelectModule} from "@angular/material/select";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatDividerModule} from "@angular/material/divider";
+import {RouterModule, Routes} from "@angular/router";
+import { CreateUserComponent } from './components/create-user/create-user.component';
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
 
 let MaterialModules = [
     MatButtonModule,
@@ -31,12 +35,22 @@ let MaterialModules = [
     MatSelectModule,
     MatSidenavModule,
     MatDividerModule,
+    MatInputModule,
+    MatFormFieldModule,
   ];
+
+const appRoutes: Routes = [
+  { path: 'register/', component: CreateUserComponent },
+];
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
+    CreateUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +60,7 @@ let MaterialModules = [
     FormsModule,
     MaterialModules,
     FlexLayoutModule,
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true },

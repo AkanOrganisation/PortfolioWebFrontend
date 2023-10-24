@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from "../../models";
 import {NgForm} from "@angular/forms";
 
@@ -9,7 +9,6 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-
   createNewUser: boolean = false;
 
   constructor(
@@ -34,7 +33,7 @@ export class UserComponent implements OnInit {
   }
 
   createUser(form: NgForm) {
-    if (form.valid && form.value.password == form.value.confirmPassword) {
+    if (form.valid && form.value.password == form.value.password2) {
       this.user.email = form.value.email;
       this.user.password = form.value.password;
       this.user.createOrUpdate(true);
