@@ -2,6 +2,7 @@ import {UserType} from "../types";
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {Injectable} from "@angular/core";
+import {firstValueFrom, lastValueFrom} from "rxjs";
 
 
 @Injectable({
@@ -45,11 +46,11 @@ export class User {
     this._password2 = value;
   }
 
-  get authenticated(): boolean | undefined {
+  get authenticated(): boolean {
     return this._authenticated;
   }
 
-  set authenticated(value: boolean | undefined) {
+  set authenticated(value: boolean) {
     this._authenticated = value;
   }
 
@@ -57,7 +58,7 @@ export class User {
   private _email: string | undefined;
   private _password: string | undefined;
   private _password2: string | undefined;
-  private _authenticated: boolean | undefined;
+  private _authenticated: boolean = false;
 
   success: boolean | undefined;
   loading = false;
@@ -126,21 +127,23 @@ export class User {
     return this.authenticated;
   }
 
-  isAuthenticated() {
-    this.apollo
-    .watchQuery({
-      query: gql`
-        query {
-          isAuthenticated
-        }
-      `,
-    })
-    .valueChanges.subscribe((result: any) => {
+  async isAuthenticated(): Promise<boolean> {
+    try {
+      const result: any = await firstValueFrom(
+        this.apollo.watchQuery({
+          query: gql`
+            query {
+              isAuthenticated
+            }
+          `,
+        }).valueChanges
+      );
       this.authenticated = !!(result.data.isAuthenticated);
-      this.loading = result.loading;
-      this.error = result.error;
-    });
-    return this.authenticated;
+      return this.authenticated;
+    } catch (error) {
+      this.error = error;
+      return this.authenticated;
+    }
   }
 
   createOrUpdate(createNewUser: boolean) {

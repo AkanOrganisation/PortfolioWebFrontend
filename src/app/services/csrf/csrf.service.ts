@@ -20,23 +20,24 @@ export class CsrfService {
   ) {
   }
 
-  async startSession(): Promise<boolean> {
+
+  public async getAndSetCsrfToken(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.get(Constants.API_GRAPHQL_ENDPOINT).subscribe({
-          next: (result: any) => {
-            resolve(result.ok)
-          },
-          error: (error) => {
-            console.error('Error starting session', error);
-            reject('Failed to start session, please try again later.');
-          }
+      this.http.get(Constants.API_CSRF_ENDPOINT).subscribe({
+        next: (result: any) => {
+          this.cookieService.set(Constants.CSRF_COOKIE_NAME, result.csrfToken);
+          resolve(true);
+        },
+        error: (error) => {
+          console.error('Error getting CSRF token', error);
+          reject('Failed to connect to server, please try again later.');
         }
-      );
+      });
     });
   }
 
 
-  private getCsrfToken(url: string) {
+/*  private getCsrfToken(url: string) {
     return this.http.get<CsrfResponse>(url).pipe(
       map((data) => {
         return data.csrfToken;
@@ -48,7 +49,7 @@ export class CsrfService {
     );
   }
 
-  setCsrfToken(): void {
+  private setCsrfToken(): void {
     this.getCsrfToken(Constants.API_CSRF_ENDPOINT).subscribe(
       {
         next: (data) => {
@@ -60,7 +61,7 @@ export class CsrfService {
         }
       }
     )
-  }
+  }*/
 
 
 }
