@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CsrfService} from './services/csrf/csrf.service';
-import {Constants} from './constants';
 import {User} from "./models";
+import {BreakpointObserver} from "@angular/cdk/layout";
+import {MatSidenav} from "@angular/material/sidenav";
+import {Constants} from "./constants";
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,11 @@ import {User} from "./models";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
+
   authenticated: boolean | undefined;
-  title = Constants.TitleOfSite;
+
   loading = true;
   ready = false;
   error: any;
@@ -18,6 +23,7 @@ export class AppComponent implements OnInit {
   constructor(
     private httpService: CsrfService,
     public user: User,
+    private observer: BreakpointObserver,
   ) {
   }
 
@@ -33,5 +39,19 @@ export class AppComponent implements OnInit {
       this.loading = false;
     });
   }
+
+  ngAfterViewInit() {
+    this.observer.observe(["(max-width: 800px)"]).subscribe((res) => {
+      if (res.matches) {
+        this.sidenav.mode = "over";
+        this.sidenav.close();
+      } else {
+        this.sidenav.mode = "side";
+        this.sidenav.open();
+      }
+    });
+  }
+
+  protected readonly Constants = Constants;
 }
 

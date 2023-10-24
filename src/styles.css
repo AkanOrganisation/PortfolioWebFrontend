@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+
+#titleOfProject {
+  font-family:  Georgia, Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  font-weight: 1500;
+  margin-left: 16px;
+}
+
+
 .loading-spinner {
   border: 16px solid #f3f3f3;
   border-top: 16px solid #3498db;
@@ -9,6 +31,17 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
+
+
+
+
+
+
