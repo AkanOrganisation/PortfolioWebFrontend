@@ -8,6 +8,7 @@ import { UserComponent } from './users/user/user.component';
 import {CsrfInterceptor} from "./services/csrf/csrf.interceptor";
 import { CookieService } from 'ngx-cookie-service';
 import {User} from "./models";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {User} from "./models";
   imports: [
     BrowserModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true },

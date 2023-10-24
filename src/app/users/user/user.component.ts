@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {User} from "../../models";
+import {NgForm} from "@angular/forms";
 
 
 @Component({
@@ -9,6 +10,7 @@ import {User} from "../../models";
 })
 export class UserComponent implements OnInit {
 
+  createNewUser: boolean = false;
 
   constructor(
     public user: User
@@ -19,15 +21,35 @@ export class UserComponent implements OnInit {
     this.user.isAuthenticated();
   }
 
-  logout(){
+  logout() {
     this.user.logout();
   }
 
-  login(event: Event,email: string, password: string){
-    event.preventDefault();
-    this.user.email = email;
-    this.user.password = password;
-    this.user.login();
+  login(form: NgForm) {
+    if (form.valid) {
+      this.user.email = form.value.email;
+      this.user.password = form.value.password;
+      this.user.login();
+    }
   }
+
+  createUser(form: NgForm) {
+    if (form.valid && form.value.password == form.value.confirmPassword) {
+      this.user.email = form.value.email;
+      this.user.password = form.value.password;
+      this.user.createOrUpdate(true);
+
+    }
+  }
+
+  updateUser(form: NgForm) {
+    if (form.valid && form.value.password == form.value.confirmPassword) {
+      this.user.email = form.value.email;
+      this.user.password = form.value.password;
+      this.user.createOrUpdate(false);
+
+    }
+  }
+
 
 }

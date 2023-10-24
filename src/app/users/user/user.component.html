@@ -1,25 +1,57 @@
 <div *ngIf="user.loading">Loading...</div>
-<div *ngIf="!user.authenticated">
-  <form (submit)="login($event,email.value, password.value)">
+<div *ngIf="!user.authenticated && !createNewUser">
+  <form (ngSubmit)="login(clientForm)" #clientForm="ngForm">
     <div *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors') || null">
       {{ error }}
     </div>
 
     <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" #email required><br>
+    <input type="email" id="email" name="email" #email ngModel required><br>
     <div *ngFor="let error of user.gqlErrors.getErrorsForField('email') || null">
       {{ error }}
     </div>
 
     <label for="password">Password:</label><br>
-    <input type="password" id="password" name="password" #password required><br>
+    <input type="password" id="password" name="password" #password ngModel required><br>
     <div *ngFor="let error of user.gqlErrors.getErrorsForField('password') || null">
       {{ error }}
     </div>
     <input type="submit" value="Submit">
   </form>
+  <button (click)="createNewUser = true">Create New User</button>
 
 </div>
+
+<div *ngIf="!user.authenticated && createNewUser">
+  <form (ngSubmit)="createUser(clientForm)" #clientForm="ngForm">
+    <div *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors') || null">
+      {{ error }}
+    </div>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" #email ngModel required><br>
+    <div *ngFor="let error of user.gqlErrors.getErrorsForField('user_email') || null">
+      {{ error }}
+    </div>
+
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password" #password ngModel required><br>
+    <div *ngFor="let error of user.gqlErrors.getErrorsForField('user_password1') || null">
+      {{ error }}
+    </div>
+
+    <label for="password">Confirm Password:</label><br>
+    <input type="password" id="confirmPassword" name="confirmPassword" #confirmPassword ngModel required><br>
+    <div *ngFor="let error of user.gqlErrors.getErrorsForField('user_password2') || null">
+      {{ error }}
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+  <button (click)="createNewUser = false">Login</button>
+
+</div>
+
+
 <div *ngIf="user.authenticated">
   <div *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors') || null">
     {{ error }}
