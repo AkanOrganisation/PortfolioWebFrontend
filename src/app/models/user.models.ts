@@ -1,8 +1,7 @@
-import {UserType} from "../types";
 import {Apollo, gql} from "apollo-angular";
-import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
+import {GraphQLErrorsService} from "../services";
 import {Injectable} from "@angular/core";
-import {firstValueFrom, lastValueFrom} from "rxjs";
+import {firstValueFrom} from "rxjs";
 
 
 @Injectable({
@@ -27,9 +26,7 @@ export class User {
   }
 
   get password(): string | undefined {
-    let password = this._password;
-    this.password = undefined;
-    return password;
+    return this._password;
   }
 
   set password(value: string | undefined) {
@@ -37,9 +34,7 @@ export class User {
   }
 
   get password2(): string | undefined {
-    let password = this._password2;
-    this.password2 = undefined;
-    return password;
+    return this._password2;
   }
 
   set password2(value: string | undefined) {
@@ -96,40 +91,46 @@ export class User {
     );
   }
 
-  login() {
-    this.gqlErrors.clearErrors();
-    this.apollo
-    .mutate({
-      mutation: gql`
-        mutation Login($email: String!, $password: String!) {
-          userLoginOrOut(email: $email, password: $password) {
-            success
-            errors {
-              field
-              messages
+  async login(): Promise<boolean> {
+    try {
+      this.gqlErrors.clearErrors();
+      const result: any = await firstValueFrom(
+        this.apollo
+        .mutate({
+          mutation: gql`
+            mutation Login($email: String!, $password: String!) {
+              userLoginOrOut(email: $email, password: $password) {
+                success
+                errors {
+                  field
+                  messages
+                }
+              }
             }
-          }
-        }
-      `,
-      variables: {
-        email: this.email,
-        password: this.password,
-      },
-    })
-    .subscribe(
-      (result: any) => {
-        this.authenticated = result.data.userLoginOrOut.success;
-        this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
-        this.loading = result.loading;
-        this.error = result.error;
-      }
-    );
-    return this.authenticated;
+          `,
+          variables: {
+            email: this.email,
+            password: this.password,
+          },
+        }));
+      this.authenticated = !!result.data.userLoginOrOut.success;
+      this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
+      this.loading = result.loading;
+      this.error = result.error;
+      return this.authenticated;
+    } catch (error) {
+      this.error = error;
+      return false;
+    }
   }
 
-  async isAuthenticated(): Promise<boolean> {
+  async isAuthenticated()
+    :
+    Promise<boolean> {
     try {
-      const result: any = await firstValueFrom(
+      const result
+      :
+      any = await firstValueFrom(
         this.apollo.watchQuery({
           query: gql`
             query {
@@ -140,46 +141,56 @@ export class User {
       );
       this.authenticated = !!(result.data.isAuthenticated);
       return this.authenticated;
-    } catch (error) {
+    } catch
+      (error) {
       this.error = error;
       return this.authenticated;
     }
   }
 
-  createOrUpdate(createNewUser: boolean) {
+
+  async createOrUpdate(createNewUser
+                         :
+                         boolean
+  ):
+    Promise<boolean> {
     this.gqlErrors.clearErrors();
-    this.apollo
-    .mutate({
-      mutation: gql`
-        mutation CreateUser($email: String!, $password: String!, $createNewUser: Boolean) {
-          createOrUpdateUser(
-            userData: {
-              email: $email,
-              newPassword: $password
-            },
-            createNewUser: $createNewUser) {
-            errors {
-              field
-              messages
+    try {
+      const result
+      :
+      any = await firstValueFrom(
+        this.apollo.mutate({
+          mutation: gql`
+            mutation CreateUser($email: String!, $password: String!, $createNewUser: Boolean) {
+              createOrUpdateUser(
+                userData: {
+                  email: $email,
+                  newPassword: $password
+                },
+                createNewUser: $createNewUser) {
+                errors {
+                  field
+                  messages
+                }
+                success
+              }
             }
-            success
+          `,
+          variables: {
+            email: this.email,
+            password: this.password,
+            createNewUser: createNewUser,
           }
-        }
-      `,
-      variables: {
-        email: this.email,
-        password: this.password,
-        createNewUser: createNewUser,
-      }
-    })
-    .subscribe(
-      (result: any) => {
-        this.success = result.data.createOrUpdateUser.success;
-        this.loading = result.loading;
-        this.gqlErrors.setErrors(result.data.createOrUpdateUser.errors);
-        this.error = result.error;
-      });
+        }));
+      this.success = !!result.data.createOrUpdateUser.success;
+      this.loading = result.loading;
+      this.gqlErrors.setErrors(result.data.createOrUpdateUser.errors);
+      this.error = result.error;
+      return this.success;
+    } catch
+      (error) {
+      this.error = error;
+      return false;
+    }
   }
-
-
 }
