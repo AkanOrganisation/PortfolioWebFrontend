@@ -4,7 +4,6 @@ import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {Injectable} from "@angular/core";
 
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -149,8 +148,13 @@ export class User {
     this.apollo
     .mutate({
       mutation: gql`
-        mutation CreateUser($email: String!, $password: String!) {
-          createOrUpdateUser(userData: {email: $email, newPassword: $password}, createNewUser: ${createNewUser}) {
+        mutation CreateUser($email: String!, $password: String!, $createNewUser: Boolean) {
+          createOrUpdateUser(
+            userData: {
+              email: $email,
+              newPassword: $password
+            },
+            createNewUser: $createNewUser) {
             errors {
               field
               messages
@@ -165,13 +169,14 @@ export class User {
         createNewUser: createNewUser,
       }
     })
-    .subscribe((result: any) => {
-      this.success = result.data.createOrUpdateUser.success;
-      this.loading = result.loading;
-      this.gqlErrors.setErrors(result.data.createOrUpdateUser.errors);
-      this.error = result.error;
-    });
-    return this.success;
+    .subscribe(
+      (result: any) => {
+        this.success = result.data.createOrUpdateUser.success;
+        this.loading = result.loading;
+        this.gqlErrors.setErrors(result.data.createOrUpdateUser.errors);
+        this.error = result.error;
+      });
   }
+
 
 }
