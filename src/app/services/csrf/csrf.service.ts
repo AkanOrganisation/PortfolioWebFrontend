@@ -27,7 +27,7 @@ export class CsrfService {
             resolve(result.ok)
           },
           error: (error) => {
-            console.log('Error starting session', error);
+            console.error('Error starting session', error);
             reject('Failed to start session, please try again later.');
           }
         }
