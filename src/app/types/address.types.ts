@@ -1,8 +1,8 @@
 export type AddressType = {
-  streetName: String
-  streetNumber: String
-  additional: String
-  zipCode: String
-  city: String
-  country: String
+  streetName?: string
+  streetNumber?: string
+  additional?: string
+  zipCode?: string
+  city?: string
+  country?: string
 }

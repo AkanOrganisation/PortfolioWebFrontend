@@ -5,7 +5,7 @@
 
       <!-- Email -->
       <mat-form-field appearance="fill">
-        <input type="email" matInput placeholder="Enter your email" [(ngModel)]="user.email" name="user_email" required
+        <input type="email" matInput placeholder="Enter your email" [(ngModel)]="userInput.email" name="user_email" required
                email>
         <mat-error *ngIf="userForm.controls?.['email']?.errors?.['required']">Email is required.</mat-error>
         <mat-error *ngIf="userForm.controls?.['email']?.errors?.['email']">Enter a valid email.</mat-error>
@@ -15,7 +15,7 @@
 
       <!-- Password -->
       <mat-form-field appearance="fill">
-        <input type="password" matInput placeholder="Enter a password" [(ngModel)]="user.password" name="user_password"
+        <input type="password" matInput placeholder="Enter a password" [(ngModel)]="userInput.password" name="user_password"
                required>
         <mat-error *ngIf="userForm.controls?.['password']?.errors?.['required']">Password is required.</mat-error>
         <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
@@ -27,13 +27,13 @@
 
       <!-- Confirm Password -->
       <mat-form-field appearance="fill">
-        <input type="password" matInput placeholder="Confirm your password" [(ngModel)]="user.password2"
+        <input type="password" matInput placeholder="Confirm your password" [(ngModel)]="userInput.password2"
                name="user_password2" required>
         <mat-error *ngIf="userForm.controls?.['password2']?.errors?.['required']">Confirm your password.</mat-error>
         <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_password2')">{{ error }}</mat-error>
 
         <!-- Matching Passwords Sign -->
-        <mat-hint *ngIf="user.password && user.password === user.password2">
+        <mat-hint *ngIf="userInput.password && userInput.password === userInput.password2">
           <mat-icon color="primary">check_circle</mat-icon>
           Passwords match
         </mat-hint>

@@ -4,8 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {GraphQLModule} from './graphql.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {UserComponent} from './users/user/user.component';
-import {CsrfInterceptor} from "./services/csrf/csrf.interceptor";
+import {CsrfInterceptor} from "./services";
 import {CookieService} from 'ngx-cookie-service';
 import {User} from "./models";
 import {FormsModule} from "@angular/forms";
@@ -51,7 +50,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
     CreateUserComponent,
     LoginUserComponent,
     CreateClientComponent,

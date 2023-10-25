@@ -2,9 +2,9 @@ import {AddressType} from "./address.types";
 
 
 export type ClientType = {
-  firstName: String
-  lastName: String
-  displayName: String
-  phoneNumber: String
+  firstName?: string
+  lastName?: string
+  displayName?: string
+  phoneNumber?: string
   address: AddressType
 }

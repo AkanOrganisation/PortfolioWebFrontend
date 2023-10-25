@@ -3,86 +3,20 @@ import {GraphQLErrorsService} from "../services";
 import {Injectable} from "@angular/core";
 import {firstValueFrom} from "rxjs";
 import {Client} from "./client.models";
+import {UserType} from "../types";
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class User {
-  get isClient(): boolean {
-    return this._isClient;
-  }
 
-  set isClient(value: boolean) {
-    this._isClient = value;
-  }
+  data: UserType = {};
 
-  get isOrganiser(): boolean {
-    return this._isOrganiser;
-  }
-
-  set isOrganiser(value: boolean) {
-    this._isOrganiser = value;
-  }
-
-  get client(): Client {
-    return this._client;
-  }
-
-  set client(value: Client) {
-    this._client = value;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  set id(value: string ) {
-    this._id = value;
-  }
-
-  get email(): string  {
-    return this._email;
-  }
-
-  set email(value: string ) {
-    this._email = value;
-  }
-
-  get password(): string  {
-    return this._password;
-  }
-
-  set password(value: string ) {
-    this._password = value;
-  }
-
-  get password2(): string  {
-    return this._password2;
-  }
-
-  set password2(value: string ) {
-    this._password2 = value;
-  }
-
-  get authenticated(): boolean {
-    return this._authenticated;
-  }
-
-  set authenticated(value: boolean) {
-    this._authenticated = value;
-  }
-
-  private _id: string = "";
-  private _email: string = "";
-  private _password: string = "";
-  private _password2: string = "";
-
-  private _authenticated: boolean = false;
-  private _client: Client = new Client(this.apollo, this.gqlErrors);
-  private _isClient: boolean = false;
-  private _isOrganiser: boolean = false;
-
+  authenticated: boolean = false;
+  client: Client = new Client(this.apollo, this.gqlErrors);
+  isClient: boolean = false;
+  isOrganiser: boolean = false;
 
   success: boolean = false;
   loading = false;
@@ -94,32 +28,36 @@ export class User {
   ) {
   }
 
-  logout() {
-    this.apollo
-    .mutate({
-      mutation: gql`
-        mutation {
-          userLoginOrOut( logout: true) {
-            success
-            errors{
-              field
-              messages
+  async logout() {
+    try {
+      this.gqlErrors.clearErrors();
+      const result: any = await firstValueFrom(
+        this.apollo
+        .mutate({
+          mutation: gql`
+            mutation {
+              userLoginOrOut( logout: true) {
+                success
+                errors{
+                  field
+                  messages
+                }
+              }
             }
-          }
-        }
-      `,
-    })
-    .subscribe(
-      (result: any) => {
-        this.authenticated = (result.data.userLoginOrOut.success == true) ? true : this.authenticated;
-        this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
-        this.loading = result.loading;
-        this.error = result.error;
-      }
-    );
+          `,
+        }));
+      this.authenticated = (result.data.userLoginOrOut.success == true) ? false : this.authenticated;
+      this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
+      this.loading = result.loading;
+      this.error = result.error;
+      return this.authenticated;
+    } catch (error) {
+      this.error = error;
+      return false;
+    }
   }
 
-  async login(): Promise<boolean> {
+  async login(user: UserType): Promise<boolean> {
     try {
       this.gqlErrors.clearErrors();
       const result: any = await firstValueFrom(
@@ -139,13 +77,13 @@ export class User {
             }
           `,
           variables: {
-            email: this.email,
-            password: this.password,
+            email: user.email,
+            password: user.password,
           },
         }));
       this.authenticated = !!result.data.userLoginOrOut.success;
-      this.isClient = !!result.data.userLoginOrOut.isClient;
-      this.isOrganiser = !!result.data.userLoginOrOut.isOrganiser;
+      this.isClient = result.data.userLoginOrOut.isClient;
+      this.isOrganiser = result.data.userLoginOrOut.isOrganiser;
       this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
       this.loading = result.loading;
       this.error = result.error;
@@ -156,9 +94,7 @@ export class User {
     }
   }
 
-  async isAuthenticated()
-    :
-    Promise<boolean> {
+  async isAuthenticated() {
     try {
       const result
       :
@@ -181,36 +117,36 @@ export class User {
   }
 
 
-  async createOrUpdate(createNewUser
-                         :
-                         boolean
+  async createOrUpdate(
+    user: UserType,
+    createNewUser:boolean,
   ):
     Promise<boolean> {
     this.gqlErrors.clearErrors();
     try {
-      const result
-      :
-      any = await firstValueFrom(
+      const result: any = await firstValueFrom(
         this.apollo.mutate({
           mutation: gql`
-            mutation CreateUser($email: String!, $password: String!, $createNewUser: Boolean) {
-              createOrUpdateUser(
-                userData: {
-                  email: $email,
-                  newPassword: $password
-                },
-                createNewUser: $createNewUser) {
-                errors {
-                  field
-                  messages
-                }
-                success
+              mutation CreateUser($email: String!, $password: String!, $password2: String, $createNewUser: Boolean) {
+                  createOrUpdateUser(
+                      userData: {
+                          email: $email,
+                          newPassword: $password
+                          oldPassword: $password2
+                      },
+                      createNewUser: $createNewUser) {
+                      errors {
+                          field
+                          messages
+                      }
+                      success
+                  }
               }
-            }
           `,
           variables: {
-            email: this.email,
-            password: this.password,
+            email: user.email,
+            password: user.password,
+            password2: user.password2,
             createNewUser: createNewUser,
           }
         }));

@@ -1,65 +1,10 @@
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
-import {Address} from "./address.models";
 import {firstValueFrom} from "rxjs";
 import {ClientType} from "../types";
 
 
 export class Client {
-  get id(): string {
-    return this._id;
-  }
-
-  set id(value: string) {
-    this._id = value;
-  }
-
-  get firstName(): string {
-    return this._firstName;
-  }
-
-  set firstName(value: string) {
-    this._firstName = value;
-  }
-
-  get lastName(): string {
-    return this._lastName;
-  }
-
-  set lastName(value: string) {
-    this._lastName = value;
-  }
-
-  get displayName(): string {
-    return this._displayName;
-  }
-
-  set displayName(value: string) {
-    this._displayName = value;
-  }
-
-  get phoneNumber(): string {
-    return this._phoneNumber;
-  }
-
-  set phoneNumber(value: string) {
-    this._phoneNumber = value;
-  }
-
-  get address(): Address {
-    return this._address;
-  }
-
-  set address(value: Address) {
-    this._address = value;
-  }
-
-  private _id: string = "";
-  private _firstName: string = "";
-  private _lastName: string = "";
-  private _displayName: string = "";
-  private _phoneNumber: string = "";
-  private _address: Address = new Address();
 
   success: boolean | undefined;
   loading: boolean | undefined;
