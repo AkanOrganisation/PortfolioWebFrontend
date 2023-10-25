@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <form #userForm="ngForm" (ngSubmit)="createUser(userForm)">
-      <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('NonFieldErrors')">{{ error }}</mat-error>
+      <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
       <!-- Email -->
       <mat-form-field appearance="fill">

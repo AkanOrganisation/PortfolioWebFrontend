@@ -24,6 +24,8 @@ import {RouterModule, Routes} from "@angular/router";
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import { LoginUserComponent } from './components/login-user/login-user.component';
+import { CreateClientComponent } from './components/create-client/create-client.component';
 
 let MaterialModules = [
     MatButtonModule,
@@ -51,6 +53,8 @@ const appRoutes: Routes = [
     AppComponent,
     UserComponent,
     CreateUserComponent,
+    LoginUserComponent,
+    CreateClientComponent,
   ],
   imports: [
     BrowserModule,

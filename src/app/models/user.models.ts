@@ -2,42 +2,66 @@ import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services";
 import {Injectable} from "@angular/core";
 import {firstValueFrom} from "rxjs";
+import {Client} from "./client.models";
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class User {
+  get isClient(): boolean {
+    return this._isClient;
+  }
 
-  get id(): string | undefined {
+  set isClient(value: boolean) {
+    this._isClient = value;
+  }
+
+  get isOrganiser(): boolean {
+    return this._isOrganiser;
+  }
+
+  set isOrganiser(value: boolean) {
+    this._isOrganiser = value;
+  }
+
+  get client(): Client {
+    return this._client;
+  }
+
+  set client(value: Client) {
+    this._client = value;
+  }
+
+  get id(): string {
     return this._id;
   }
 
-  set id(value: string | undefined) {
+  set id(value: string ) {
     this._id = value;
   }
 
-  get email(): string | undefined {
+  get email(): string  {
     return this._email;
   }
 
-  set email(value: string | undefined) {
+  set email(value: string ) {
     this._email = value;
   }
 
-  get password(): string | undefined {
+  get password(): string  {
     return this._password;
   }
 
-  set password(value: string | undefined) {
+  set password(value: string ) {
     this._password = value;
   }
 
-  get password2(): string | undefined {
+  get password2(): string  {
     return this._password2;
   }
 
-  set password2(value: string | undefined) {
+  set password2(value: string ) {
     this._password2 = value;
   }
 
@@ -49,13 +73,18 @@ export class User {
     this._authenticated = value;
   }
 
-  private _id: string | undefined;
-  private _email: string | undefined;
-  private _password: string | undefined;
-  private _password2: string | undefined;
-  private _authenticated: boolean = false;
+  private _id: string = "";
+  private _email: string = "";
+  private _password: string = "";
+  private _password2: string = "";
 
-  success: boolean | undefined;
+  private _authenticated: boolean = false;
+  private _client: Client = new Client(this.apollo, this.gqlErrors);
+  private _isClient: boolean = false;
+  private _isOrganiser: boolean = false;
+
+
+  success: boolean = false;
   loading = false;
   error: any;
 
@@ -63,7 +92,6 @@ export class User {
     private apollo: Apollo,
     public gqlErrors: GraphQLErrorsService,
   ) {
-
   }
 
   logout() {
@@ -83,7 +111,7 @@ export class User {
     })
     .subscribe(
       (result: any) => {
-        this.authenticated = (result.data.userLoginOrOut.success == true) ? false : this.authenticated;
+        this.authenticated = (result.data.userLoginOrOut.success == true) ? true : this.authenticated;
         this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
         this.loading = result.loading;
         this.error = result.error;
@@ -100,6 +128,8 @@ export class User {
           mutation: gql`
             mutation Login($email: String!, $password: String!) {
               userLoginOrOut(email: $email, password: $password) {
+                isClient
+                isOrganiser
                 success
                 errors {
                   field
@@ -114,6 +144,8 @@ export class User {
           },
         }));
       this.authenticated = !!result.data.userLoginOrOut.success;
+      this.isClient = !!result.data.userLoginOrOut.isClient;
+      this.isOrganiser = !!result.data.userLoginOrOut.isOrganiser;
       this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
       this.loading = result.loading;
       this.error = result.error;

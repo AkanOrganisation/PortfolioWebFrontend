@@ -1,66 +1,66 @@
 
 export class Address {
-  private _id: String | undefined
-  private _streetName: String | undefined
-  private _streetNumber: String | undefined
-  private _additional: String | undefined
-  private _zipCode: String | undefined
-  private _city: String | undefined
-  private _country: String | undefined
+  private _id: String = ""
+  private _streetName: String = ""
+  private _streetNumber: String = ""
+  private _additional: String = ""
+  private _zipCode: String = ""
+  private _city: String = ""
+  private _country: String = ""
 
-  get id(): String | undefined {
+  get id(): String {
     return this._id;
   }
 
-  set id(value: String | undefined) {
+  set id(value: String) {
     this._id = value;
   }
 
-  get streetName(): String | undefined {
+  get streetName(): String {
     return this._streetName;
   }
 
-  set streetName(value: String | undefined) {
+  set streetName(value: String ) {
     this._streetName = value;
   }
 
-  get streetNumber(): String | undefined {
+  get streetNumber(): String  {
     return this._streetNumber;
   }
 
-  set streetNumber(value: String | undefined) {
+  set streetNumber(value: String ) {
     this._streetNumber = value;
   }
 
-  get additional(): String | undefined {
+  get additional(): String  {
     return this._additional;
   }
 
-  set additional(value: String | undefined) {
+  set additional(value: String ) {
     this._additional = value;
   }
 
-  get zipCode(): String | undefined {
+  get zipCode(): String  {
     return this._zipCode;
   }
 
-  set zipCode(value: String | undefined) {
+  set zipCode(value: String ) {
     this._zipCode = value;
   }
 
-  get city(): String | undefined {
+  get city(): String  {
     return this._city;
   }
 
-  set city(value: String | undefined) {
+  set city(value: String ) {
     this._city = value;
   }
 
-  get country(): String | undefined {
+  get country(): String  {
     return this._country;
   }
 
-  set country(value: String | undefined) {
+  set country(value: String) {
     this._country = value;
   }
 }

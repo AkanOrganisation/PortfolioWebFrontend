@@ -1,63 +1,65 @@
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {Address} from "./address.models";
+import {firstValueFrom} from "rxjs";
+import {ClientType} from "../types";
 
 
 export class Client {
-  get id(): string | undefined {
+  get id(): string {
     return this._id;
   }
 
-  set id(value: string | undefined) {
+  set id(value: string) {
     this._id = value;
   }
 
-  get firstName(): string | undefined {
+  get firstName(): string {
     return this._firstName;
   }
 
-  set firstName(value: string | undefined) {
+  set firstName(value: string) {
     this._firstName = value;
   }
 
-  get lastName(): string | undefined {
+  get lastName(): string {
     return this._lastName;
   }
 
-  set lastName(value: string | undefined) {
+  set lastName(value: string) {
     this._lastName = value;
   }
 
-  get displayName(): string | undefined {
+  get displayName(): string {
     return this._displayName;
   }
 
-  set displayName(value: string | undefined) {
+  set displayName(value: string) {
     this._displayName = value;
   }
 
-  get phoneNumber(): string | undefined {
+  get phoneNumber(): string {
     return this._phoneNumber;
   }
 
-  set phoneNumber(value: string | undefined) {
+  set phoneNumber(value: string) {
     this._phoneNumber = value;
   }
 
-  get address(): Address | undefined {
+  get address(): Address {
     return this._address;
   }
 
-  set address(value: Address | undefined) {
+  set address(value: Address) {
     this._address = value;
   }
 
-  private _id: string | undefined;
-  private _firstName: string | undefined;
-  private _lastName: string | undefined;
-  private _displayName: string | undefined;
-  private _phoneNumber: string | undefined;
-  private _address: Address | undefined;
+  private _id: string = "";
+  private _firstName: string = "";
+  private _lastName: string = "";
+  private _displayName: string = "";
+  private _phoneNumber: string = "";
+  private _address: Address = new Address();
 
   success: boolean | undefined;
   loading: boolean | undefined;
@@ -69,67 +71,36 @@ export class Client {
   ) {
   }
 
-  createOrUpdateClient() {
-    this.gqlErrors.clearErrors();
-    this.apollo
-    .mutate({
-      mutation: gql`
-        mutation createOrUpdateClient($client: ClientType!) {
-          createOrUpdateClient(
-            clientData: {
-              phoneNumber: $phoneNumber,
-              lastName: $lastName,
-              firstName: $firstName,
-              displayName: $displayName,
-              address: {
-                additional: $additional,
-                city: $city,
-                country: $country,
-                streetName: $streetName,
-                streetNumber: $streetNumber,
-                zipCode: $zipCode
+  async createOrUpdateClient(client: ClientType): Promise<boolean> {
+    try {
+      this.gqlErrors.clearErrors();
+      const result: any = await firstValueFrom(
+        this.apollo
+        .mutate({
+          mutation: gql`
+            mutation createOrUpdateClient($client: ClientInputType!) {
+              createOrUpdateClient(
+                clientData: $client
+              ) {
+                success
+                errors {
+                  field
+                  messages
+                }
               }
-            }
-          ) {
-            success
-            errors {
-              field
-              messages
-            }
-            client {
-              id
-              address {
-                id
-              }
-            }
+            }`,
+          variables: {
+            client
           }
-        }`,
-      variables: {
-        client: {
-          phoneNumber: this.phoneNumber,
-          lastName: this.lastName,
-          firstName: this.firstName,
-          displayName: this.displayName,
-          address: {
-            additional: this.address?.additional,
-            city: this.address?.city,
-            country: this.address?.country,
-            streetName: this.address?.streetName,
-            streetNumber: this.address?.streetNumber,
-            zipCode: this.address?.zipCode,
-          }
-        },
-      },
-    })
-    .subscribe((result: any) => {
+        }));
       this.gqlErrors.setErrors(result.data.createOrUpdateClient.errors);
-      this.id = result.data.createOrUpdateClient.client.id;
-      //this.address.id = result.data.createOrUpdateClient.client.address.id;
-
-      this.success = result.data.createOrUpdateClient.success;
+      this.success = !!result.data.createOrUpdateClient.success;
       this.loading = result.loading;
       this.error = result.error;
-    });
-    return this.success;
+      return this.success;
+    } catch (error) {
+      this.error = error;
+      return false;
+    }
   }
 }
