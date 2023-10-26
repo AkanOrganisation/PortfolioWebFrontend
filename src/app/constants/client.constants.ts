@@ -1,10 +1,15 @@
 import {ClientType} from "../types";
-import {EMPTY_ADDRESS} from "./address.constants";
+import {getEmptyAddress} from "./address.constants";
 
-export const EMPTY_CLIENT: ClientType = {
+const emptyClient: ClientType = {
     phoneNumber: "",
     firstName: "",
     lastName: "",
     displayName: "",
-    address: EMPTY_ADDRESS
+    address: getEmptyAddress()
 };
+
+
+export function getEmptyClient(): ClientType {
+    return JSON.parse(JSON.stringify(emptyClient));
+}

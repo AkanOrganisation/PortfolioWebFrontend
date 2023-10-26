@@ -1,10 +1,10 @@
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {firstValueFrom} from "rxjs";
-import {ClientType} from "../types";
+import {OrganiserType} from "../types";
 
 
-export class Client {
+export class Organiser {
 
   success: boolean = false;
   loading: boolean = false;
@@ -16,16 +16,16 @@ export class Client {
   ) {
   }
 
-  async createOrUpdateClient(client: ClientType): Promise<boolean> {
+  async createOrUpdateOrganiser(organiser: OrganiserType): Promise<boolean> {
     try {
       this.gqlErrors.clearErrors();
       const result: any = await firstValueFrom(
         this.apollo
         .mutate({
           mutation: gql`
-            mutation createOrUpdateClient($client: ClientInputType!) {
-              createOrUpdateClient(
-                clientData: $client
+            mutation createOrUpdateOrganiser($organiser: OrganiserInputType!) {
+              createOrUpdateOrganiser(
+                organiserData: $organiser
               ) {
                 success
                 errors {
@@ -35,7 +35,7 @@ export class Client {
               }
             }`,
           variables: {
-            client
+            organiser
           }
         }));
       this.gqlErrors.setErrors(result.data.createOrUpdateClient.errors);

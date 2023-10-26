@@ -1,6 +1,6 @@
 import {AddressType} from "../types";
 
-export const EMPTY_ADDRESS: AddressType = {
+const emptyAddress: AddressType = {
   streetName: "",
   streetNumber: "",
   city: "",
@@ -9,3 +9,7 @@ export const EMPTY_ADDRESS: AddressType = {
   additional: "",
 
 };
+
+export function getEmptyAddress(): AddressType {
+  return JSON.parse(JSON.stringify(emptyAddress));
+}

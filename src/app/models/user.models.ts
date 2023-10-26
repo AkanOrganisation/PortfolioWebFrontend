@@ -4,6 +4,7 @@ import {Injectable} from "@angular/core";
 import {firstValueFrom} from "rxjs";
 import {Client} from "./client.models";
 import {UserType} from "../types";
+import {Organiser} from "./organiser.models";
 
 
 @Injectable({
@@ -15,6 +16,7 @@ export class User {
 
   authenticated: boolean = false;
   client: Client = new Client(this.apollo, this.gqlErrors);
+  organiser: Organiser = new Organiser(this.apollo, this.gqlErrors);
   isClient: boolean = false;
   isOrganiser: boolean = false;
 

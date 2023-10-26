@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../../models";
 import {NgForm} from "@angular/forms";
 import {ClientType} from "../../types";
-import {EMPTY_CLIENT} from "../../constants/client.constants";
+import {getEmptyClient} from "../../constants/client.constants";
 
 @Component({
   selector: 'app-create-client',
@@ -16,7 +16,7 @@ export class CreateClientComponent implements OnInit {
   completed = false;
   error: any;
 
-  clientInput: ClientType = EMPTY_CLIENT;
+  clientInput: ClientType = getEmptyClient();
 
   constructor(
     public user: User,
@@ -60,7 +60,7 @@ export class CreateClientComponent implements OnInit {
       }else {
         this.user.isClient = true;
         this.user.data.client = this.clientInput;
-        this.clientInput = EMPTY_CLIENT;
+        this.clientInput = getEmptyClient();
       }
       return this.completed
     } catch (error) {

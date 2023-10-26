@@ -7,7 +7,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CsrfInterceptor} from "./services";
 import {CookieService} from 'ngx-cookie-service';
 import {User} from "./models";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
@@ -20,31 +20,42 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatDividerModule} from "@angular/material/divider";
 import {RouterModule, Routes} from "@angular/router";
-import { CreateUserComponent } from './components/create-user/create-user.component';
+import {CreateUserComponent} from './components/create-user/create-user.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import { LoginUserComponent } from './components/login-user/login-user.component';
-import { CreateClientComponent } from './components/create-client/create-client.component';
+import {LoginUserComponent} from './components/login-user/login-user.component';
+import {CreateClientComponent} from './components/create-client/create-client.component';
+import {CreateOrganiserComponent} from './components/create-organiser/create-organiser.component';
 
-let MaterialModules = [
-    MatButtonModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    MatCardModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatInputModule,
-    MatFormFieldModule,
-  ];
+const MATERIALMODULES = [
+  MatButtonModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCheckboxModule,
+  MatPaginatorModule,
+  MatCardModule,
+  MatSelectModule,
+  MatSidenavModule,
+  MatDividerModule,
+  MatInputModule,
+  MatFormFieldModule,
+];
 
-const appRoutes: Routes = [
-  { path: 'register/', component: CreateUserComponent },
+const BROWSERMODULES = [
+  BrowserModule,
+  BrowserAnimationsModule,
+  GraphQLModule,
+  HttpClientModule,
+];
+
+const FORMSMODULES = [
+  FormsModule,
 ];
 
 
+const appRoutes: Routes = [
+  {path: 'register/', component: CreateUserComponent},
+];
 
 
 @NgModule({
@@ -53,22 +64,21 @@ const appRoutes: Routes = [
     CreateUserComponent,
     LoginUserComponent,
     CreateClientComponent,
+    CreateOrganiserComponent,
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    GraphQLModule,
-    HttpClientModule,
-    FormsModule,
-    MaterialModules,
+    BROWSERMODULES,
+    FORMSMODULES,
+    MATERIALMODULES,
     FlexLayoutModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true},
     CookieService,
     User,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

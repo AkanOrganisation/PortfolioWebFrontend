@@ -3,7 +3,7 @@ import {User} from "../../models";
 import {NgForm} from "@angular/forms";
 import {PasswordService} from "../../services";
 import {UserType} from "../../types";
-import {EMPTY_USER} from "../../constants/user.constants";
+import {getEmptyUser} from "../../constants/user.constants";
 
 @Component({
   selector: 'app-create-user',
@@ -12,7 +12,7 @@ import {EMPTY_USER} from "../../constants/user.constants";
 })
 export class CreateUserComponent implements OnInit {
 
-  userInput: UserType = EMPTY_USER;
+  userInput: UserType = getEmptyUser();
 
   loading = true;
   ready = false;
@@ -57,7 +57,7 @@ export class CreateUserComponent implements OnInit {
         )
       } else {
         this.user.data.email = this.userInput.email;
-        this.userInput = EMPTY_USER;
+        this.userInput = getEmptyUser();
       }
       return this.completed
     } catch (error) {
