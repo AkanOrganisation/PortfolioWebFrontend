@@ -1,138 +1,158 @@
-<mat-card>
-  <mat-card-content>
-    <form #organiserForm="ngForm" (ngSubmit)="createOrganiser(organiserForm)">
-      <mat-error
-        *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+<!-- Display spinner if loading, otherwise display form -->
+<mat-spinner *ngIf="loading; else createOrganiserForm"></mat-spinner>
 
-      <!-- CompanyName -->
-      <mat-form-field appearance="fill">
-        <input type="text" matInput placeholder="Enter your Company Name" [(ngModel)]="organiserInput.companyName"
-               name="organiser_company_name" required>
-        <mat-error *ngIf="organiserForm.controls?.['organiser_company_name']?.errors?.['required']">Company name is
-          required.
-        </mat-error>
+<ng-template #createOrganiserForm>
+
+  <mat-card *ngIf="ready && !completed; else alreadyOrganiser">
+    <mat-card-content>
+      <form #organiserForm="ngForm" (ngSubmit)="createOrganiser(organiserForm)">
         <mat-error
-          *ngFor="let error of user.gqlErrors.getErrorsForField('organiser_company_name')">{{ error }}</mat-error>
-      </mat-form-field>
+          *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
-      <!-- RegisterNumber -->
-      <mat-form-field appearance="fill">
-        <input type="text" matInput placeholder="Enter your Register Number" [(ngModel)]="organiserInput.registerNumber"
-               name="organiser_register_number" required>
-        <mat-error *ngIf="organiserForm.controls?.['organiser_register_number']?.errors?.['required']">Register Number
-          is required.
-        </mat-error>
-        <mat-error
-          *ngFor="let error of user.gqlErrors.getErrorsForField('organiser_register_number')">{{ error }}</mat-error>
-      </mat-form-field>
+        <!-- CompanyName -->
+        <mat-form-field appearance="fill">
+          <input type="text" matInput placeholder="Enter your Company Name" [(ngModel)]="organiserInput.companyName"
+                 name="organiser_company_name" required>
+          <mat-error *ngIf="organiserForm.controls?.['organiser_company_name']?.errors?.['required']">Company name is
+            required.
+          </mat-error>
+          <mat-error
+            *ngFor="let error of user.gqlErrors.getErrorsForField('organiser_company_name')">{{ error }}</mat-error>
+        </mat-form-field>
 
-      <!-- Address -->
-      <!-- StreetName -->
-      <mat-form-field appearance="fill">
-        <input type="text" matInput placeholder="Enter your Street Name" [(ngModel)]="organiserInput.address.streetName"
-               name="address_streetname" required>
-        <mat-error *ngIf="organiserForm.controls?.['address_streetname']?.errors?.['required']">Street name is
-          required.
-        </mat-error>
-        <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_streetname')">{{ error }}</mat-error>
-      </mat-form-field>
+        <!-- RegisterNumber -->
+        <mat-form-field appearance="fill">
+          <input type="text" matInput placeholder="Enter your Register Number"
+                 [(ngModel)]="organiserInput.registerNumber"
+                 name="organiser_register_number" required>
+          <mat-error *ngIf="organiserForm.controls?.['organiser_register_number']?.errors?.['required']">Register Number
+            is required.
+          </mat-error>
+          <mat-error
+            *ngFor="let error of user.gqlErrors.getErrorsForField('organiser_register_number')">{{ error }}</mat-error>
+        </mat-form-field>
 
-      <!-- StreetNumber -->
-      <mat-form-field appearance="fill">
-        <input type="text" matInput placeholder="Enter your Street Number"
-               [(ngModel)]="organiserInput.address.streetNumber" name="address_streetnumber" required>
-        <mat-error *ngIf="organiserForm.controls?.['address_streetnumber']?.errors?.['required']">Street number is
-          required.
-        </mat-error>
-        <mat-error
-          *ngFor="let error of user.gqlErrors.getErrorsForField('address_streetnumber')">{{ error }}</mat-error>
-      </mat-form-field>
+        <!-- Address -->
+        <!-- StreetName -->
+        <mat-form-field appearance="fill">
+          <input type="text" matInput placeholder="Enter your Street Name"
+                 [(ngModel)]="organiserInput.address.streetName"
+                 name="address_streetname" required>
+          <mat-error *ngIf="organiserForm.controls?.['address_streetname']?.errors?.['required']">Street name is
+            required.
+          </mat-error>
+          <mat-error
+            *ngFor="let error of user.gqlErrors.getErrorsForField('address_streetname')">{{ error }}</mat-error>
+        </mat-form-field>
 
-      <!-- City -->
-      <mat-form-field appearance="fill">
-        <input type="text" matInput placeholder="Enter your City" [(ngModel)]="organiserInput.address.city"
-               name="address_city" required>
-        <mat-error *ngIf="organiserForm.controls?.['address_city']?.errors?.['required']">City is required.</mat-error>
-        <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
-      </mat-form-field>
+        <!-- StreetNumber -->
+        <mat-form-field appearance="fill">
+          <input type="text" matInput placeholder="Enter your Street Number"
+                 [(ngModel)]="organiserInput.address.streetNumber" name="address_streetnumber" required>
+          <mat-error *ngIf="organiserForm.controls?.['address_streetnumber']?.errors?.['required']">Street number is
+            required.
+          </mat-error>
+          <mat-error
+            *ngFor="let error of user.gqlErrors.getErrorsForField('address_streetnumber')">{{ error }}</mat-error>
+        </mat-form-field>
 
-      <!-- Country -->
-      <mat-form-field appearance="fill">
-        <input type="text" matInput placeholder="Enter your Country" [(ngModel)]="organiserInput.address.country"
-               name="address_country" required>
-        <mat-error *ngIf="organiserForm.controls?.['address_country']?.errors?.['required']">Country is required.
-        </mat-error>
-        <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
-      </mat-form-field>
+        <!-- City -->
+        <mat-form-field appearance="fill">
+          <input type="text" matInput placeholder="Enter your City" [(ngModel)]="organiserInput.address.city"
+                 name="address_city" required>
+          <mat-error *ngIf="organiserForm.controls?.['address_city']?.errors?.['required']">City is required.
+          </mat-error>
+          <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
+        </mat-form-field>
 
-      <!-- ZipCode -->
-      <mat-form-field appearance="fill">
-        <input type="text" matInput placeholder="Enter your Zipcode" [(ngModel)]="organiserInput.address.zipCode"
-               name="address_zipcode" required>
-        <mat-error *ngIf="organiserForm.controls?.['address_zipcode']?.errors?.['required']">ZipCode is required.
-        </mat-error>
-        <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
-      </mat-form-field>
+        <!-- Country -->
+        <mat-form-field appearance="fill">
+          <input type="text" matInput placeholder="Enter your Country" [(ngModel)]="organiserInput.address.country"
+                 name="address_country" required>
+          <mat-error *ngIf="organiserForm.controls?.['address_country']?.errors?.['required']">Country is required.
+          </mat-error>
+          <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
+        </mat-form-field>
 
-      <!-- ContactPersons -->
-      <!-- Button to Add Contact Person -->
-      <button mat-button type="button" (click)="addContactPerson()">Add Contact Person</button>
+        <!-- ZipCode -->
+        <mat-form-field appearance="fill">
+          <input type="text" matInput placeholder="Enter your Zipcode" [(ngModel)]="organiserInput.address.zipCode"
+                 name="address_zipcode" required>
+          <mat-error *ngIf="organiserForm.controls?.['address_zipcode']?.errors?.['required']">ZipCode is required.
+          </mat-error>
+          <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
+        </mat-form-field>
+
+        <!-- ContactPersons -->
+        <!-- Button to Add Contact Person -->
+        <button mat-button type="button" (click)="addContactPerson()">Add Contact Person</button>
 
 
-      <div>
-        <div *ngFor="let contactPerson of contactPersonsInput; let i = index;">
-          <!-- FirstName -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter First Name" [(ngModel)]="contactPersonsInput[i].firstName"
-                   name="contact_persons_{{i}}_firstname" required>
-            <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_firstname']?.errors?.['required']">First
-              name is required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_firstname')">{{ error }}</mat-error>
-          </mat-form-field>
+        <div>
+          <div *ngFor="let contactPerson of contactPersonsInput; let i = index;">
+            <!-- FirstName -->
+            <mat-form-field appearance="fill">
+              <input type="text" matInput placeholder="Enter First Name" [(ngModel)]="contactPersonsInput[i].firstName"
+                     name="contact_persons_{{i}}_firstname" required>
+              <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_firstname']?.errors?.['required']">First
+                name is required.
+              </mat-error>
+              <mat-error
+                *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_firstname')">{{ error }}</mat-error>
+            </mat-form-field>
 
-          <!-- LastName -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter Last Name" [(ngModel)]="contactPersonsInput[i].lastName"
-                   name="contact_persons_{{i}}_lastname" required>
-            <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_lastname']?.errors?.['required']">Last
-              name is required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_lastname')">{{ error }}</mat-error>
-          </mat-form-field>
+            <!-- LastName -->
+            <mat-form-field appearance="fill">
+              <input type="text" matInput placeholder="Enter Last Name" [(ngModel)]="contactPersonsInput[i].lastName"
+                     name="contact_persons_{{i}}_lastname" required>
+              <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_lastname']?.errors?.['required']">Last
+                name is required.
+              </mat-error>
+              <mat-error
+                *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_lastname')">{{ error }}</mat-error>
+            </mat-form-field>
 
-          <!-- EmailAddress -->
-          <mat-form-field appearance="fill">
-            <input type="email" matInput placeholder="Enter Email Address" [(ngModel)]="contactPersonsInput[i].email"
-                   name="contact_persons_{{i}}_email" required>
-            <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_email']?.errors?.['required']">Email
-              address is required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_email')">{{ error }}</mat-error>
-          </mat-form-field>
+            <!-- EmailAddress -->
+            <mat-form-field appearance="fill">
+              <input type="email" matInput placeholder="Enter Email Address" [(ngModel)]="contactPersonsInput[i].email"
+                     name="contact_persons_{{i}}_email" required>
+              <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_email']?.errors?.['required']">Email
+                address is required.
+              </mat-error>
+              <mat-error
+                *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_email')">{{ error }}</mat-error>
+            </mat-form-field>
 
-          <!-- PhoneNumber -->
-          <mat-form-field appearance="fill">
-            <input type="tel" matInput placeholder="Enter Phone Number" [(ngModel)]="contactPersonsInput[i].phoneNumber"
-                   name="contact_persons_{{i}}_phone" required>
-            <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_phone']?.errors?.['required']">Phone
-              number is required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_phone')">{{ error }}</mat-error>
-          </mat-form-field>
+            <!-- PhoneNumber -->
+            <mat-form-field appearance="fill">
+              <input type="tel" matInput placeholder="Enter Phone Number"
+                     [(ngModel)]="contactPersonsInput[i].phoneNumber"
+                     name="contact_persons_{{i}}_phone" required>
+              <mat-error *ngIf="organiserForm.controls?.['contact_persons_{{i}}_phone']?.errors?.['required']">Phone
+                number is required.
+              </mat-error>
+              <mat-error
+                *ngFor="let error of user.gqlErrors.getErrorsForField('contact_persons_{{i}}_phone')">{{ error }}</mat-error>
+            </mat-form-field>
 
-          <!-- Button to Remove Contact Person -->
-          <button *ngIf="i > 0" mat-button type="button" (click)="removeContactPerson(i)">Remove Contact Person</button>
+            <!-- Button to Remove Contact Person -->
+            <button *ngIf="i > 0" mat-button type="button" (click)="removeContactPerson(i)">Remove Contact Person
+            </button>
 
+          </div>
         </div>
-      </div>
 
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="!organiserForm.valid">Submit</button>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!organiserForm.valid">Submit</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+
+<ng-template #alreadyOrganiser>
+  <mat-card>
+    <mat-card-content>
+      <h1>You are already an organiser!</h1>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

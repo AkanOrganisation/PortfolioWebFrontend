@@ -1,4 +1,9 @@
-<mat-card>
+<!-- Display spinner if loading, otherwise display form -->
+<mat-spinner *ngIf="loading; else createUserForm"></mat-spinner>
+
+<ng-template #createUserForm>
+
+<mat-card *ngIf="ready && !completed; else alreadyUser">
   <mat-card-content>
     <form #userForm="ngForm" (ngSubmit)="createUser(userForm)">
       <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
@@ -43,3 +48,12 @@
     </form>
   </mat-card-content>
 </mat-card>
+</ng-template>
+
+<ng-template #alreadyUser>
+  <mat-card>
+    <mat-card-content>
+      <h1>You already have a user</h1>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

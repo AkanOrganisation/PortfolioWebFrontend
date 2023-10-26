@@ -26,6 +26,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {LoginUserComponent} from './components/login-user/login-user.component';
 import {CreateClientComponent} from './components/create-client/create-client.component';
 import {CreateOrganiserComponent} from './components/create-organiser/create-organiser.component';
+import { DashboardClientComponent } from './components/dashboard-client/dashboard-client.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { DashboardOrganiserComponent } from './components/dashboard-organiser/dashboard-organiser.component';
 
 const MATERIALMODULES = [
   MatButtonModule,
@@ -65,6 +68,8 @@ const appRoutes: Routes = [
     LoginUserComponent,
     CreateClientComponent,
     CreateOrganiserComponent,
+    DashboardClientComponent,
+    DashboardOrganiserComponent,
   ],
   imports: [
     BROWSERMODULES,
@@ -72,6 +77,7 @@ const appRoutes: Routes = [
     MATERIALMODULES,
     FlexLayoutModule,
     RouterModule.forRoot(appRoutes),
+    MatProgressSpinnerModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true},

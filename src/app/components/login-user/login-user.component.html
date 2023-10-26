@@ -1,26 +1,41 @@
-<mat-card>
-  <mat-card-content>
-    <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
-      <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+<!-- Display spinner if loading, otherwise display form -->
+<mat-spinner *ngIf="loading; else loginForm"></mat-spinner>
 
-      <!-- Email -->
-      <mat-form-field appearance="fill">
-        <input type="email" matInput placeholder="Enter your email" [(ngModel)]="userInput.email" name="user_email" required
-               email>
-        <mat-error *ngIf="userForm.controls?.['email']?.errors?.['required']">Email is required.</mat-error>
-        <mat-error *ngIf="userForm.controls?.['email']?.errors?.['email']">Enter a valid email.</mat-error>
-      </mat-form-field>
+<ng-template #loginForm>
+  <mat-card *ngIf="ready && !completed; else alreadyLogged">
+    <mat-card-content>
+      <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
 
+        <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
-      <!-- Password -->
-      <mat-form-field appearance="fill">
-        <input type="password" matInput placeholder="Enter a password" [(ngModel)]="userInput.password" name="user_password"
-               required>
-        <mat-error *ngIf="userForm.controls?.['password']?.errors?.['required']">Password is required.</mat-error>
-      </mat-form-field>
+        <!-- Email -->
+        <mat-form-field appearance="fill">
+          <input type="email" matInput placeholder="Enter your email" [(ngModel)]="userInput.email" name="user_email"
+                 required email>
+          <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['required']">Email is required.</mat-error>
+          <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['email']">Enter a valid email.</mat-error>
+          <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_email')">{{ error }}</mat-error>
+        </mat-form-field>
 
+        <!-- Password -->
+        <mat-form-field appearance="fill">
+          <input type="password" matInput placeholder="Enter a password" [(ngModel)]="userInput.password"
+                 name="user_password" required>
+          <mat-error *ngIf="userForm.controls?.['user_password']?.errors?.['required']">Password is required.
+          </mat-error>
+          <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
+        </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Submit</button>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Login</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+
+<ng-template #alreadyLogged>
+  <mat-card>
+    <mat-card-content>
+      <h2>You are already logged in.</h2>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

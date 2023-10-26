@@ -1,48 +1,22 @@
-<mat-toolbar class="mat-elevation-z8">
-  <button
-    mat-icon-button
-    *ngIf="sidenav.mode === 'over'"
-    (click)="sidenav.toggle()"
-  >
-    <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>
-    <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
-  </button>
-  <span class="spacer"></span>
-  <span id="titleOfProject">{{Constants.TitleOfProject}}
-    <mat-icon>events</mat-icon></span>
+<!-- Show spinner when loading -->
+<mat-spinner *ngIf="loading; else content"></mat-spinner>
 
-</mat-toolbar>
+<ng-template #content>
+  <!-- Show auth component when not authenticated -->
+  <app-login-user *ngIf="!user.authenticated; else authenticatedContent"></app-login-user>
 
-<mat-sidenav-container>
-  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    TODO: Here will be search form
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="content mat-elevation-z8">
-      <app-create-organiser></app-create-organiser>
+  <ng-template #authenticatedContent>
+    <!-- Show client dashboard if user is a client -->
+    <app-dashboard-client *ngIf="user.isClient; else checkOrganiser"></app-dashboard-client>
 
-    </div>
-  </mat-sidenav-content>
+    <ng-template #checkOrganiser>
+      <!-- Show organiser dashboard if user is an organiser -->
+      <app-dashboard-organiser *ngIf="user.isOrganiser; else defaultAuth"></app-dashboard-organiser>
 
-</mat-sidenav-container>
-<!--&lt;!&ndash; Spacer to push items to the right &ndash;&gt;
-<span fxFlex></span>
-
-&lt;!&ndash; Mobile Menu Button for smaller screens &ndash;&gt;
-<button mat-button fxShow.xs fxHide>
-  <mat-icon>menu</mat-icon>
-</button>
-<button mat-button fxHide.xs>Login
-  <mat-icon>login</mat-icon>
-</button>
-<button mat-button fxHide.xs>Register
-  <mat-icon>person_add_alt</mat-icon>
-</button>
-<button mat-button fxHide.xs>
-  <mat-icon>dashboard</mat-icon>
-</button>
-<button mat-button fxHide.xs>Logout
-  <mat-icon>logout</mat-icon>
-</button>-->
-
-
+      <ng-template #defaultAuth>
+        <!-- Show auth component if user is neither a client nor an organiser -->
+        <app-login-user></app-login-user>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+</ng-template>

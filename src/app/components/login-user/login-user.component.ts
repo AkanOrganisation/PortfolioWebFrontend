@@ -13,7 +13,7 @@ export class LoginUserComponent implements OnInit {
 
   userInput: UserType = getEmptyUser();
 
-  loading = false;
+  loading = true;
   ready = false;
   completed = false;
   error: any;
@@ -25,14 +25,9 @@ export class LoginUserComponent implements OnInit {
   }
 
   async ngOnInit() {
-    if (this.user.authenticated) {
-      this.loading = false;
-      this.completed = true;
-      this.error = "You are already logged in."
-    } else {
-      this.ready = true;
-      this.loading = false;
-    }
+    this.completed = this.user.authenticated;
+    this.ready = !this.completed;
+    this.loading = false;
   }
 
 
