@@ -1,0 +1,27 @@
+<mat-toolbar class="mat-elevation-z8">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
+  </button>
+  <span class="spacer"></span>
+  <span id="titleOfProject">{{Constants.TitleOfProject}}
+    <mat-icon>events</mat-icon></span>
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    TODO: Here will be search form
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content mat-elevation-z8">
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+
