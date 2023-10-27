@@ -5,6 +5,7 @@ import {firstValueFrom} from "rxjs";
 import {Client} from "./client.models";
 import {UserType} from "../types";
 import {Organiser} from "./organiser.models";
+import {UserPermissions} from "../constants/permissions.constants";
 
 
 @Injectable({
@@ -17,12 +18,9 @@ export class User {
   authenticated: boolean = false;
   client: Client = new Client(this.apollo, this.gqlErrors);
   organiser: Organiser = new Organiser(this.apollo, this.gqlErrors);
-  isClient: boolean = false;
-  isOrganiser: boolean = false;
 
-  success: boolean = false;
-  loading = false;
   error: any;
+  permissions: UserPermissions[] = [];
 
   constructor(
     private apollo: Apollo,
@@ -48,13 +46,14 @@ export class User {
             }
           `,
         }));
-      this.authenticated = (result.data.userLoginOrOut.success == true) ? false : this.authenticated;
+      this.authenticated = !result.data.userLoginOrOut.success || this.authenticated;
+      if (!this.authenticated) {
+        this.data.email = "";
+        this.permissions = [];
+      }
       this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
-      this.loading = result.loading;
-      this.error = result.error;
       return this.authenticated;
     } catch (error) {
-      this.error = error;
       return false;
     }
   }
@@ -80,14 +79,17 @@ export class User {
           `,
           variables: {
             email: user.email,
-            password: user.password,
+            password: user.password
           },
         }));
       this.authenticated = !!result.data.userLoginOrOut.success;
-      this.isClient = result.data.userLoginOrOut.isClient;
-      this.isOrganiser = result.data.userLoginOrOut.isOrganiser;
+      if (this.authenticated) {
+        this.data.email = user.email;
+        this.permissions.push(UserPermissions.USER);
+        result.data.userLoginOrOut.isClient ? this.permissions.push(UserPermissions.CLIENT) : null;
+        result.data.userLoginOrOut.isOrganiser ? this.permissions.push(UserPermissions.ORGANISER) : null;
+      }
       this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
-      this.loading = result.loading;
       this.error = result.error;
       return this.authenticated;
     } catch (error) {
@@ -110,18 +112,19 @@ export class User {
         }).valueChanges
       );
       this.authenticated = !!(result.data.isAuthenticated);
+      this.error = result.error;
       return this.authenticated;
     } catch
       (error) {
       this.error = error;
-      return this.authenticated;
+      return false;
     }
   }
 
 
   async createOrUpdate(
     user: UserType,
-    createNewUser:boolean,
+    createNewUser: boolean,
   ):
     Promise<boolean> {
     this.gqlErrors.clearErrors();
@@ -129,21 +132,21 @@ export class User {
       const result: any = await firstValueFrom(
         this.apollo.mutate({
           mutation: gql`
-              mutation CreateUser($email: String!, $password: String!, $password2: String, $createNewUser: Boolean) {
-                  createOrUpdateUser(
-                      userData: {
-                          email: $email,
-                          newPassword: $password
-                          oldPassword: $password2
-                      },
-                      createNewUser: $createNewUser) {
-                      errors {
-                          field
-                          messages
-                      }
-                      success
-                  }
+            mutation CreateUser($email: String!, $password: String!, $password2: String, $createNewUser: Boolean) {
+              createOrUpdateUser(
+                userData: {
+                  email: $email,
+                  newPassword: $password
+                  oldPassword: $password2
+                },
+                createNewUser: $createNewUser) {
+                errors {
+                  field
+                  messages
+                }
+                success
               }
+            }
           `,
           variables: {
             email: user.email,
@@ -152,11 +155,16 @@ export class User {
             createNewUser: createNewUser,
           }
         }));
-      this.success = !!result.data.createOrUpdateUser.success;
-      this.loading = result.loading;
+      this.authenticated = !!result.data.createOrUpdateUser.success;
       this.gqlErrors.setErrors(result.data.createOrUpdateUser.errors);
       this.error = result.error;
-      return this.success;
+      if (this.authenticated) {
+        this.data.email = user.email;
+        if (createNewUser) {
+          this.permissions = [UserPermissions.USER];
+        }
+      }
+      return true;
     } catch
       (error) {
       this.error = error;

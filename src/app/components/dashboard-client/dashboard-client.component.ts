@@ -3,7 +3,7 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {CsrfService} from "../../services";
 import {User} from "../../models";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {Constants} from "../../constants";
+import {LinksConstants} from "../../constants/links-constants";
 
 @Component({
   selector: 'app-dashboard-client',
@@ -44,5 +44,5 @@ export class DashboardClientComponent implements OnInit{
     });
   }
 
-  protected readonly Constants = Constants;
+  protected readonly Constants = LinksConstants;
 }

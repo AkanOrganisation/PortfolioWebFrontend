@@ -4,6 +4,7 @@ import {NgForm} from "@angular/forms";
 import {PasswordService} from "../../services";
 import {UserType} from "../../types";
 import {getEmptyUser} from "../../constants/user.constants";
+import {ComponentState} from "../../constants/states.components";
 
 @Component({
   selector: 'app-create-user',
@@ -14,9 +15,7 @@ export class CreateUserComponent implements OnInit {
 
   userInput: UserType = getEmptyUser();
 
-  loading = true;
-  ready = false;
-  completed = false;
+  state= ComponentState.LOADING;
   error: any;
 
   constructor(
@@ -26,45 +25,38 @@ export class CreateUserComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.user.gqlErrors.clearErrors()
     if (this.user.authenticated) {
-      this.loading = false;
-      this.completed = true;
+      this.state = ComponentState.COMPLETED;
       this.error = "You already have an account. Please login instead."
     } else {
-      this.ready = true;
-      this.loading = false;
+      this.state = ComponentState.READY;
     }
   }
 
   async createUser(form: NgForm) {
-    this.loading = true;
+    this.state = ComponentState.PROCESSING;
     this.user.gqlErrors.clearErrors();
-    if (form.valid) {
-      if (form.value.password != form.value.password2) {
-        this.user.gqlErrors.addError("password2", "Passwords do not match.");
-        return;
-      }
-    }
     this.error = null;
-    this.completed = false;
+
     try {
-      this.completed = await this.user.createOrUpdate(this.userInput, true);
-      if (!this.completed) {
+      const result = await this.user.createOrUpdate(this.userInput, true);
+      if (!result) {
         form.control.setErrors({server: true})
         Object.keys(this.user.gqlErrors.errorsByField).forEach((key) => {
-            form.controls[key].setErrors({server: true})
-          }
-        )
+          form.controls[key]?.setErrors({server: true})
+        })
+        this.state = ComponentState.READY
       } else {
         this.user.data.email = this.userInput.email;
         this.userInput = getEmptyUser();
+        this.state = ComponentState.COMPLETED
       }
-      return this.completed
+      return result
     } catch (error) {
       this.error = error;
+      this.state = ComponentState.ERROR
       return false;
-    } finally {
-      this.loading = false;
     }
   }
 
@@ -74,4 +66,5 @@ export class CreateUserComponent implements OnInit {
   }
 
 
+  protected readonly ComponentState = ComponentState;
 }

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {GraphQLModule} from './graphql.module';
+import {GraphQLModule} from './services/graphql/graphql.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CsrfInterceptor} from "./services";
 import {CookieService} from 'ngx-cookie-service';
@@ -26,9 +26,14 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {LoginUserComponent} from './components/login-user/login-user.component';
 import {CreateClientComponent} from './components/create-client/create-client.component';
 import {CreateOrganiserComponent} from './components/create-organiser/create-organiser.component';
-import { DashboardClientComponent } from './components/dashboard-client/dashboard-client.component';
+import {DashboardClientComponent} from './components/dashboard-client/dashboard-client.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { DashboardOrganiserComponent } from './components/dashboard-organiser/dashboard-organiser.component';
+import {DashboardOrganiserComponent} from './components/dashboard-organiser/dashboard-organiser.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {appRoutes} from "./app.routes";
+
+
+
 
 const MATERIALMODULES = [
   MatButtonModule,
@@ -47,17 +52,13 @@ const MATERIALMODULES = [
 const BROWSERMODULES = [
   BrowserModule,
   BrowserAnimationsModule,
+  RouterModule.forRoot(appRoutes),
   GraphQLModule,
   HttpClientModule,
 ];
 
 const FORMSMODULES = [
   FormsModule,
-];
-
-
-const appRoutes: Routes = [
-  {path: 'register/', component: CreateUserComponent},
 ];
 
 
@@ -70,13 +71,14 @@ const appRoutes: Routes = [
     CreateOrganiserComponent,
     DashboardClientComponent,
     DashboardOrganiserComponent,
+    DashboardComponent,
   ],
   imports: [
     BROWSERMODULES,
     FORMSMODULES,
     MATERIALMODULES,
     FlexLayoutModule,
-    RouterModule.forRoot(appRoutes),
+
     MatProgressSpinnerModule,
   ],
   providers: [

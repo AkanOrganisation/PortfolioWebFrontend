@@ -3,6 +3,7 @@ import {User} from "../../models";
 import {NgForm} from "@angular/forms";
 import {getEmptyUser} from "../../constants/user.constants";
 import {UserType} from "../../types";
+import {ComponentState} from "../../constants/states.components";
 
 @Component({
   selector: 'app-login-user',
@@ -11,11 +12,11 @@ import {UserType} from "../../types";
 })
 export class LoginUserComponent implements OnInit {
 
+
+
   userInput: UserType = getEmptyUser();
 
-  loading = true;
-  ready = false;
-  completed = false;
+  state = ComponentState.LOADING;
   error: any;
 
   constructor(
@@ -25,38 +26,35 @@ export class LoginUserComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.completed = this.user.authenticated;
-    this.ready = !this.completed;
-    this.loading = false;
+    this.state = (this.user.authenticated) ? ComponentState.COMPLETED : ComponentState.READY;
   }
 
 
   async loginUser(form: NgForm) {
-    this.loading = true;
-    this.user.gqlErrors.clearErrors();
+    this.state = ComponentState.PROCESSING;
     this.error = null;
-    this.completed = false;
     try {
       const result = await this.user.login(this.userInput);
-      this.completed = result;
-      if (!this.completed) {
+      if (!result) {
         form.control.setErrors({server: true})
         Object.keys(this.user.gqlErrors.errorsByField).forEach((key) => {
-            form.controls[key].setErrors({server: true})
+            form.controls[key]?.setErrors({server: true})
           }
         )
+        this.state = ComponentState.READY;
       } else {
         this.user.data.email = this.userInput.email;
         this.userInput = getEmptyUser();
+        this.state = ComponentState.COMPLETED;
       }
-      return this.completed
+      return result
     } catch (error) {
       this.error = error;
+      this.state = ComponentState.ERROR;
       return false;
-    } finally {
-      this.loading = false;
     }
   }
 
+  protected readonly ComponentState = ComponentState;
 }
 

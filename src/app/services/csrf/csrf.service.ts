@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {map, pipe, throwError, catchError} from 'rxjs';
 import {AppComponent} from '../../app.component';
-import {Constants} from '../../constants';
+import {LinksConstants} from '../../constants/links-constants';
 import {CookieService} from 'ngx-cookie-service';
 
 interface CsrfResponse {
@@ -23,9 +23,9 @@ export class CsrfService {
 
   public async getAndSetCsrfToken(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.get(Constants.API_CSRF_ENDPOINT).subscribe({
+      this.http.get(LinksConstants.API_CSRF_ENDPOINT).subscribe({
         next: (result: any) => {
-          this.cookieService.set(Constants.CSRF_COOKIE_NAME, result.csrfToken);
+          this.cookieService.set(LinksConstants.CSRF_COOKIE_NAME, result.csrfToken);
           resolve(true);
         },
         error: (error) => {
@@ -50,10 +50,10 @@ export class CsrfService {
   }
 
   private setCsrfToken(): void {
-    this.getCsrfToken(Constants.API_CSRF_ENDPOINT).subscribe(
+    this.getCsrfToken(LinksConstants.API_CSRF_ENDPOINT).subscribe(
       {
         next: (data) => {
-          this.cookieService.set(Constants.CSRF_COOKIE_NAME, data);
+          this.cookieService.set(LinksConstants.CSRF_COOKIE_NAME, data);
         },
         error: (error) => {
           console.error('Error setting CSRF token', error);

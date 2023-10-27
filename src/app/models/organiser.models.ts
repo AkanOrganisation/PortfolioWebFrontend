@@ -6,8 +6,6 @@ import {OrganiserType} from "../types";
 
 export class Organiser {
 
-  success: boolean = false;
-  loading: boolean = false;
   error: any;
 
   constructor(
@@ -39,10 +37,8 @@ export class Organiser {
           }
         }));
       this.gqlErrors.setErrors(result.data.createOrUpdateClient.errors);
-      this.success = !!result.data.createOrUpdateClient.success;
-      this.loading = result.loading;
       this.error = result.error;
-      return this.success;
+      return !!result.data.createOrUpdateClient.success;
     } catch (error) {
       this.error = error;
       return false;

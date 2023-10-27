@@ -3,7 +3,7 @@ import {CsrfService} from './services/csrf/csrf.service';
 import {User} from "./models";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSidenav} from "@angular/material/sidenav";
-import {Constants} from "./constants";
+import {LinksConstants} from "./constants/links-constants";
 
 @Component({
   selector: 'app-root',
@@ -52,6 +52,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  protected readonly Constants = Constants;
+  protected readonly Constants = LinksConstants;
 }
 

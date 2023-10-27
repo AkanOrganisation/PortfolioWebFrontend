@@ -3,6 +3,8 @@ import {User} from "../../models";
 import {NgForm} from "@angular/forms";
 import {ClientType} from "../../types";
 import {getEmptyClient} from "../../constants/client.constants";
+import {ComponentState} from "../../constants";
+import {UserPermissions} from "../../constants/permissions.constants";
 
 @Component({
   selector: 'app-create-client',
@@ -11,9 +13,7 @@ import {getEmptyClient} from "../../constants/client.constants";
 })
 export class CreateClientComponent implements OnInit {
 
-  loading = true;
-  ready = false;
-  completed = false;
+  state = ComponentState.LOADING;
   error: any;
 
   clientInput: ClientType = getEmptyClient();
@@ -27,48 +27,46 @@ export class CreateClientComponent implements OnInit {
 
   async ngOnInit(): Promise<boolean> {
     if (!this.user.authenticated) {
-      this.loading = false;
-      this.completed = true;
+      this.state = ComponentState.COMPLETED;
       this.error = "You must login or create account first."
       return false;
-    } else if (this.user.isClient) {
-      this.loading = false;
-      this.completed = true;
+    } else if (this.user.permissions.includes(UserPermissions.CLIENT)) {
+      this.state = ComponentState.COMPLETED;
       this.error = "You already have a client account.";
       return false;
     } else {
-      this.ready = true;
-      this.loading = false;
+      this.state = ComponentState.READY;
       return true;
     }
 
   }
 
   async createClient(form: NgForm) {
-    this.loading = true;
-    this.user.gqlErrors.clearErrors();
+    this.state = ComponentState.PROCESSING;
+    this.user.client.gqlErrors.clearErrors();
     this.error = null;
-    this.completed = false;
     try {
-      this.completed = await this.user.client.createOrUpdateClient(this.clientInput);
-      if (!this.completed) {
+      const result = await this.user.client.createOrUpdateClient(this.clientInput);
+      if (!result) {
         form.control.setErrors({server: true})
         Object.keys(this.user.client?.gqlErrors.errorsByField).forEach((key) => {
-            form.controls[key].setErrors({server: true})
+            form.controls[key]?.setErrors({server: true})
           }
         )
-      }else {
-        this.user.isClient = true;
+        this.state = ComponentState.READY
+      } else {
+        this.user.permissions.push(UserPermissions.CLIENT);
         this.user.data.client = this.clientInput;
         this.clientInput = getEmptyClient();
+        this.state = ComponentState.COMPLETED;
       }
-      return this.completed
+      return result
     } catch (error) {
       this.error = error;
+      this.state = ComponentState.ERROR
       return false;
-    } finally {
-      this.loading = false;
     }
   }
 
+  protected readonly ComponentState = ComponentState;
 }

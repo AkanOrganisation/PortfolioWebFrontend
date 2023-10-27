@@ -5,7 +5,9 @@ export type UserType = {
   email?: string;
   password?: string;
   password2?: string;
+
   authenticated?: boolean;
+
   client?: ClientType;
   organiser?: OrganiserType;
 

@@ -4,6 +4,8 @@ import {getEmptyOrganiser} from "../../constants/organiser.constants";
 import {getEmptyContactPerson} from "../../constants/contact-person.constants";
 import {User} from "../../models";
 import {NgForm} from '@angular/forms';
+import {ComponentState} from "../../constants";
+import {UserPermissions} from "../../constants/permissions.constants";
 
 @Component({
   selector: 'app-create-organiser',
@@ -12,9 +14,7 @@ import {NgForm} from '@angular/forms';
 })
 export class CreateOrganiserComponent implements OnInit {
 
-  loading = true;
-  ready = false;
-  completed = false;
+  state = ComponentState.LOADING;
   error: any;
 
   organiserInput: OrganiserType = getEmptyOrganiser();
@@ -30,43 +30,46 @@ export class CreateOrganiserComponent implements OnInit {
   }
 
   async createOrganiser(form: NgForm) {
-    this.loading = true;
+    this.state = ComponentState.PROCESSING;
+    this.user.organiser.gqlErrors.clearErrors();
     this.error = null;
-    this.completed = false;
     try {
       this.organiserInput.contactPersons = this.contactPersonsInput;
-      this.completed = await this.user.organiser.createOrUpdateOrganiser(this.organiserInput);
-      if (this.completed) {
-        this.user.isOrganiser = true;
+      const result = await this.user.organiser.createOrUpdateOrganiser(this.organiserInput);
+      if (result) {
+        this.user.permissions.push(UserPermissions.ORGANISER);
         this.user.data.organiser = this.organiserInput;
         this.organiserInput = getEmptyOrganiser();
+        this.contactPersonsInput = [getEmptyContactPerson()];
+        this.state = ComponentState.COMPLETED;
       } else {
         this.handleErrorOnForm(form);
+        this.state = ComponentState.READY;
       }
+      return result;
     } catch (error) {
       this.error = error;
-    } finally {
-      this.loading = false;
+      this.state = ComponentState.ERROR;
+      return false;
     }
   }
 
   private checkUserStatus(): void {
-    this.loading = false;
     if (!this.user.authenticated) {
+      this.state = ComponentState.COMPLETED;
       this.error = "You must login or create an account first.";
-      this.completed = true;
-    } else if (this.user.isOrganiser) {
+    } else if (this.user.permissions.includes(UserPermissions.ORGANISER)) {
+      this.state = ComponentState.COMPLETED
       this.error = "You already have an organiser account.";
-      this.completed = true;
     } else {
-      this.ready = true;
+      this.state = ComponentState.READY;
     }
   }
 
   private handleErrorOnForm(form: NgForm): void {
     form.control.setErrors({server: true});
     Object.keys(this.user.organiser?.gqlErrors.errorsByField).forEach((key) => {
-        form.control.get(key)?.setErrors({server: true});
+        form.controls[key]?.setErrors({server: true});
       }
     )
   }
@@ -82,5 +85,6 @@ export class CreateOrganiserComponent implements OnInit {
   }
 
 
+  protected readonly ComponentState = ComponentState;
 }
 
