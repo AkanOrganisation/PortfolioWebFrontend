@@ -4,12 +4,17 @@ import {LoginUserComponent} from "./components/login-user/login-user.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {AuthGuard} from "./services/auth-guard/auth.guard";
 import {UserPermissions} from "./constants/permissions.constants";
+import {LogoutUserComponent} from "./components/logout-user/logout-user.component";
 
 
 export const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginUserComponent,
+  },
+  {
+    path: 'logout',
+    component: LogoutUserComponent,
   },
   {
     path: 'register',

@@ -1,0 +1,41 @@
+<div class="component-container">
+
+
+  <mat-spinner class="mat-progress-spinner"
+               *ngIf="state === ComponentState.LOADING; else logoutButton"></mat-spinner>
+
+  <ng-template #logoutButton>
+    <mat-card *ngIf="state === ComponentState.READY;else logoutDialog">
+      <button mat-raised-button color="primary" (click)="openDialog()">
+        <span>Logout</span>
+      </button>
+    </mat-card>
+  </ng-template>
+
+
+  <ng-template #logoutDialog>
+    <mat-card *ngIf="state === ComponentState.PROCESSING; else notLoggedIn">
+      <mat-card-title>Logout</mat-card-title>
+      <mat-card-content>
+        <p>Are you sure you want to logout?</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="logout()">
+          <span>Logout</span>
+        </button>
+        <button mat-raised-button color="warn" (click)="cancel()">
+          <span>Cancel</span>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-template>
+
+  <ng-template #notLoggedIn>
+    <mat-card>
+      <mat-card-content>
+        <p>You are not logged in.</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+
+</div>

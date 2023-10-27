@@ -31,6 +31,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {DashboardOrganiserComponent} from './components/dashboard-organiser/dashboard-organiser.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {appRoutes} from "./app.routes";
+import { LogoutUserComponent } from './components/logout-user/logout-user.component';
 
 
 
@@ -72,6 +73,7 @@ const FORMSMODULES = [
     DashboardClientComponent,
     DashboardOrganiserComponent,
     DashboardComponent,
+    LogoutUserComponent,
   ],
   imports: [
     BROWSERMODULES,
