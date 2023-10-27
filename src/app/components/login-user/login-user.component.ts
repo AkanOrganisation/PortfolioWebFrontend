@@ -30,7 +30,6 @@ export class LoginUserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.state = (this.user.authenticated) ? ComponentState.COMPLETED : ComponentState.READY;
     this.authStatusSubscription = this.user.authenticated$.subscribe((authenticated) => {
       this.state = (authenticated) ? ComponentState.COMPLETED : ComponentState.READY;
       if (authenticated) {
@@ -57,7 +56,6 @@ export class LoginUserComponent implements OnInit, OnDestroy {
         )
         this.state = ComponentState.READY;
       } else {
-        this.user.data.email = this.userInput.email;
         this.userInput = getEmptyUser();
         this.state = ComponentState.COMPLETED;
       }
