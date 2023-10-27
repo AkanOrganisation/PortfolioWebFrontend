@@ -12,49 +12,49 @@
           <!-- CompanyName -->
           <mat-form-field appearance="fill">
             <input type="text" matInput placeholder="Enter your Company Name" [(ngModel)]="organiserInput.companyName"
-                   name="organiser_company_name" required>
-            <mat-error *ngIf="organiserForm.controls?.['organiser_company_name']?.errors?.['required']">Company name is
+                   name="organiser_companyName" required>
+            <mat-error *ngIf="organiserForm.controls?.['organiser_companyName']?.errors?.['required']">Company name is
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('organiser_company_name')">{{ error }}</mat-error>
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('organiser_companyName')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- RegisterNumber -->
           <mat-form-field appearance="fill">
             <input type="text" matInput placeholder="Enter your Register Number"
                    [(ngModel)]="organiserInput.registerNumber"
-                   name="organiser_register_number" required>
-            <mat-error *ngIf="organiserForm.controls?.['organiser_register_number']?.errors?.['required']">Register
+                   name="organiser_registerNumber" required>
+            <mat-error *ngIf="organiserForm.controls?.['organiser_registerNumber']?.errors?.['required']">Register
               Number
               is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('organiser_register_number')">{{ error }}</mat-error>
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('organiser_registerNumber')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Address -->
-          <!-- StreetName -->
+          <!-- streetName -->
           <mat-form-field appearance="fill">
             <input type="text" matInput placeholder="Enter your Street Name"
                    [(ngModel)]="organiserInput.address.streetName"
-                   name="address_streetname" required>
-            <mat-error *ngIf="organiserForm.controls?.['address_streetname']?.errors?.['required']">Street name is
+                   name="address_streetName" required>
+            <mat-error *ngIf="organiserForm.controls?.['address_streetName']?.errors?.['required']">Street name is
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_streetname')">{{ error }}</mat-error>
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_streetName')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- StreetNumber -->
           <mat-form-field appearance="fill">
             <input type="text" matInput placeholder="Enter your Street Number"
-                   [(ngModel)]="organiserInput.address.streetNumber" name="address_streetnumber" required>
-            <mat-error *ngIf="organiserForm.controls?.['address_streetnumber']?.errors?.['required']">Street number is
+                   [(ngModel)]="organiserInput.address.streetNumber" name="address_streetNumber" required>
+            <mat-error *ngIf="organiserForm.controls?.['address_streetNumber']?.errors?.['required']">Street number is
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_streetnumber')">{{ error }}</mat-error>
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_streetNumber')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- City -->
@@ -80,11 +80,11 @@
           <!-- ZipCode -->
           <mat-form-field appearance="fill">
             <input type="text" matInput placeholder="Enter your Zipcode" [(ngModel)]="organiserInput.address.zipCode"
-                   name="address_zipcode" required>
-            <mat-error *ngIf="organiserForm.controls?.['address_zipcode']?.errors?.['required']">ZipCode is required.
+                   name="address_zipCode" required>
+            <mat-error *ngIf="organiserForm.controls?.['address_zipCode']?.errors?.['required']">ZipCode is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_zipCode')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- ContactPersons -->
@@ -159,7 +159,6 @@
       </mat-card-content>
     </mat-card>
   </ng-template>
-
 
 
 </div>
