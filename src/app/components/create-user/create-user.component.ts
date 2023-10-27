@@ -58,6 +58,7 @@ export class CreateUserComponent implements OnInit {
         this.state = ComponentState.READY
       } else {
         this.user.data.email = this.userInput.email;
+        this.user.data = this.user.data;
         this.userInput = getEmptyUser();
         this.state = ComponentState.COMPLETED
         this.navigateToChoice();

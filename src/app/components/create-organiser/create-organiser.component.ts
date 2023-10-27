@@ -49,7 +49,6 @@ export class CreateOrganiserComponent implements OnInit {
       } else {
         this.handleErrorsOnForm(form);
         this.state = ComponentState.READY;
-        console.log(123)
         return false;
       }
     } catch (error) {
