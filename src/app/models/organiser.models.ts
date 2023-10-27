@@ -36,9 +36,9 @@ export class Organiser {
             organiser
           }
         }));
-      this.gqlErrors.setErrors(result.data.createOrUpdateClient.errors);
+      this.gqlErrors.setErrors(result.data.createOrUpdateOrganiser.errors);
       this.error = result.error;
-      return !!result.data.createOrUpdateClient.success;
+      return !!result.data.createOrUpdateOrganiser.success;
     } catch (error) {
       this.error = error;
       return false;

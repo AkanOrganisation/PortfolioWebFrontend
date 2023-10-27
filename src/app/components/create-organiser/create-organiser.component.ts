@@ -45,11 +45,13 @@ export class CreateOrganiserComponent implements OnInit {
         this.contactPersonsInput = [getEmptyContactPerson()];
         this.state = ComponentState.COMPLETED;
         this.router.navigate(['/']);
+        return true;
       } else {
-        this.handleErrorOnForm(form);
+        this.handleErrorsOnForm(form);
         this.state = ComponentState.READY;
+        console.log(123)
+        return false;
       }
-      return result;
     } catch (error) {
       this.error = error;
       this.state = ComponentState.ERROR;
@@ -69,10 +71,10 @@ export class CreateOrganiserComponent implements OnInit {
     }
   }
 
-  private handleErrorOnForm(form: NgForm): void {
+  private handleErrorsOnForm(form: NgForm): void {
     form.control.setErrors({server: true});
     Object.keys(this.user.organiser?.gqlErrors.errorsByField).forEach((key) => {
-        form.controls[key]?.setErrors({server: true});
+      form.controls[key]?.setErrors({server: true});
       }
     )
   }
