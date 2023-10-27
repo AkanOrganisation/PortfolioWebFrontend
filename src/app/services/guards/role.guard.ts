@@ -8,7 +8,7 @@ import {UserPermissions} from "../../constants/permissions.constants";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard {
+export class RoleGuard {
   constructor(private user: User, private router: Router) {
   }
 
@@ -20,21 +20,14 @@ export class AuthGuard {
 
     if (requiredPermissions.length === 0) return true;  // no permissions required
 
-    if (!this.user.authenticated) {
-      this.router.navigate(['/login']);
-      return false;
-    }
-
     if (this.user.permissions.length === 1 && this.user.permissions.includes(UserPermissions.USER)) {
       this.router.navigate(['/register']); // didn't finish registration
       return false;
     }
 
-
     if (this.user.permissions.includes(UserPermissions.SUPERUSER)) {
       return true;  // superuser can access everything
     }
-
 
     if (requiredPermissions.some((permission) => this.user.permissions.includes(permission))) return true;
 

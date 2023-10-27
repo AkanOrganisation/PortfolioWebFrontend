@@ -2,9 +2,10 @@ import {Routes} from "@angular/router";
 import {CreateUserComponent} from "./components/create-user/create-user.component";
 import {LoginUserComponent} from "./components/login-user/login-user.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
-import {AuthGuard} from "./services/auth-guard/auth.guard";
+import {AuthGuard} from "./services/guards/auth.guard";
 import {UserPermissions} from "./constants/permissions.constants";
 import {LogoutUserComponent} from "./components/logout-user/logout-user.component";
+import {RoleGuard} from "./services/guards/role.guard";
 
 
 export const appRoutes: Routes = [
@@ -15,6 +16,7 @@ export const appRoutes: Routes = [
   {
     path: 'logout',
     component: LogoutUserComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'register',
@@ -23,13 +25,13 @@ export const appRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
     data: { permissions: [UserPermissions.CLIENT, UserPermissions.ORGANISER] },
   },
   // {
   //   path: 'events',
   //   component: EventsComponent,
-  //   canActivate: [AuthGuard],
+  //   canActivate: [AuthGuard, RoleGuard],
   //   data: { permissions: [userPermissions.CLIENT, userPermissions.ORGANISER] },
   // },
   {
