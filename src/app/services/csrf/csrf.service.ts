@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
-import {map, pipe, throwError, catchError} from 'rxjs';
-import {AppComponent} from '../../app.component';
+import {HttpClient} from '@angular/common/http';
 import {LinksConstants} from '../../constants/links-constants';
 import {CookieService} from 'ngx-cookie-service';
 
