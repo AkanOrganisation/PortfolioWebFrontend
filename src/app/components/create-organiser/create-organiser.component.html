@@ -1,11 +1,9 @@
 <div class="component-container">
-
   <!-- Display spinner if loading, otherwise display form -->
-  <mat-spinner *ngIf="ComponentState.LOADING; else createOrganiserForm"></mat-spinner>
-
+  <mat-spinner *ngIf="state === ComponentState.LOADING; else createOrganiserForm"></mat-spinner>
   <ng-template #createOrganiserForm>
 
-    <mat-card *ngIf="state != ComponentState.COMPLETED; else alreadyOrganiser">
+    <mat-card *ngIf="state !== ComponentState.COMPLETED;">
       <mat-card-content>
         <form #organiserForm="ngForm" (ngSubmit)="createOrganiser(organiserForm)">
           <mat-error
@@ -65,7 +63,8 @@
                    name="address_city" required>
             <mat-error *ngIf="organiserForm.controls?.['address_city']?.errors?.['required']">City is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
+            <mat-error
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Country -->
@@ -74,7 +73,8 @@
                    name="address_country" required>
             <mat-error *ngIf="organiserForm.controls?.['address_country']?.errors?.['required']">Country is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
+            <mat-error
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- ZipCode -->
@@ -83,7 +83,8 @@
                    name="address_zipcode" required>
             <mat-error *ngIf="organiserForm.controls?.['address_zipcode']?.errors?.['required']">ZipCode is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
+            <mat-error
+              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- ContactPersons -->
@@ -159,12 +160,6 @@
     </mat-card>
   </ng-template>
 
-  <ng-template #alreadyOrganiser>
-    <mat-card>
-      <mat-card-content>
-        <h1>You are already an organiser!</h1>
-      </mat-card-content>
-    </mat-card>
-  </ng-template>
+
 
 </div>
