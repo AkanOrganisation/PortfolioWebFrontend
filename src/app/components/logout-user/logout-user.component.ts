@@ -1,31 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {ComponentState} from "../../constants";
 import {User} from "../../models";
+import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-logout-user',
   templateUrl: './logout-user.component.html',
   styleUrls: ['./logout-user.component.css']
 })
-export class LogoutUserComponent implements OnInit{
+export class LogoutUserComponent implements OnInit {
 
   state = ComponentState.LOADING;
   error: any;
 
+  private authStatusSubscription!: Subscription;
+
   constructor(
     public user: User,
+    private router: Router,
   ) {
 
   }
 
   async ngOnInit() {
     this.user.gqlErrors.clearErrors()
-    if (!this.user.authenticated) {
-      this.state = ComponentState.COMPLETED;
-      this.error = "You are not logged in."
-    } else {
-      this.state = ComponentState.READY;
-    }
+    this.authStatusSubscription = this.user.authenticated$.subscribe((authenticated) => {
+      this.state = (authenticated) ? ComponentState.READY : ComponentState.COMPLETED;
+    });
   }
 
   async logout() {
@@ -52,7 +54,7 @@ export class LogoutUserComponent implements OnInit{
   protected readonly ComponentState = ComponentState;
 
   cancel() {
-    this.state = ComponentState.COMPLETED;
+    this.state = ComponentState.READY;
   }
 
   openDialog() {

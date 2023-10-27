@@ -5,7 +5,6 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSidenav} from "@angular/material/sidenav";
 import {LinksConstants} from "./constants/links-constants";
 import {ComponentState} from "./constants";
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,8 +13,6 @@ import {ComponentState} from "./constants";
 export class AppComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-
-  authenticated: boolean | undefined;
 
   state = ComponentState.LOADING;
   error: any;
@@ -30,7 +27,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.httpService.getAndSetCsrfToken().then(
       async () => {
-        this.authenticated = await this.user.isAuthenticated();
+        this.user.authenticated = await this.user.isAuthenticated();
         this.state = ComponentState.READY
       }).catch((error) => {
       this.error = error;

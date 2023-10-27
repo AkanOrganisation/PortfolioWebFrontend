@@ -5,6 +5,7 @@ import {ClientType} from "../../types";
 import {getEmptyClient} from "../../constants/client.constants";
 import {ComponentState} from "../../constants";
 import {UserPermissions} from "../../constants/permissions.constants";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-client',
@@ -20,6 +21,7 @@ export class CreateClientComponent implements OnInit {
 
   constructor(
     public user: User,
+    private router: Router,
   ) {
 
   }
@@ -59,6 +61,7 @@ export class CreateClientComponent implements OnInit {
         this.user.data.client = this.clientInput;
         this.clientInput = getEmptyClient();
         this.state = ComponentState.COMPLETED;
+        this.router.navigate(['/']);
       }
       return result
     } catch (error) {

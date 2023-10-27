@@ -5,6 +5,8 @@ import {PasswordService} from "../../services";
 import {UserType} from "../../types";
 import {getEmptyUser} from "../../constants/user.constants";
 import {ComponentState} from "../../constants/states.components";
+import {UserPermissions} from "../../constants/permissions.constants";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-user',
@@ -15,12 +17,14 @@ export class CreateUserComponent implements OnInit {
 
   userInput: UserType = getEmptyUser();
 
-  state= ComponentState.LOADING;
+  state = ComponentState.LOADING;
+  step = Step.CREATE_USER;
   error: any;
 
   constructor(
     public user: User,
     private passwordService: PasswordService,
+    private router: Router,
   ) {
   }
 
@@ -28,7 +32,12 @@ export class CreateUserComponent implements OnInit {
     this.user.gqlErrors.clearErrors()
     if (this.user.authenticated) {
       this.state = ComponentState.COMPLETED;
-      this.error = "You already have an account. Please login instead."
+      if (this.user.permissions.includes(UserPermissions.CLIENT || UserPermissions.ORGANISER)) {
+        this.step = Step.COMPLETED;
+        this.router.navigate(['/']);
+      } else {
+        this.step = Step.CHOICE;
+      }
     } else {
       this.state = ComponentState.READY;
     }
@@ -51,6 +60,7 @@ export class CreateUserComponent implements OnInit {
         this.user.data.email = this.userInput.email;
         this.userInput = getEmptyUser();
         this.state = ComponentState.COMPLETED
+        this.navigateToChoice();
       }
       return result
     } catch (error) {
@@ -67,4 +77,28 @@ export class CreateUserComponent implements OnInit {
 
 
   protected readonly ComponentState = ComponentState;
+
+  navigateToCreateClient() {
+    this.step = Step.CREATE_CLIENT;
+  }
+
+  navigateToCreateOrganizer() {
+    this.step = Step.CREATE_ORGANISER;
+  }
+
+  navigateToChoice() {
+    this.step = Step.CHOICE;
+  }
+
+
+  protected readonly Step = Step;
+}
+
+
+enum Step {
+  CREATE_USER = 1,
+  CHOICE = 2,
+  CREATE_ORGANISER = 3,
+  CREATE_CLIENT = 4,
+  COMPLETED = 5,
 }

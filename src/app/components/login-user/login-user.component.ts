@@ -1,32 +1,46 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from "../../models";
 import {NgForm} from "@angular/forms";
 import {getEmptyUser} from "../../constants/user.constants";
 import {UserType} from "../../types";
 import {ComponentState} from "../../constants/states.components";
+import {Subscription} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-user',
   templateUrl: './login-user.component.html',
   styleUrls: ['./login-user.component.css']
 })
-export class LoginUserComponent implements OnInit {
-
-
+export class LoginUserComponent implements OnInit, OnDestroy {
 
   userInput: UserType = getEmptyUser();
 
   state = ComponentState.LOADING;
   error: any;
 
+
+  private authStatusSubscription!: Subscription;
+
   constructor(
     public user: User,
+    private router: Router,
   ) {
 
   }
 
-  async ngOnInit() {
-    this.state = (this.user.authenticated) ? ComponentState.COMPLETED : ComponentState.READY;
+  ngOnInit() {
+    // this.state = (this.user.authenticated) ? ComponentState.COMPLETED : ComponentState.READY;
+    this.authStatusSubscription = this.user.authenticated$.subscribe((authenticated) => {
+      this.state = (authenticated) ? ComponentState.COMPLETED : ComponentState.READY;
+      if (authenticated) {
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.authStatusSubscription.unsubscribe();
   }
 
 

@@ -87,6 +87,7 @@ const FORMSMODULES = [
     {provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true},
     CookieService,
     User,
+
   ],
   bootstrap: [AppComponent]
 })

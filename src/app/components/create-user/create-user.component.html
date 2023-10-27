@@ -69,11 +69,39 @@
   </ng-template>
 
   <ng-template #alreadyUser>
-    <mat-card>
+    <mat-card *ngIf="step === Step.CHOICE; else createClientOrOrganiser">
       <mat-card-content>
-        <h1>You already have a user</h1>
+        <h1>Choose Your Role</h1>
+        <p>Please select if you want to be a client or an organizer.</p>
+
+        <!-- Client Option -->
+        <mat-card class="choice-card" (click)="navigateToCreateClient()">
+          <mat-card-content>
+            <h2>Client</h2>
+            <p>Choose this if you want to request services.</p>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Organizer Option -->
+        <mat-card class="choice-card" (click)="navigateToCreateOrganizer()">
+          <mat-card-content>
+            <h2>Organizer</h2>
+            <p>Choose this if you want to offer services.</p>
+          </mat-card-content>
+        </mat-card>
+
       </mat-card-content>
     </mat-card>
   </ng-template>
+
+  <ng-template #createClientOrOrganiser>
+    <mat-card *ngIf="step === Step.CREATE_CLIENT">
+      <app-create-client></app-create-client>
+    </mat-card>
+    <mat-card *ngIf="step === Step.CREATE_ORGANISER">
+      <app-create-organiser></app-create-organiser>
+    </mat-card>
+  </ng-template>
+
 
 </div>

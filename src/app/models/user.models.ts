@@ -1,7 +1,7 @@
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services";
 import {Injectable} from "@angular/core";
-import {firstValueFrom} from "rxjs";
+import {BehaviorSubject, firstValueFrom} from "rxjs";
 import {Client} from "./client.models";
 import {UserType} from "../types";
 import {Organiser} from "./organiser.models";
@@ -15,12 +15,24 @@ export class User {
 
   data: UserType = {};
 
-  authenticated: boolean = false;
+  private _authenticated = new BehaviorSubject<boolean>(false);
+
+  get authenticated() {
+    return this._authenticated.getValue();
+  }
+  get authenticated$() {
+    return this._authenticated.asObservable();
+  }
+  set authenticated(value: boolean) {
+    this._authenticated.next(value);
+  }
+
+
+  permissions: UserPermissions[] = [];
+  error: any;
+
   client: Client = new Client(this.apollo, this.gqlErrors);
   organiser: Organiser = new Organiser(this.apollo, this.gqlErrors);
-
-  error: any;
-  permissions: UserPermissions[] = [];
 
   constructor(
     private apollo: Apollo,

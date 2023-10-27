@@ -6,6 +6,7 @@ import {User} from "../../models";
 import {NgForm} from '@angular/forms';
 import {ComponentState} from "../../constants";
 import {UserPermissions} from "../../constants/permissions.constants";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-organiser',
@@ -22,6 +23,7 @@ export class CreateOrganiserComponent implements OnInit {
 
   constructor(
     public user: User,
+    private router: Router,
   ) {
   }
 
@@ -42,6 +44,7 @@ export class CreateOrganiserComponent implements OnInit {
         this.organiserInput = getEmptyOrganiser();
         this.contactPersonsInput = [getEmptyContactPerson()];
         this.state = ComponentState.COMPLETED;
+        this.router.navigate(['/']);
       } else {
         this.handleErrorOnForm(form);
         this.state = ComponentState.READY;

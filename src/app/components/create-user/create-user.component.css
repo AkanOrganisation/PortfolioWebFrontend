@@ -1,0 +1,9 @@
+.choice-card {
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.2s;
+}
+
+.choice-card:hover {
+  transform: scale(1.05);
+}
