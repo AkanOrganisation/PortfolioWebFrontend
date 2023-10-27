@@ -4,6 +4,7 @@ import {User} from "./models";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSidenav} from "@angular/material/sidenav";
 import {LinksConstants} from "./constants/links-constants";
+import {ComponentState} from "./constants";
 
 @Component({
   selector: 'app-root',
@@ -16,8 +17,7 @@ export class AppComponent implements OnInit {
 
   authenticated: boolean | undefined;
 
-  loading = true;
-  ready = false;
+  state = ComponentState.LOADING;
   error: any;
 
   constructor(
@@ -31,13 +31,11 @@ export class AppComponent implements OnInit {
     this.httpService.getAndSetCsrfToken().then(
       async () => {
         this.authenticated = await this.user.isAuthenticated();
-        this.ready = true;
+        this.state = ComponentState.READY
       }).catch((error) => {
       this.error = error;
-      this.ready = false;
-    }).finally(() => {
-      this.loading = false;
-    });
+      this.state = ComponentState.ERROR
+    })
   }
 
   ngAfterViewInit() {
@@ -53,5 +51,6 @@ export class AppComponent implements OnInit {
   }
 
   protected readonly Constants = LinksConstants;
+  protected readonly ComponentState = ComponentState;
 }
 

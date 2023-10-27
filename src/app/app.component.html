@@ -1,11 +1,18 @@
 <!-- Show spinner when loading -->
-<mat-spinner *ngIf="loading; else content"></mat-spinner>
+<mat-spinner *ngIf="state === ComponentState.LOADING; else content"></mat-spinner>
 
 <ng-template #content>
+  <div class="component-container" *ngIf="state === ComponentState.READY; else error">
+
+    <router-outlet></router-outlet>
+
+  </div>
+</ng-template>
+
+<ng-template #error>
   <div class="component-container">
-
-  <router-outlet></router-outlet>
-
+    <h1>Oops! Something went wrong.</h1>
+    <p>Try refreshing the page or contact the administrator if the problem persists.</p>
   </div>
 </ng-template>
 
