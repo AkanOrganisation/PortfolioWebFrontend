@@ -43,6 +43,7 @@ export class LogoutUserComponent implements OnInit {
         this.state = ComponentState.READY
       } else {
         this.state = ComponentState.COMPLETED
+        this.router.navigate(['/login'], );
       }
       return result
     } catch (error) {

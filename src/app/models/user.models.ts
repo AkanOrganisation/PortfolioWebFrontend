@@ -44,12 +44,11 @@ export class UserModel {
             }
           `,
         }));
-      this.user.authenticated = !result.data.userLoginOrOut.success || this.user.authenticated;
-      if (!this.user.authenticated) {
+      if (result.data.userLoginOrOut.success) {
         this.user.logout();
       }
       this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
-      return this.user.authenticated;
+      return result.data.userLoginOrOut.success;
     } catch (error) {
       return false;
     }
