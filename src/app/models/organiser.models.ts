@@ -2,8 +2,11 @@ import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {firstValueFrom} from "rxjs";
 import {OrganiserType} from "../types";
+import {Injectable} from "@angular/core";
 
-
+@Injectable({
+  providedIn: 'root',
+})
 export class OrganiserModel {
 
   error: any;
