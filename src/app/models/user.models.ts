@@ -1,7 +1,7 @@
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services";
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, firstValueFrom} from "rxjs";
+import {BehaviorSubject, firstValueFrom, Observable} from "rxjs";
 import {Client} from "./client.models";
 import {UserType} from "../types";
 import {Organiser} from "./organiser.models";
@@ -13,16 +13,31 @@ import {UserPermissions} from "../constants/permissions.constants";
 })
 export class User {
 
-  data: UserType = {};
+  private _data: BehaviorSubject<UserType> = new BehaviorSubject<UserType>({} as UserType);
+
+  get data() {
+    return this._data.getValue();
+  }
+
+  get data$() {
+    return this._data.asObservable();
+  }
+
+  set data(value: UserType) {
+    this._data.next(value);
+  }
+
 
   private _authenticated = new BehaviorSubject<boolean>(false);
 
   get authenticated() {
     return this._authenticated.getValue();
   }
+
   get authenticated$() {
     return this._authenticated.asObservable();
   }
+
   set authenticated(value: boolean) {
     this._authenticated.next(value);
   }
@@ -38,6 +53,15 @@ export class User {
     private apollo: Apollo,
     public gqlErrors: GraphQLErrorsService,
   ) {
+    const initialData = localStorage.getItem('userData');
+    ////////////////////////////////////////////////////////////////FIX THIS
+    if (initialData) {
+      this._data.next(JSON.parse(initialData));
+      this.permissions = this.data.permissions || [];
+    }
+    this.data$.subscribe((data) => {
+      localStorage.setItem('userData', JSON.stringify(data));
+    });
   }
 
   async logout() {
@@ -97,9 +121,8 @@ export class User {
       this.authenticated = !!result.data.userLoginOrOut.success;
       if (this.authenticated) {
         this.data.email = user.email;
-        this.permissions.push(UserPermissions.USER);
-        result.data.userLoginOrOut.isClient ? this.permissions.push(UserPermissions.CLIENT) : null;
-        result.data.userLoginOrOut.isOrganiser ? this.permissions.push(UserPermissions.ORGANISER) : null;
+        result.data.userLoginOrOut.isClient ? this.addPermission(UserPermissions.CLIENT) : null;
+        result.data.userLoginOrOut.isOrganiser ? this.addPermission(UserPermissions.ORGANISER) : null;
       }
       this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
       this.error = result.error;
@@ -123,7 +146,7 @@ export class User {
           `,
         }).valueChanges
       );
-      this.authenticated = !!(result.data.isAuthenticated);
+      this.authenticated = result.data.isAuthenticated;
       this.error = result.error;
       return this.authenticated;
     } catch
@@ -172,15 +195,19 @@ export class User {
       this.error = result.error;
       if (this.authenticated) {
         this.data.email = user.email;
-        if (createNewUser) {
-          this.permissions = [UserPermissions.USER];
-        }
       }
       return true;
     } catch
       (error) {
       this.error = error;
       return false;
+    }
+  }
+
+  addPermission(permission: UserPermissions) {
+    if (!this.permissions.includes(permission)) {
+      this.permissions.push(permission);
+      this.data.permissions = this.permissions;
     }
   }
 }

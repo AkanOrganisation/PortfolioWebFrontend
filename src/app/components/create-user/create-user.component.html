@@ -5,7 +5,7 @@
 
   <ng-template #createUserForm>
 
-    <mat-card *ngIf="state !== ComponentState.COMPLETED; else alreadyUser">
+    <mat-card *ngIf="state !== ComponentState.COMPLETED && step === Step.CREATE_USER; else roleChoice">
       <mat-card-content>
         <form #userForm="ngForm" (ngSubmit)="createUser(userForm)">
           <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
@@ -68,8 +68,8 @@
     </mat-card>
   </ng-template>
 
-  <ng-template #alreadyUser>
-    <mat-card *ngIf="step === Step.CHOICE; else createClientOrOrganiser">
+  <ng-template #roleChoice>
+    <mat-card *ngIf="state !== ComponentState.COMPLETED && step === Step.CHOICE; else createClientOrOrganiser">
       <mat-card-content>
         <h1>Choose Your Role</h1>
         <p>Please select if you want to be a client or an organizer.</p>
@@ -95,10 +95,10 @@
   </ng-template>
 
   <ng-template #createClientOrOrganiser>
-    <mat-card *ngIf="step === Step.CREATE_CLIENT">
+    <mat-card *ngIf="state !== ComponentState.COMPLETED && step === Step.CREATE_CLIENT">
       <app-create-client></app-create-client>
     </mat-card>
-    <mat-card *ngIf="step === Step.CREATE_ORGANISER">
+    <mat-card *ngIf="state !== ComponentState.COMPLETED && step === Step.CREATE_ORGANISER">
       <app-create-organiser></app-create-organiser>
     </mat-card>
   </ng-template>

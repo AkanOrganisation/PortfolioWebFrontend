@@ -57,7 +57,7 @@ export class CreateClientComponent implements OnInit {
         )
         this.state = ComponentState.READY
       } else {
-        this.user.permissions.push(UserPermissions.CLIENT);
+        this.user.addPermission(UserPermissions.CLIENT);
         this.user.data.client = this.clientInput;
         this.clientInput = getEmptyClient();
         this.state = ComponentState.COMPLETED;

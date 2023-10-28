@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -29,11 +29,10 @@ import {CreateOrganiserComponent} from './components/create-organiser/create-org
 import {DashboardClientComponent} from './components/dashboard-client/dashboard-client.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {DashboardOrganiserComponent} from './components/dashboard-organiser/dashboard-organiser.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {appRoutes} from "./app.routes";
-import { LogoutUserComponent } from './components/logout-user/logout-user.component';
-
-
+import {LogoutUserComponent} from './components/logout-user/logout-user.component';
+import {AppInitializerService} from "./services/initializer/app.initializer";
 
 
 const MATERIALMODULES = [
@@ -85,9 +84,14 @@ const FORMSMODULES = [
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true},
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (appInitializer: AppInitializerService) => () => appInitializer.init(),
+      deps: [AppInitializerService],
+      multi: true
+    },
     CookieService,
     User,
-
   ],
   bootstrap: [AppComponent]
 })

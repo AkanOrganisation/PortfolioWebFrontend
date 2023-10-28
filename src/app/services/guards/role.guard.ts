@@ -20,7 +20,7 @@ export class RoleGuard {
 
     if (requiredPermissions.length === 0) return true;  // no permissions required
 
-    if (this.user.permissions.length === 1 && this.user.permissions.includes(UserPermissions.USER)) {
+    if (this.user.permissions.length === 0) {
       this.router.navigate(['/register']); // didn't finish registration
       return false;
     }

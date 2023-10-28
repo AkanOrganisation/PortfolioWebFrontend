@@ -5,6 +5,9 @@ import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSidenav} from "@angular/material/sidenav";
 import {LinksConstants} from "./constants/links-constants";
 import {ComponentState} from "./constants";
+import {DEBUG} from "@angular/compiler-cli/src/ngtsc/logging/src/console_logger";
+import {AppInitializerService} from "./services/initializer/app.initializer";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,18 +24,26 @@ export class AppComponent implements OnInit {
     private httpService: CsrfService,
     public user: User,
     private observer: BreakpointObserver,
+    private appInitializer: AppInitializerService,
   ) {
   }
 
-  async ngOnInit() {
-    this.httpService.getAndSetCsrfToken().then(
-      async () => {
-        this.user.authenticated = await this.user.isAuthenticated();
-        this.state = ComponentState.READY
-      }).catch((error) => {
-      this.error = error;
-      this.state = ComponentState.ERROR
-    })
+  ngOnInit() {
+    this.appInitializer.initStatus.subscribe((status) => {
+      if (status) {
+        this.state = ComponentState.READY;
+      } else {
+        this.state = ComponentState.ERROR;
+      }
+    });
+    // await this.httpService.getAndSetCsrfToken().then(
+    //   async () => {
+    //     this.user.authenticated = await this.user.isAuthenticated();
+    //     this.state = ComponentState.READY
+    //   }).catch((error) => {
+    //   this.error = error;
+    //   this.state = ComponentState.ERROR
+    // })
   }
 
   ngAfterViewInit() {

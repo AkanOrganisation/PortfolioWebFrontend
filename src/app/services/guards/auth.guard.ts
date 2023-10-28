@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot} from '@angul
 import {User} from 'src/app/models';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,10 @@ export class AuthGuard {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) => {
-
-
     if (!this.user.authenticated) {
       this.router.navigate(['/login'])
       return false
     }
-
     return true
-
   };
 }

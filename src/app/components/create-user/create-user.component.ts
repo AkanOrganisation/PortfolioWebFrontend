@@ -31,11 +31,12 @@ export class CreateUserComponent implements OnInit {
   async ngOnInit() {
     this.user.gqlErrors.clearErrors()
     if (this.user.authenticated) {
-      this.state = ComponentState.COMPLETED;
       if (this.user.permissions.includes(UserPermissions.CLIENT || UserPermissions.ORGANISER)) {
         this.step = Step.COMPLETED;
+        this.state = ComponentState.COMPLETED;
         this.router.navigate(['/']);
       } else {
+        this.state = ComponentState.READY;
         this.step = Step.CHOICE;
       }
     } else {
