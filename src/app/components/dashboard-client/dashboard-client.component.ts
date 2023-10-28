@@ -43,5 +43,5 @@ export class DashboardClientComponent implements OnInit{
     });
   }
 
-  protected readonly Constants = LinksConstants;
+  protected readonly LinksConstants = LinksConstants;
 }

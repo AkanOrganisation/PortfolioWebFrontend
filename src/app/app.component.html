@@ -1,12 +1,12 @@
 <!-- Show spinner when loading -->
-<mat-spinner *ngIf="state === ComponentState.LOADING; else content"></mat-spinner>
+<mat-spinner *ngIf="state === ComponentState.LOADING; else root"></mat-spinner>
 
-<ng-template #content>
-  <div class="component-container" *ngIf="state === ComponentState.READY; else error">
+<ng-template #root>
+  <ng-container *ngIf="state !== ComponentState.ERROR; else error">
 
     <router-outlet></router-outlet>
 
-  </div>
+  </ng-container>
 </ng-template>
 
 <ng-template #error>
