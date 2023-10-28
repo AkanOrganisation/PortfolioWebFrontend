@@ -1,9 +1,8 @@
 // role.guard.ts
 import {ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot} from '@angular/router';
-import {UserModel} from 'src/app/models';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {UserPermissions} from "../../constants/permissions.constants";
+import {UserPermissions} from "../../constants";
 import {UserService} from "../user/user.service";
 
 @Injectable({
@@ -26,11 +25,11 @@ export class RoleGuard {
       return false;
     }
 
-    if (this.user.permissions.includes(UserPermissions.SUPERUSER)) {
+    if (this.user.hasPermission(UserPermissions.SUPERUSER)) {
       return true;  // superuser can access everything
     }
 
-    if (requiredPermissions.some((permission) => this.user.permissions.includes(permission))) return true;
+    if (requiredPermissions.some((permission) => this.user.hasPermission(permission))) return true;
 
     this.router.navigate(['/']);
     return false;

@@ -34,7 +34,7 @@ export class CreateClientComponent implements OnInit {
       this.state = ComponentState.COMPLETED;
       this.error = "You must login or create account first."
       return false;
-    } else if (this.user.permissions.includes(UserPermissions.CLIENT)) {
+    } else if (this.user.hasPermission(UserPermissions.CLIENT)) {
       this.state = ComponentState.COMPLETED;
       this.error = "You already have a client account.";
       return false;

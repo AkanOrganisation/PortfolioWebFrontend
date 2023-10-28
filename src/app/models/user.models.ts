@@ -46,8 +46,7 @@ export class UserModel {
         }));
       this.user.authenticated = !result.data.userLoginOrOut.success || this.user.authenticated;
       if (!this.user.authenticated) {
-        this.user.data.email = "";
-        this.user.permissions = [];
+        this.user.logout();
       }
       this.gqlErrors.setErrors(result.data.userLoginOrOut.errors);
       return this.user.authenticated;

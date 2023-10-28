@@ -14,7 +14,10 @@ export class UserService {
     const initialData = localStorage.getItem(LocalStorageConstants.USER_DATA);
     if (initialData) {
       this._data.next(JSON.parse(initialData));
-      this.permissions = this.data.permissions || this.permissions;
+      this._permissions = this.data.permissions || [];
+    }
+    if (this.hasNoPermissions) {
+      this.logout();
     }
     this.data$.subscribe((data) => {
       localStorage.setItem(LocalStorageConstants.USER_DATA, JSON.stringify(data));
@@ -51,13 +54,38 @@ export class UserService {
   }
 
 
-  permissions: UserPermissions[] = [];
+  private _permissions: UserPermissions[] = [];
 
   addPermission(permission: UserPermissions) {
-    if (!this.permissions.includes(permission)) {
-      this.permissions.push(permission);
-      this.data.permissions = this.permissions;
+    if (!this._permissions.includes(permission)) {
+      this._permissions.push(permission);
+      this.data.permissions = this._permissions;
     }
+  }
+
+  removePermission(permission: UserPermissions) {
+    if (this._permissions.includes(permission)) {
+      this._permissions = this._permissions.filter((p) => p !== permission);
+      this.data.permissions = this._permissions;
+    }
+  }
+
+  hasPermission(permission: UserPermissions) {
+    return this._permissions.includes(permission);
+  }
+
+  get permissions(): UserPermissions[] {
+    return this._permissions.slice();  // return a copy to ensure immutability
+  }
+  get hasNoPermissions() {
+    return this._permissions.length === 0;
+  }
+
+
+  logout() {
+    this.authenticated = false;
+    this.data = {} as UserType;
+    this._permissions = [];
   }
 
 

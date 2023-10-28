@@ -65,7 +65,7 @@ export class CreateOrganiserComponent implements OnInit {
     if (!this.user.authenticated) {
       this.state = ComponentState.COMPLETED;
       this.error = "You must login or create an account first.";
-    } else if (this.user.permissions.includes(UserPermissions.ORGANISER)) {
+    } else if (this.user.hasPermission(UserPermissions.ORGANISER)) {
       this.state = ComponentState.COMPLETED
       this.error = "You already have an organiser account.";
     } else {
