@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {UserType} from "../../types";
-import {UserPermissions} from "../../constants/permissions.constants";
+import {UserPermissions} from "../../constants";
+import {LocalStorageConstants} from "../../constants/localstorage.constants";
 
 
 @Injectable({
@@ -10,13 +11,13 @@ import {UserPermissions} from "../../constants/permissions.constants";
 export class UserService {
 
   constructor() {
-    const initialData = localStorage.getItem('userData');
+    const initialData = localStorage.getItem(LocalStorageConstants.USER_DATA);
     if (initialData) {
       this._data.next(JSON.parse(initialData));
       this.permissions = this.data.permissions || this.permissions;
     }
     this.data$.subscribe((data) => {
-      localStorage.setItem('userData', JSON.stringify(data));
+      localStorage.setItem(LocalStorageConstants.USER_DATA, JSON.stringify(data));
     });
   }
 
