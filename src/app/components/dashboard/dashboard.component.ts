@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {UserService} from "../../services";
+import {UserPermissions} from "../../constants";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
+  constructor(
+   public user : UserService
+  ) {
+  }
+
+  protected readonly UserPermissions = UserPermissions;
 }

@@ -1,1 +1,5 @@
-<p>dashboard works!</p>
+<!-- Check user permission for client -->
+<app-dashboard-client *ngIf="user.hasPermission(UserPermissions.CLIENT)"></app-dashboard-client>
+
+<!-- Check user permission for organiser -->
+<app-dashboard-organiser *ngIf="user.hasPermission(UserPermissions.ORGANISER)"></app-dashboard-organiser>
