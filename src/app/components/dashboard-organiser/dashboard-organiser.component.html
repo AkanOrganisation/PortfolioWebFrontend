@@ -13,18 +13,18 @@
       <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
     </button>
     <span class="spacer"></span>
+    <app-logout-user></app-logout-user>
     <span id="titleOfProject">{{LinksConstants.TitleOfProject}}
       <mat-icon>events</mat-icon></span>
 
   </mat-toolbar>
 
   <mat-sidenav-container>
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-      TODO: Here will be search form
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z16">
+      <app-events-filter></app-events-filter>
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="content mat-elevation-z8">
-      </div>
+      <app-events-list></app-events-list>
     </mat-sidenav-content>
 
   </mat-sidenav-container>
