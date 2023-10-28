@@ -15,27 +15,3 @@
     <p>Try refreshing the page or contact the administrator if the problem persists.</p>
   </div>
 </ng-template>
-
-
-<!--
-<ng-template #content>
-
-  &lt;!&ndash; Show auth component when not authenticated &ndash;&gt;
-  <app-login-user *ngIf="!user.authenticated; else authenticatedContent"></app-login-user>
-
-  <ng-template #authenticatedContent>
-    &lt;!&ndash; Show client dashboard if user is a client &ndash;&gt;
-    <app-dashboard-client *ngIf="user.isClient; else checkOrganiser"></app-dashboard-client>
-
-    <ng-template #checkOrganiser>
-      &lt;!&ndash; Show organiser dashboard if user is an organiser &ndash;&gt;
-      <app-dashboard-organiser *ngIf="user.isOrganiser; else defaultAuth"></app-dashboard-organiser>
-
-      <ng-template #defaultAuth>
-        &lt;!&ndash; Show auth component if user is neither a client nor an organiser &ndash;&gt;
-        <app-login-user></app-login-user>
-      </ng-template>
-    </ng-template>
-  </ng-template>
-</ng-template>
--->
