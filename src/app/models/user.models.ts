@@ -1,7 +1,7 @@
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService, UserService} from "../services";
 import {Injectable} from "@angular/core";
-import { firstValueFrom, Observable} from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 import {ClientModel} from "./client.models";
 import {UserType} from "../types";
 import {OrganiserModel} from "./organiser.models";
@@ -95,10 +95,10 @@ export class UserModel {
   }
 
   async isAuthenticated() {
-    if (!this.user.authenticated) {
-      // return false if no localStorage data available
-      return false;
-    }
+    // if (!this.user.authenticated) {
+    //   // return false if no localStorage data available
+    //   return false;
+    // }
     try {
       const result
       :
@@ -159,7 +159,7 @@ export class UserModel {
       this.gqlErrors.setErrors(result.data.createOrUpdateUser.errors);
       this.error = result.error;
       if (this.user.authenticated) {
-        this.user.data.email = user.email;
+        this.user.updateData(user, createNewUser);
       }
       return this.user.authenticated;
     } catch

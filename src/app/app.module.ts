@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {GraphQLModule} from './services/graphql/graphql.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {CsrfInterceptor} from "./services";
+import {CsrfInterceptor, UserService} from "./services";
 import {CookieService} from 'ngx-cookie-service';
 import {UserModel} from "./models";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -33,6 +33,7 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {appRoutes} from "./app.routes";
 import {LogoutUserComponent} from './components/logout-user/logout-user.component';
 import {AppInitializerService} from "./services/initializer/app.initializer";
+import {resolve} from "@angular/compiler-cli";
 
 
 const MATERIALMODULES = [
@@ -84,6 +85,17 @@ const FORMSMODULES = [
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true},
+    UserService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (userService: UserService) => () => {
+        userService;
+        return true;
+      },
+      deps: [UserService],
+      multi: true
+    },
+    AppInitializerService,
     {
       provide: APP_INITIALIZER,
       useFactory: (appInitializer: AppInitializerService) => () => appInitializer.init(),

@@ -38,7 +38,7 @@ export class CreateUserComponent implements OnInit {
         this.router.navigate(['/']);
       } else {
         this.state = ComponentState.READY;
-        this.step = Step.CHOICE;
+        this.navigateToChoice();
       }
     } else {
       this.state = ComponentState.READY;
@@ -57,18 +57,14 @@ export class CreateUserComponent implements OnInit {
         Object.keys(this.userModel.gqlErrors.errorsByField).forEach((key) => {
           form.controls[key]?.setErrors({server: true})
         })
-        this.state = ComponentState.READY
       } else {
-        this.user.data.email = this.userInput.email;
         this.userInput = getEmptyUser();
-        this.state = ComponentState.COMPLETED
         this.navigateToChoice();
       }
-      return result
+      this.state = ComponentState.READY;
     } catch (error) {
       this.error = error;
       this.state = ComponentState.ERROR
-      return false;
     }
   }
 

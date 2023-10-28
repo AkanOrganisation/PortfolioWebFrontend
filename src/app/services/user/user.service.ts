@@ -93,5 +93,14 @@ export class UserService {
     this._permissions = [];
   }
 
+  updateData(user: UserType, createNewUser: boolean) {
+    user.password = user.password2 = "";
+    if (createNewUser) {
+      user.authenticated = true;
+      this.data = user;
+    } else {
+      this.data = {...this.data, ...user};
+    }
 
+  }
 }

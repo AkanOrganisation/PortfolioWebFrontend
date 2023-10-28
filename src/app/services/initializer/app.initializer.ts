@@ -13,6 +13,7 @@ export class AppInitializerService {
 
   init(): Promise<any> {
     return new Promise((resolve, reject) => {
+
       this.httpService.getAndSetCsrfToken().then(async () => {
         this.user.authenticated = await this.userModel.isAuthenticated();
         this.initStatus.next(true);
