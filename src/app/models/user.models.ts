@@ -161,7 +161,7 @@ export class UserModel {
       if (this.user.authenticated) {
         this.user.data.email = user.email;
       }
-      return true;
+      return this.user.authenticated;
     } catch
       (error) {
       this.error = error;
