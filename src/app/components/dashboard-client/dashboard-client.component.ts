@@ -28,9 +28,6 @@ export class DashboardClientComponent implements OnInit{
 
   async ngOnInit() {
     this.ready = this.user.authenticated;
-    if (!this.ready) {
-      console.log("Not authenticated");
-    }
     this.loading = false;
   }
 

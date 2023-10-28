@@ -50,7 +50,9 @@ export class UserService {
   }
 
   set authenticated(value: boolean) {
-    this._authenticated.next(value);
+    const newData = {...this.data, authenticated: value}; // create a copy of current data with updated authenticated value
+    this.data = newData; // use the setter to update the data and trigger BehaviorSubject
+    this._authenticated.next(value); // update the authenticated BehaviorSubject
   }
 
 
@@ -58,15 +60,17 @@ export class UserService {
 
   addPermission(permission: UserPermissions) {
     if (!this._permissions.includes(permission)) {
-      this._permissions.push(permission);
-      this.data.permissions = this._permissions;
+      const updatedPermissions = [...this._permissions, permission];
+      this._permissions = updatedPermissions;
+      this.data = {...this.data, permissions: updatedPermissions};
     }
   }
 
   removePermission(permission: UserPermissions) {
     if (this._permissions.includes(permission)) {
-      this._permissions = this._permissions.filter((p) => p !== permission);
-      this.data.permissions = this._permissions;
+      const updatedPermissions = this._permissions.filter((p) => p !== permission);
+      this._permissions = updatedPermissions;
+      this.data = {...this.data, permissions: updatedPermissions};
     }
   }
 
@@ -77,6 +81,7 @@ export class UserService {
   get permissions(): UserPermissions[] {
     return this._permissions.slice();  // return a copy to ensure immutability
   }
+
   get hasNoPermissions() {
     return this._permissions.length === 0;
   }

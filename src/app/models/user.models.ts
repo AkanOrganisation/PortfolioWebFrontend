@@ -95,6 +95,10 @@ export class UserModel {
   }
 
   async isAuthenticated() {
+    if (!this.user.authenticated) {
+      // return false if no localStorage data available
+      return false;
+    }
     try {
       const result
       :

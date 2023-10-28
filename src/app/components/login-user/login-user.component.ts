@@ -60,6 +60,7 @@ export class LoginUserComponent implements OnInit, OnDestroy {
       } else {
         this.userInput = getEmptyUser();
         this.state = ComponentState.COMPLETED;
+        this.router.navigate(['/']);
       }
       return result
     } catch (error) {
