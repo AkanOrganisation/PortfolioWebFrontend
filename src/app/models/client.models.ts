@@ -4,7 +4,7 @@ import {firstValueFrom} from "rxjs";
 import {ClientType} from "../types";
 
 
-export class Client {
+export class ClientModel {
 
   success: boolean = false;
   loading: boolean = false;

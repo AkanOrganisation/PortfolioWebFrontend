@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {User} from "../../models";
+import {UserModel} from "../../models";
 import {NgForm} from "@angular/forms";
 import {getEmptyUser} from "../../constants/user.constants";
 import {UserType} from "../../types";
 import {ComponentState} from "../../constants/states.components";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {UserService} from "../../services";
 
 @Component({
   selector: 'app-login-user',
@@ -23,7 +24,8 @@ export class LoginUserComponent implements OnInit, OnDestroy {
   private authStatusSubscription!: Subscription;
 
   constructor(
-    public user: User,
+    public userModel: UserModel,
+    public user: UserService,
     private router: Router,
   ) {
 
@@ -47,10 +49,10 @@ export class LoginUserComponent implements OnInit, OnDestroy {
     this.state = ComponentState.PROCESSING;
     this.error = null;
     try {
-      const result = await this.user.login(this.userInput);
+      const result = await this.userModel.login(this.userInput);
       if (!result) {
         form.control.setErrors({server: true})
-        Object.keys(this.user.gqlErrors.errorsByField).forEach((key) => {
+        Object.keys(this.userModel.gqlErrors.errorsByField).forEach((key) => {
             form.controls[key]?.setErrors({server: true})
           }
         )

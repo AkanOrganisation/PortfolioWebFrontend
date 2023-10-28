@@ -10,7 +10,7 @@
         <form #clientForm="ngForm" (ngSubmit)="createClient(clientForm)">
 
           <mat-error
-            *ngFor="let error of user.client.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+            *ngFor="let error of clientModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
           <!-- FirstName -->
           <mat-form-field appearance="fill">
@@ -19,7 +19,7 @@
             <mat-error *ngIf="clientForm.controls?.['client_firstname']?.errors?.['required']">First name is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('client_firstname')">{{ error }}</mat-error>
+              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_firstname')">{{ error }}</mat-error>
           </mat-form-field>
 
 
@@ -29,7 +29,7 @@
                    name="client_lastname" required>
             <mat-error *ngIf="clientForm.controls?.['client_lastname']?.errors?.['required']">Last name is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('client_lastname')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_lastname')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- DisplayName -->
@@ -40,7 +40,7 @@
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('client_displayname')">{{ error }}</mat-error>
+              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_displayname')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- PhoneNumber -->
@@ -51,7 +51,7 @@
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('client_phonenumber')">{{ error }}</mat-error>
+              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_phonenumber')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Address -->
@@ -64,7 +64,7 @@
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('address_streetname')">{{ error }}</mat-error>
+              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_streetname')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- StreetNumber -->
@@ -75,7 +75,7 @@
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.gqlErrors.getErrorsForField('address_streetnumber')">{{ error }}</mat-error>
+              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_streetnumber')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- City -->
@@ -83,7 +83,7 @@
             <input type="text" matInput placeholder="Enter your City" [(ngModel)]="clientInput.address.city"
                    name="address_city" required>
             <mat-error *ngIf="clientForm.controls?.['address_city']?.errors?.['required']">City is required.</mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Country -->
@@ -92,7 +92,7 @@
                    name="address_country" required>
             <mat-error *ngIf="clientForm.controls?.['address_country']?.errors?.['required']">Country is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- ZipCode -->
@@ -101,7 +101,7 @@
                    name="address_zipcode" required>
             <mat-error *ngIf="clientForm.controls?.['address_zipcode']?.errors?.['required']">ZipCode is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Submit Button -->

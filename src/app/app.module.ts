@@ -6,7 +6,7 @@ import {GraphQLModule} from './services/graphql/graphql.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CsrfInterceptor} from "./services";
 import {CookieService} from 'ngx-cookie-service';
-import {User} from "./models";
+import {UserModel} from "./models";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -91,7 +91,7 @@ const FORMSMODULES = [
       multi: true
     },
     CookieService,
-    User,
+    UserModel,
   ],
   bootstrap: [AppComponent]
 })

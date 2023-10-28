@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
-import {CsrfService} from "../../services";
-import {User} from "../../models";
+import {CsrfService, UserService} from "../../services";
+import {ClientModel, UserModel} from "../../models";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {LinksConstants} from "../../constants/links-constants";
 
@@ -19,7 +19,9 @@ export class DashboardClientComponent implements OnInit{
   error: any;
 
   constructor(
-    public user: User,
+    public clientModel: ClientModel,
+    public userModel: UserModel,
+    public user: UserService,
     private observer: BreakpointObserver,
   ) {
   }

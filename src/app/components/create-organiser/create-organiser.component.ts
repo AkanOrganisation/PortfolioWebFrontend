@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ContactPersonType, OrganiserType} from "../../types";
 import {getEmptyOrganiser} from "../../constants/organiser.constants";
 import {getEmptyContactPerson} from "../../constants/contact-person.constants";
-import {User} from "../../models";
+import {UserModel} from "../../models";
 import {NgForm} from '@angular/forms';
 import {ComponentState} from "../../constants";
 import {UserPermissions} from "../../constants/permissions.constants";
 import {Router} from "@angular/router";
+import {UserService} from "../../services";
+import {OrganiserModel} from "../../models/organiser.models";
 
 @Component({
   selector: 'app-create-organiser',
@@ -22,7 +24,8 @@ export class CreateOrganiserComponent implements OnInit {
   contactPersonsInput: ContactPersonType[] = [getEmptyContactPerson()];
 
   constructor(
-    public user: User,
+    public user: UserService,
+    public organiserModel: OrganiserModel,
     private router: Router,
   ) {
   }
@@ -33,11 +36,11 @@ export class CreateOrganiserComponent implements OnInit {
 
   async createOrganiser(form: NgForm) {
     this.state = ComponentState.PROCESSING;
-    this.user.organiser.gqlErrors.clearErrors();
+    this.organiserModel.gqlErrors.clearErrors();
     this.error = null;
     try {
       this.organiserInput.contactPersons = this.contactPersonsInput;
-      const result = await this.user.organiser.createOrUpdateOrganiser(this.organiserInput);
+      const result = await this.organiserModel.createOrUpdateOrganiser(this.organiserInput);
       if (result) {
         this.user.addPermission(UserPermissions.ORGANISER);
         this.user.data.organiser = this.organiserInput;
@@ -72,7 +75,7 @@ export class CreateOrganiserComponent implements OnInit {
 
   private handleErrorsOnForm(form: NgForm): void {
     form.control.setErrors({server: true});
-    Object.keys(this.user.organiser?.gqlErrors.errorsByField).forEach((key) => {
+    Object.keys(this.organiserModel.gqlErrors.errorsByField).forEach((key) => {
       form.controls[key]?.setErrors({server: true});
       }
     )

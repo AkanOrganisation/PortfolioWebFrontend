@@ -8,7 +8,7 @@
     <mat-card *ngIf="state !== ComponentState.COMPLETED && step === Step.CREATE_USER; else roleChoice">
       <mat-card-content>
         <form #userForm="ngForm" (ngSubmit)="createUser(userForm)">
-          <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+          <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
           <!-- Email -->
           <mat-form-field appearance="fill">
@@ -17,7 +17,7 @@
                    email>
             <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['required']">Email is required.</mat-error>
             <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['email']">Enter a valid email.</mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_email')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_email')">{{ error }}</mat-error>
 
           </mat-form-field>
 
@@ -29,7 +29,7 @@
                    required>
             <mat-error *ngIf="userForm.controls?.['user_password']?.errors?.['required']">Password is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
 
             <!-- Password Strength Bar Placeholder -->
             <!-- This can be replaced with a component or directive for password strength visualization -->
@@ -42,7 +42,7 @@
                    name="user_password2" required>
             <mat-error *ngIf="userForm.controls?.['user_password2']?.errors?.['required']">Confirm your password.
             </mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_password2')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_password2')">{{ error }}</mat-error>
 
             <!-- Matching Passwords Sign -->
             <mat-hint *ngIf="userInput.password && userInput.password === userInput.password2; else notMatching">

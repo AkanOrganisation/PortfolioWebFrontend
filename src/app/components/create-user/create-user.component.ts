@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../../models";
+import {UserModel} from "../../models";
 import {NgForm} from "@angular/forms";
-import {PasswordService} from "../../services";
+import {PasswordService, UserService} from "../../services";
 import {UserType} from "../../types";
 import {getEmptyUser} from "../../constants/user.constants";
 import {ComponentState} from "../../constants/states.components";
@@ -22,14 +22,15 @@ export class CreateUserComponent implements OnInit {
   error: any;
 
   constructor(
-    public user: User,
+    public userModel: UserModel,
+    public user: UserService,
     private passwordService: PasswordService,
     private router: Router,
   ) {
   }
 
   async ngOnInit() {
-    this.user.gqlErrors.clearErrors()
+    this.userModel.gqlErrors.clearErrors()
     if (this.user.authenticated) {
       if (this.user.permissions.includes(UserPermissions.CLIENT || UserPermissions.ORGANISER)) {
         this.step = Step.COMPLETED;
@@ -46,20 +47,19 @@ export class CreateUserComponent implements OnInit {
 
   async createUser(form: NgForm) {
     this.state = ComponentState.PROCESSING;
-    this.user.gqlErrors.clearErrors();
+    this.userModel.gqlErrors.clearErrors();
     this.error = null;
 
     try {
-      const result = await this.user.createOrUpdate(this.userInput, true);
+      const result = await this.userModel.createOrUpdate(this.userInput, true);
       if (!result) {
         form.control.setErrors({server: true})
-        Object.keys(this.user.gqlErrors.errorsByField).forEach((key) => {
+        Object.keys(this.userModel.gqlErrors.errorsByField).forEach((key) => {
           form.controls[key]?.setErrors({server: true})
         })
         this.state = ComponentState.READY
       } else {
         this.user.data.email = this.userInput.email;
-        this.user.data = this.user.data;
         this.userInput = getEmptyUser();
         this.state = ComponentState.COMPLETED
         this.navigateToChoice();

@@ -4,7 +4,7 @@ import {firstValueFrom} from "rxjs";
 import {OrganiserType} from "../types";
 
 
-export class Organiser {
+export class OrganiserModel {
 
   error: any;
 

@@ -7,7 +7,7 @@
       <mat-card-content>
         <form #organiserForm="ngForm" (ngSubmit)="createOrganiser(organiserForm)">
           <mat-error
-            *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+            *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
           <!-- CompanyName -->
           <mat-form-field appearance="fill">
@@ -17,7 +17,7 @@
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('organiser_companyName')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('organiser_companyName')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- RegisterNumber -->
@@ -30,7 +30,7 @@
               is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('organiser_registerNumber')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('organiser_registerNumber')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Address -->
@@ -43,7 +43,7 @@
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_streetName')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_streetName')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- StreetNumber -->
@@ -54,7 +54,7 @@
               required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_streetNumber')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_streetNumber')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- City -->
@@ -64,7 +64,7 @@
             <mat-error *ngIf="organiserForm.controls?.['address_city']?.errors?.['required']">City is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Country -->
@@ -74,7 +74,7 @@
             <mat-error *ngIf="organiserForm.controls?.['address_country']?.errors?.['required']">Country is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- ZipCode -->
@@ -84,7 +84,7 @@
             <mat-error *ngIf="organiserForm.controls?.['address_zipCode']?.errors?.['required']">ZipCode is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('address_zipCode')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_zipCode')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- ContactPersons -->
@@ -104,7 +104,7 @@
                   name is required.
                 </mat-error>
                 <mat-error
-                  *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('contact_persons_{{i}}_firstname')">{{ error }}</mat-error>
+                  *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('contact_persons_{{i}}_firstname')">{{ error }}</mat-error>
               </mat-form-field>
 
               <!-- LastName -->
@@ -115,7 +115,7 @@
                   name is required.
                 </mat-error>
                 <mat-error
-                  *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('contact_persons_{{i}}_lastname')">{{ error }}</mat-error>
+                  *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('contact_persons_{{i}}_lastname')">{{ error }}</mat-error>
               </mat-form-field>
 
               <!-- EmailAddress -->
@@ -127,7 +127,7 @@
                   address is required.
                 </mat-error>
                 <mat-error
-                  *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('contact_persons_{{i}}_email')">{{ error }}</mat-error>
+                  *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('contact_persons_{{i}}_email')">{{ error }}</mat-error>
               </mat-form-field>
 
               <!-- PhoneNumber -->
@@ -139,7 +139,7 @@
                   number is required.
                 </mat-error>
                 <mat-error
-                  *ngFor="let error of user.organiser.gqlErrors.getErrorsForField('contact_persons_{{i}}_phone')">{{ error }}</mat-error>
+                  *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('contact_persons_{{i}}_phone')">{{ error }}</mat-error>
               </mat-form-field>
 
               <!-- Button to Remove Contact Person -->

@@ -1,2 +1,2 @@
-export { User } from './user.models';
-export { Client } from './client.models';
+export { UserModel } from './user.models';
+export { ClientModel } from './client.models';

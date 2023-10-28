@@ -1,11 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CsrfService} from './services/csrf/csrf.service';
-import {User} from "./models";
+import {UserModel} from "./models";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {MatSidenav} from "@angular/material/sidenav";
 import {LinksConstants} from "./constants/links-constants";
 import {ComponentState} from "./constants";
-import {DEBUG} from "@angular/compiler-cli/src/ngtsc/logging/src/console_logger";
 import {AppInitializerService} from "./services/initializer/app.initializer";
 
 @Component({
@@ -21,8 +19,7 @@ export class AppComponent implements OnInit {
   error: any;
 
   constructor(
-    private httpService: CsrfService,
-    public user: User,
+    public user: UserModel,
     private observer: BreakpointObserver,
     private appInitializer: AppInitializerService,
   ) {
@@ -36,14 +33,6 @@ export class AppComponent implements OnInit {
         this.state = ComponentState.ERROR;
       }
     });
-    // await this.httpService.getAndSetCsrfToken().then(
-    //   async () => {
-    //     this.user.authenticated = await this.user.isAuthenticated();
-    //     this.state = ComponentState.READY
-    //   }).catch((error) => {
-    //   this.error = error;
-    //   this.state = ComponentState.ERROR
-    // })
   }
 
   ngAfterViewInit() {

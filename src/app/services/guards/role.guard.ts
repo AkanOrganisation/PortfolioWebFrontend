@@ -1,15 +1,16 @@
 // role.guard.ts
 import {ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot} from '@angular/router';
-import {User} from 'src/app/models';
+import {UserModel} from 'src/app/models';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserPermissions} from "../../constants/permissions.constants";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleGuard {
-  constructor(private user: User, private router: Router) {
+  constructor(private user: UserService, private router: Router) {
   }
 
   canActivate: CanActivateFn = (

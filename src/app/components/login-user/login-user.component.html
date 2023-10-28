@@ -8,7 +8,7 @@
       <mat-card-content class="mat-card-content">
         <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
 
-          <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+          <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
           <!-- Email -->
           <mat-form-field appearance="fill">
@@ -16,7 +16,7 @@
                    required email>
             <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['required']">Email is required.</mat-error>
             <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['email']">Enter a valid email.</mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_email')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_email')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Password -->
@@ -25,7 +25,7 @@
                    name="user_password" required>
             <mat-error *ngIf="userForm.controls?.['user_password']?.errors?.['required']">Password is required.
             </mat-error>
-            <mat-error *ngFor="let error of user.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
           </mat-form-field>
 
           <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid || state === ComponentState.PROCESSING">

@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ComponentState} from "../../constants";
-import {User} from "../../models";
+import {UserModel} from "../../models";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {UserService} from "../../services";
 
 @Component({
   selector: 'app-logout-user',
@@ -17,14 +18,15 @@ export class LogoutUserComponent implements OnInit {
   private authStatusSubscription!: Subscription;
 
   constructor(
-    public user: User,
+    public user: UserService,
+    public userModel: UserModel,
     private router: Router,
   ) {
 
   }
 
   async ngOnInit() {
-    this.user.gqlErrors.clearErrors()
+    this.userModel.gqlErrors.clearErrors()
     this.authStatusSubscription = this.user.authenticated$.subscribe((authenticated) => {
       this.state = (authenticated) ? ComponentState.READY : ComponentState.COMPLETED;
     });
@@ -32,11 +34,11 @@ export class LogoutUserComponent implements OnInit {
 
   async logout() {
     this.state = ComponentState.PROCESSING;
-    this.user.gqlErrors.clearErrors();
+    this.userModel.gqlErrors.clearErrors();
     this.error = null;
 
     try {
-      const result = await this.user.logout();
+      const result = await this.userModel.logout();
       if (!result) {
         this.state = ComponentState.READY
       } else {

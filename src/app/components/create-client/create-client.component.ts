@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../../models";
+import {ClientModel, UserModel} from "../../models";
 import {NgForm} from "@angular/forms";
 import {ClientType} from "../../types";
 import {getEmptyClient} from "../../constants/client.constants";
 import {ComponentState} from "../../constants";
 import {UserPermissions} from "../../constants/permissions.constants";
 import {Router} from "@angular/router";
+import {UserService} from "../../services";
 
 @Component({
   selector: 'app-create-client',
@@ -20,7 +21,8 @@ export class CreateClientComponent implements OnInit {
   clientInput: ClientType = getEmptyClient();
 
   constructor(
-    public user: User,
+    public clientModel: ClientModel,
+    public user : UserService,
     private router: Router,
   ) {
 
@@ -45,13 +47,13 @@ export class CreateClientComponent implements OnInit {
 
   async createClient(form: NgForm) {
     this.state = ComponentState.PROCESSING;
-    this.user.client.gqlErrors.clearErrors();
+    this.clientModel.gqlErrors.clearErrors();
     this.error = null;
     try {
-      const result = await this.user.client.createOrUpdateClient(this.clientInput);
+      const result = await this.clientModel.createOrUpdateClient(this.clientInput);
       if (!result) {
         form.control.setErrors({server: true})
-        Object.keys(this.user.client?.gqlErrors.errorsByField).forEach((key) => {
+        Object.keys(this.clientModel.gqlErrors.errorsByField).forEach((key) => {
             form.controls[key]?.setErrors({server: true})
           }
         )
