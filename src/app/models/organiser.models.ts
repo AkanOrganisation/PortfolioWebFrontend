@@ -3,6 +3,7 @@ import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {firstValueFrom} from "rxjs";
 import {OrganiserType} from "../types";
 import {Injectable} from "@angular/core";
+import {OrganiserFilterType, OrganiserPrivateResultType} from "../graphql/organiser/organiser.graphql";
 
 @Injectable({
   providedIn: 'root',
@@ -22,23 +23,12 @@ export class OrganiserModel {
       this.gqlErrors.clearErrors();
       const result: any = await firstValueFrom(
         this.apollo
-        .mutate({
-          mutation: gql`
-            mutation createOrUpdateOrganiser($organiser: OrganiserInputType!) {
-              createOrUpdateOrganiser(
-                organiserData: $organiser
-              ) {
-                success
-                errors {
-                  field
-                  messages
-                }
-              }
-            }`,
-          variables: {
-            organiser
-          }
-        }));
+          .mutate({
+            mutation: CREATE_OR_UPDATE_ORGANISER_MUTATION,
+            variables: {
+              organiser
+            }
+          }));
       this.gqlErrors.setErrors(result.data.createOrUpdateOrganiser.errors);
       this.error = result.error;
       return !!result.data.createOrUpdateOrganiser.success;
@@ -47,4 +37,63 @@ export class OrganiserModel {
       return false;
     }
   }
+
+
+  getOwnedEventsList(variables: OrganiserFilterType) {
+    return this.apollo
+      .watchQuery<OrganiserPrivateResultType>({
+        query: EVENTS_LIST_QUERY,
+        variables: {...variables.ownedEvents},
+      }).valueChanges;
+  }
+
 }
+
+
+const EVENTS_LIST_QUERY = gql`
+  query EventsListQuery(
+    $first: Int = 100
+    $after: String
+    $before: String
+    $last: Int
+    $filter: EventDetailOrganiserPrivateEventDetailFilterOrganiserPrivateFilterInputType) {
+    organiserPrivate {
+      ownedEvents(
+        first: $first
+        after: $after
+        before: $before
+        last: $last
+        filter: $filter
+      )
+      {
+        edges {
+          node {
+            category
+            title
+            id
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
+        }
+      }
+    }
+  }
+`;
+
+const CREATE_OR_UPDATE_ORGANISER_MUTATION = gql`
+  mutation createOrUpdateOrganiser($organiser: OrganiserInputType!) {
+    createOrUpdateOrganiser(
+      organiserData: $organiser
+    ) {
+      success
+      errors {
+        field
+        messages
+      }
+    }
+  }`

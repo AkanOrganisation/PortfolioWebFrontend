@@ -3,6 +3,7 @@ import {OrganiserModel} from "../../models/organiser.models";
 import {ComponentState, LinksConstants} from "../../constants";
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {EventsFilterConnectionType} from "../../graphql/events/events.graphql";
 
 @Component({
   selector: 'app-dashboard-organiser',

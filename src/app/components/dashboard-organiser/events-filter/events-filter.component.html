@@ -1,1 +1,15 @@
-<p>events-filter works!</p>
+<mat-spinner
+  *ngIf="state === ComponentState.LOADING || state === ComponentState.PROCESSING; else loadEventsFilterForm"></mat-spinner>
+
+
+<ng-template #loadEventsFilterForm>
+  <form #eventsFilterForm="ngForm" (ngSubmit)="applyFilter(eventsFilterForm)">
+    <mat-form-field appearance="fill">
+      <input type="text" matInput placeholder="Search for Category"
+             [(ngModel)]="eventsFilter.ownedEvents?.filter.category.exact"
+             name="eventCategory">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Search</button>
+  </form>
+</ng-template>
