@@ -18,8 +18,6 @@ export class EventsFilterComponent implements OnInit, OnDestroy {
   state = ComponentState.LOADING;
   eventsFilter: OrganiserFilterType = {ownedEvents: getDefaultEventsFilter()};
 
-  protected hasPreviousPage = false;
-  protected eventsStartCursor = undefined;
   protected eventsEndCursor = undefined;
   protected hasNextPage = false;
 
@@ -36,11 +34,11 @@ export class EventsFilterComponent implements OnInit, OnDestroy {
   }
 
   private handleApiResponse(result: any) {
-    this.hasPreviousPage = result.data.organiserPrivate?.ownedEvents?.pageInfo.hasPreviousPage;
-    this.eventsStartCursor = result.data.organiserPrivate?.ownedEvents?.pageInfo.startCursor;
+
     this.eventsEndCursor = result.data.organiserPrivate?.ownedEvents?.pageInfo.endCursor;
     this.hasNextPage = result.data.organiserPrivate?.ownedEvents?.pageInfo.hasNextPage;
     this.state = ComponentState.READY;
+
   }
 
   private fetchData(cursorKey?: string, cursorValue?: string) {
@@ -76,9 +74,6 @@ export class EventsFilterComponent implements OnInit, OnDestroy {
     this.fetchData('after', this.eventsEndCursor);
   }
 
-  previousPage() {
-    this.fetchData('before', this.eventsStartCursor);
-  }
 
   ngOnDestroy(): void {
     if (this.subscription) {
