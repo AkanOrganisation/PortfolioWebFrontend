@@ -11,5 +11,6 @@
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit">Search</button>
+    <button mat-raised-button color="warn" type="button" (click)="nextPage()" [disabled]="hasNextPage === false" >Load more</button>
   </form>
 </ng-template>

@@ -62,6 +62,7 @@ const EVENTS_LIST_QUERY: TypedDocumentNode<OrganiserNodeType, OrganiserFilterTyp
     $last: Int
     $filter: EventDetailOrganiserPrivateEventDetailFilterOrganiserPrivateFilterInputType) {
     organiserPrivate {
+      id
       ownedEvents(
         first: $first
         after: $after

@@ -3,6 +3,7 @@ import {AddressFilterType} from "./location/address.graphql";
 
 // Basic Pagination and Filtering Types
 export type ConnectionFilterType = {
+  [key: string]: any;
   after?: string;
   before?: string;
   first?: number;
