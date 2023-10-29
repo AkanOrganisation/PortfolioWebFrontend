@@ -1,36 +1,52 @@
-import {LookupFilterType} from "../lookups.graphql";
-import {AddressFilterType} from "../location/address.graphql";
+import {AddressNodeType} from "../location/address.graphql";
 import {ConnectionFilterType, PagedQueryResultType} from "../filters.graphql";
-import {LocationFilterType} from "../location/location.graphql";
-import {EventDateTimesListNodeType, EventListNodeType, EventsFilterConnectionType} from "../events/events.graphql";
+import {
+
+  EventNodeType,
+  EventsFilterConnectionType
+} from "../events/events.graphql";
+import {
+  ContactPersonFilterConnectionType,
+  ContactPersonFilterType,
+  ContactPersonNodeType
+} from "./contact-person.graphql";
 
 // Input Types
 ////////////////////////////////////////////////////////////////////////////////////////
 export type OrganiserFilterType = {
-  //contactPersons
+  contactPersons?: ContactPersonFilterConnectionType;
   ownedEvents?: EventsFilterConnectionType;
 };
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-
-
-// Result Types
-export type OrganiserPrivateResultType = {
-  organiserPrivate: {
-    ownedEvents: PagedQueryResultType<EventListNodeType>;
-  }
-}
-
-export type MyEventsAndDateTimesListResultType = {
-  ownedEvents: PagedQueryResultType<EventDateTimesListNodeType>;
+export type OrganiserFilterConnectionType = ConnectionFilterType & {
+  filter?: OrganiserFilterType;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Node Types
 ////////////////////////////////////////////////////////////////////////////////////////
-
-
-
+export type OrganiserNodeType = {
+  id?: string;
+  companyName?: string;
+  registerNumber?: string;
+  address?: AddressNodeType;
+  contactPersons?: PagedQueryResultType<ContactPersonNodeType>;
+  ownedEvents?: PagedQueryResultType<EventNodeType>;
+}
 ////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Query Types
+////////////////////////////////////////////////////////////////////////////////////////
+export type OrganiserPrivateQueryType = {
+  organiserPrivate?: OrganiserNodeType;
+}
+
+export type OrganiserPublicQueryType = {
+  organiserPublic?: OrganiserNodeType;
+}
+
+export type AllOrganisersQueryType = {
+  allOrganisers?: PagedQueryResultType<OrganiserNodeType>;
+}

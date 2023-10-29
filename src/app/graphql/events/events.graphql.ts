@@ -1,16 +1,18 @@
 import {LookupFilterType} from "../lookups.graphql";
-import {AddressFilterType} from "../location/address.graphql";
+import {AddressFilterType, AddressNodeType} from "../location/address.graphql";
 import {ConnectionFilterType, PagedQueryResultType} from "../filters.graphql";
-import {LocationFilterType} from "../location/location.graphql";
+import {LocationFilterType, LocationNodeType} from "../location/location.graphql";
+import {OrganiserNodeType} from "../organiser/organiser.graphql";
+import {ClientNodeType} from "../client/client.graphql";
 
 // Input Types
 ////////////////////////////////////////////////////////////////////////////////////////
 export type EventsDateTimeFilterType = {
-  freeSlotsAvailable?: LookupFilterType<boolean>;
   datetime?: LookupFilterType<string>;
+  status?: LookupFilterType<string>;
+  freeSlotsAvailable?: LookupFilterType<boolean>;
   freeSlotsMinCount?: LookupFilterType<number>;
   maxMembers?: LookupFilterType<number>;
-  status?: LookupFilterType<string>;
 };
 
 export type EventsFilterType = {
@@ -19,35 +21,48 @@ export type EventsFilterType = {
   description?: LookupFilterType<string>;
   title?: LookupFilterType<string>;
   datetime?: EventsDateTimeFilterType;
-} & LocationFilterType;
+  location?: LocationFilterType;
+};
 
 
 export type EventsFilterConnectionType = ConnectionFilterType & {
   filter?: EventsFilterType;
 };
-////////////////////////////////////////////////////////////////////////////////////////
 
-
-// Result Types
-// export type MyEventsListResultType = {
-//   ownedEvents: PagedQueryResultType<EventListNodeType>;
-// }
-//
-// export type MyEventsAndDateTimesListResultType = {
-//   ownedEvents: PagedQueryResultType<EventDateTimesListNodeType>;
-// }
-////////////////////////////////////////////////////////////////////////////////////////
+export type EventsDateTimeFilterConnectionType = ConnectionFilterType & {
+  filter?: EventsDateTimeFilterType;
+}
 
 
 // Node Types
 ////////////////////////////////////////////////////////////////////////////////////////
-export type EventListNodeType = {
-  category: string;
-  title: string;
-  id: string;
-};
+export type EventNodeType = {
+  category?: string;
+  title?: string;
+  id?: string;
+  description?: string;
+  address?: AddressNodeType;
+  dates?: PagedQueryResultType<EventDateTimeNodeType>;
+  organiser?: OrganiserNodeType;
+  location: LocationNodeType;
+}
 
-export type EventDateTimesListNodeType = EventListNodeType & {
-  dates: PagedQueryResultType<{ id: string }>;
+
+export type EventDateTimeNodeType = {
+  id: string | undefined;
+  datetime: string | undefined;
+  freeSlotsAvailable: boolean | undefined;
+  freeSlotsCount: number | undefined;
+  maxMembers: number | undefined;
+  status: string | undefined;
+  eventDescription : EventNodeType | undefined;
+  members : PagedQueryResultType<EventMemberNodeType>;
+}
+
+
+export type EventMemberNodeType = {
+  id?: string;
+  client?: ClientNodeType;
+  status?: string;
 }
 ////////////////////////////////////////////////////////////////////////////////////////

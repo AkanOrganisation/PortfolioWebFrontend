@@ -1,9 +1,13 @@
-import {Apollo, gql} from "apollo-angular";
+import {Apollo, gql, TypedDocumentNode} from "apollo-angular";
 import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {firstValueFrom} from "rxjs";
 import {OrganiserType} from "../types";
 import {Injectable} from "@angular/core";
-import {OrganiserFilterType, OrganiserPrivateResultType} from "../graphql/organiser/organiser.graphql";
+import {
+  OrganiserFilterType,
+  OrganiserNodeType,
+  OrganiserPrivateQueryType
+} from "../graphql/organiser/organiser.graphql";
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +45,7 @@ export class OrganiserModel {
 
   getOwnedEventsList(variables: OrganiserFilterType) {
     return this.apollo
-      .watchQuery<OrganiserPrivateResultType>({
+      .watchQuery<OrganiserPrivateQueryType>({
         query: EVENTS_LIST_QUERY,
         variables: {...variables.ownedEvents},
       }).valueChanges;
@@ -50,7 +54,7 @@ export class OrganiserModel {
 }
 
 
-const EVENTS_LIST_QUERY = gql`
+const EVENTS_LIST_QUERY: TypedDocumentNode<OrganiserNodeType, OrganiserFilterType> = gql`
   query EventsListQuery(
     $first: Int = 100
     $after: String

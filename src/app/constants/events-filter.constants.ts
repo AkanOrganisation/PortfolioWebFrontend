@@ -22,11 +22,10 @@ const DEFAULT_EVENTS_FILTER: EventsFilterConnectionType = {
       exact: undefined,
       icontains: undefined,
     },
-    //organiser: {
-    //  exact: '',
-    //  in: [],
-    //},
-    ...getDefaultLocationFilter(),
+    organiser: {
+      exact: undefined,
+    },
+    location: getDefaultLocationFilter(),
   }
 };
 

@@ -1,8 +1,19 @@
 import {LookupFilterType} from "../lookups.graphql";
 
 
+// Input Types
+////////////////////////////////////////////////////////////////////////////////////////
 export type LocationFilterType = {
-  locationLat?: LookupFilterType<number>;
-  locationLng?: LookupFilterType<number>;
+  lat?: LookupFilterType<number>;
+  lng?: LookupFilterType<number>;
   radius?: LookupFilterType<number>; // in meters
+}
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// Result Types
+////////////////////////////////////////////////////////////////////////////////////////
+export type LocationNodeType = {
+  location?: [number, number];
 }

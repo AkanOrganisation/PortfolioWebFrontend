@@ -2,10 +2,10 @@ import {LocationFilterType} from "../graphql/location/location.graphql";
 
 // DHBW, Lohrtalweg 10, 74821 Mosbach
 const MOSBACH_LOCATION_FILTER: LocationFilterType = {
-  locationLat: {
+  lat: {
     exact: 49.35431131686691,
   },
-  locationLng: {
+  lng: {
     exact: 9.150493075599343,
   },
   radius: {
@@ -15,10 +15,10 @@ const MOSBACH_LOCATION_FILTER: LocationFilterType = {
 
 
 const DEFAULT_LOCATION_FILTER: LocationFilterType = {
-  locationLat: {
+  lat: {
     exact: undefined,
   },
-  locationLng: {
+  lng: {
     exact: undefined,
   },
   radius: {

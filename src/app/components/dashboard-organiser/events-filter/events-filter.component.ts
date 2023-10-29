@@ -32,9 +32,10 @@ export class EventsFilterComponent implements OnInit {
     this.state = ComponentState.PROCESSING;
     const result = this.organiserModel.getOwnedEventsList(this.eventsFilter).subscribe({
       next: (result) => {
-        console.log(result);
-        this.eventsEndCursor = result.data.organiserPrivate.ownedEvents.pageInfo.endCursor;
-        console.log(result.data.organiserPrivate.ownedEvents.pageInfo.endCursor);
+
+        this.eventsStartCursor = result.data.organiserPrivate?.ownedEvents?.pageInfo.startCursor;
+        this.eventsEndCursor = result.data.organiserPrivate?.ownedEvents?.pageInfo.endCursor;
+
 
         this.state = ComponentState.READY;
       },
@@ -47,15 +48,13 @@ export class EventsFilterComponent implements OnInit {
         this.state = ComponentState.READY;
       }
     })
-    this.state = ComponentState.READY;
   }
 
   nextPage() {
     this.state = ComponentState.PROCESSING;
     const result = this.organiserModel.getOwnedEventsList(this.eventsFilter).subscribe({
       next: (result) => {
-        console.log(result);
-        this.eventsEndCursor = result.data.organiserPrivate.ownedEvents.pageInfo.endCursor;
+        this.eventsEndCursor = result.data.organiserPrivate?.ownedEvents?.pageInfo.endCursor;
 
         this.state = ComponentState.READY;
       },
