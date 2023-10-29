@@ -4,5 +4,5 @@ export type LookupFilterType<T> = {
   lte?: T;
   range?: T;
   in?: T[];
-  icontains?: string;
+  icontains?: T;
 }
