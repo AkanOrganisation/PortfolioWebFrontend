@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ComponentState} from "../../../../../constants";
 import {ComponentMode} from "../../../../../constants/mode.components";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import ClassicEditor  from "@ckeditor/ckeditor5-build-classic";
 
 @Component({
   selector: 'app-event-description',
@@ -17,7 +16,12 @@ export class EventDescriptionComponent {
   state = ComponentState.LOADING;
   mode = ComponentMode.VIEW;
 
-  public Editor = ClassicEditor;
+   get isEdited(): boolean {
+    return this.eventDescriptionInput !== this.eventDescription;
+  }
+
+
+  public Editor= ClassicEditor;
 
 
   constructor() {
@@ -46,5 +50,7 @@ export class EventDescriptionComponent {
 
   protected readonly ComponentState = ComponentState;
   protected readonly ComponentMode = ComponentMode;
+
+
 
 }

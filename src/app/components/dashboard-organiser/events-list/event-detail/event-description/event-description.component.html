@@ -10,17 +10,19 @@
 </ng-container>
 
 <ng-container *ngIf="state === ComponentState.READY">
+
+  <p>Description:</p>
+
   <ckeditor [(ngModel)]="eventDescriptionInput" [editor]="Editor"></ckeditor>
   <span class="spacer"></span>
-  <button mat-icon-butto (click)="save()">
-    <mat-icon>
-      done
-    </mat-icon>
-  </button>
-  <button mat-icon-butto (click)="cancel()">
-    <mat-icon>
-      restore
-    </mat-icon>
-  </button>
+  <mat-card-actions>
+    <button mat-icon-button [disabled]="!isEdited" (click)="save()">
+      <mat-icon>done</mat-icon>
+    </button>
+    <button mat-icon-butto [disabled]="!isEdited" (click)="cancel()">
+      <mat-icon>restore</mat-icon>
+    </button>
+  </mat-card-actions>
+
 
 </ng-container>
