@@ -29,15 +29,24 @@
 
     <ng-container *ngIf="mode === ComponentMode.DETAIL">
       <mat-card class="card-details mat-elevation-z16">
+        <mat-toolbar-row>
+          <span class="spacer"></span>
+          <button mat-icon-button (click)="toggle()">
+            <mat-icon>close</mat-icon>
+          </button>
+
+        </mat-toolbar-row>
         <mat-card-header>
           <app-event-title [eventTitle]="event.title" (eventTitleChange)="updateEventsTitle($event)"></app-event-title>
         </mat-card-header>
         <mat-card-content>
-          <app-event-category [eventCategory]="event.category" (eventCategoryChange)="updateEventsCategory($event)" ></app-event-category>
+          <app-event-category [eventCategory]="event.category"
+                              (eventCategoryChange)="updateEventsCategory($event)"></app-event-category>
           <mat-divider></mat-divider>
-          <app-event-description [eventDescription]="event.description" (eventDescriptionChange)="updateEventsDescription($event)"></app-event-description>
+          <app-event-description [eventDescription]="event.description"
+                                 (eventDescriptionChange)="updateEventsDescription($event)"></app-event-description>
           <mat-divider></mat-divider>
-          <app-event-location></app-event-location>
+          <app-event-address></app-event-address>
           <mat-divider></mat-divider>
           <ng-container *ngFor="let eventDateTime of getDates(); trackBy: trackById" class="mat-elevation-z14">
             <app-event-datetime [eventDateTime]="eventDateTime"></app-event-datetime>
