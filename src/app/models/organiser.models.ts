@@ -8,6 +8,7 @@ import {
   OrganiserNodeType,
   OrganiserPrivateQueryType
 } from "../graphql/organiser/organiser.graphql";
+import {EventNodeType, eventPrivateQueryType} from "../graphql/events/events.graphql";
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +52,14 @@ export class OrganiserModel {
       }).valueChanges;
   }
 
+  getEventDetails(id: string) {
+    return this.apollo
+      .watchQuery<eventPrivateQueryType>({
+        query: EVENT_DETAILS_QUERY,
+        variables: {id},
+      }).valueChanges;
+
+  }
 }
 
 
@@ -84,6 +93,55 @@ const EVENTS_LIST_QUERY: TypedDocumentNode<OrganiserNodeType, OrganiserFilterTyp
           hasNextPage
           hasPreviousPage
           startCursor
+        }
+      }
+    }
+  }
+`;
+
+
+const EVENT_DETAILS_QUERY: TypedDocumentNode<EventNodeType> = gql`
+  query EventsListQuery(
+    $id: ID!) {
+    eventOrganiserPrivate(id: $id) {
+      address {
+        additional
+        city
+        country
+        id
+        streetName
+        streetNumber
+        zipCode
+      }
+      category
+      description
+      id
+      location
+      title
+      dates {
+        edges {
+          node {
+            datetime
+            freeSlotsAvailable
+            freeSlotsCount
+            maxMembers
+            id
+            status
+            members {
+              edges {
+                node {
+                  status
+                  id
+                  client {
+                    displayName
+                    firstName
+                    lastName
+                    id
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

@@ -44,19 +44,19 @@ export type EventNodeType = {
   address?: AddressNodeType;
   dates?: PagedQueryResultType<EventDateTimeNodeType>;
   organiser?: OrganiserNodeType;
-  location: LocationNodeType;
+  location?: LocationNodeType;
 }
 
 
 export type EventDateTimeNodeType = {
-  id: string | undefined;
-  datetime: string | undefined;
-  freeSlotsAvailable: boolean | undefined;
-  freeSlotsCount: number | undefined;
-  maxMembers: number | undefined;
-  status: string | undefined;
-  eventDescription : EventNodeType | undefined;
-  members : PagedQueryResultType<EventMemberNodeType>;
+  id?: string;
+  datetime?: string;
+  freeSlotsAvailable?: boolean;
+  freeSlotsCount?: number;
+  maxMembers?: number;
+  status?: string;
+  eventDescription?: EventNodeType;
+  members?: PagedQueryResultType<EventMemberNodeType>;
 }
 
 
@@ -65,4 +65,13 @@ export type EventMemberNodeType = {
   client?: ClientNodeType;
   status?: string;
 }
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Query Types
+////////////////////////////////////////////////////////////////////////////////////////
+export type eventPrivateQueryType = {
+  eventOrganiserPrivate?: EventNodeType;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////
