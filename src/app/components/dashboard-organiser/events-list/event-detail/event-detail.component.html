@@ -1,12 +1,48 @@
-<mat-spinner *ngIf="state === ComponentState.LOADING; else showCard" class="spinner"></mat-spinner>
+<mat-spinner *ngIf="state === ComponentState.LOADING; else showCardIcon" class="spinner"></mat-spinner>
 
-<ng-template #showCard>
+
+<ng-template #showCardIcon>
+  <ng-container *ngIf="mode === ComponentMode.LIST; else showCardDetails">
+    <mat-card @cardAnimation (click)="toggle()">
+      <mat-card-header>
+        <mat-card-title>{{ event.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Category: {{ event.category }}</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</ng-template>
+
+<ng-template #showCardDetails>
+  <ng-container *ngIf="mode === ComponentMode.DETAIL; else showCardError">
+    <mat-card @cardAnimation (click)="toggle()" class="card-details mat-elevation-z16">
+      <mat-card-header>
+        <mat-card-title>{{ event.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Category: {{ event.category }}</p>
+        <mat-divider></mat-divider>
+        <p>Description: {{ event.description }}</p>
+        <mat-divider></mat-divider>
+        <p>Location: {{ event.location }}</p>
+        <mat-divider></mat-divider>
+        <ng-container *ngFor="let eventDateTime of getDates(); trackBy: trackById" class="mat-elevation-z14">
+          <app-event-datetime [eventDateTime]="eventDateTime"></app-event-datetime>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</ng-template>
+
+
+<ng-template #showCardError>
   <mat-card @cardAnimation>
     <mat-card-header>
-      <mat-card-title>{{ event.title }}</mat-card-title>
+      <mat-card-title>Error</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p>Category: {{ event.category }}</p>
+      <p>Something went wrong</p>
     </mat-card-content>
   </mat-card>
 </ng-template>

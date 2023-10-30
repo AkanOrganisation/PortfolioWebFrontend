@@ -37,6 +37,7 @@ import {resolve} from "@angular/compiler-cli";
 import { EventsListComponent } from './components/dashboard-organiser/events-list/events-list.component';
 import { EventsFilterComponent } from './components/dashboard-organiser/events-filter/events-filter.component';
 import { EventDetailComponent } from './components/dashboard-organiser/events-list/event-detail/event-detail.component';
+import { AppEventDatetimeComponent } from './components/dashboard-organiser/events-list/event-detail/event-datetime/app-event-datetime.component';
 
 
 const MATERIALMODULES = [
@@ -80,6 +81,7 @@ const FORMSMODULES = [
     EventsListComponent,
     EventsFilterComponent,
     EventDetailComponent,
+    AppEventDatetimeComponent,
   ],
   imports: [
     BROWSERMODULES,

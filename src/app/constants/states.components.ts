@@ -3,5 +3,5 @@ export enum ComponentState {
     READY = 'READY',
     PROCESSING = 'PROCESSING',
     COMPLETED = 'COMPLETED',
-    ERROR = 'ERROR'
+    ERROR = 'ERROR',
 }

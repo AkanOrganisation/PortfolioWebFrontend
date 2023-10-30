@@ -1,6 +1,4 @@
 :host {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 100%;
 }
@@ -26,8 +24,7 @@ mat-sidenav {
   background-color: #333333;
   height: calc(100vh - 98px);
   border-radius: 10px;
-  margin: 16px;
-  margin-left: 32px;
+  margin: 16px 16px 16px 32px;
 
   display: flex;
   justify-content: center;
