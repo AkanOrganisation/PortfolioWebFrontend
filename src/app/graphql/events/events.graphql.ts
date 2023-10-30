@@ -40,7 +40,7 @@ export type EventNodeType = {
   category?: string;
   title?: string;
   id?: string;
-  description?: string;
+  description?: HTMLElement;
   address?: AddressNodeType;
   dates?: PagedQueryResultType<EventDateTimeNodeType>;
   organiser?: OrganiserNodeType;

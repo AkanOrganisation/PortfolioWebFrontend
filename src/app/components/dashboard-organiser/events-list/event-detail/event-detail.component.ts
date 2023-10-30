@@ -100,8 +100,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   }
 
-  updateEventsDescription(newDescription: string) {
-    this.event.title = newDescription;
+  updateEventsDescription(newDescription: HTMLElement) {
+    this.event.description = newDescription;
     this.edited = true;
   }
 }

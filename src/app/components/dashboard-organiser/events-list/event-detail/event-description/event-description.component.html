@@ -1,0 +1,26 @@
+<ng-container *ngIf="state === ComponentState.LOADING">
+  <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+  <div class="error">
+    <mat-icon>error</mat-icon>
+    <span>Something went wrong</span>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+  <ckeditor [(ngModel)]="eventDescriptionInput" [editor]="Editor"></ckeditor>
+  <span class="spacer"></span>
+  <button mat-icon-butto (click)="save()">
+    <mat-icon>
+      done
+    </mat-icon>
+  </button>
+  <button mat-icon-butto (click)="cancel()">
+    <mat-icon>
+      clear
+    </mat-icon>
+  </button>
+
+</ng-container>
