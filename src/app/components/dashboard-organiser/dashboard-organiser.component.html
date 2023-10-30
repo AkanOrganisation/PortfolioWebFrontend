@@ -21,10 +21,10 @@
 
   <mat-sidenav-container>
     <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z16">
-      <app-events-filter></app-events-filter>
+      <app-events-filter (eventsList)="updateEventsList($event)"></app-events-filter>
     </mat-sidenav>
     <mat-sidenav-content>
-      <app-events-list></app-events-list>
+      <app-events-list [eventsList]="eventsList" ></app-events-list>
     </mat-sidenav-content>
 
   </mat-sidenav-container>

@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
-import {UserType} from "../../types";
+import {ClientType, OrganiserType, UserType} from "../../types";
 import {UserPermissions} from "../../constants";
 import {LocalStorageConstants} from "../../constants/localstorage.constants";
+import {EventNodeType} from "../../graphql/events/events.graphql";
 
 
 @Injectable({
@@ -93,7 +94,7 @@ export class UserService {
     this._permissions = [];
   }
 
-  updateData(user: UserType, createNewUser: boolean) {
+  updateUserData(user: UserType, createNewUser: boolean) {
     user.password = user.password2 = "";
     if (createNewUser) {
       user.authenticated = true;
@@ -101,6 +102,29 @@ export class UserService {
     } else {
       this.data = {...this.data, ...user};
     }
-
   }
+
+  updateClientData(client: ClientType) {
+    this.data = {...this.data, client: client};
+  }
+
+  updateOrganiserData(organiser: OrganiserType | undefined) {
+    this.data = {...this.data, organiser: organiser};
+  }
+
+
+ addOrganiserEvents(edges: Array<{ node: EventNodeType; cursor: string }> | undefined) {
+  if (!this.data.organiser) {
+    this.data.organiser = {address: {}};
+  }
+  if (!this.data.organiser.ownedEvents) {
+    this.data.organiser.ownedEvents = {};
+  }
+
+  edges?.forEach((edge) => {
+    // @ts-ignore
+    this.data.organiser.ownedEvents[edge.node.id] = edge.node;
+  });
+  this.data = {...this.data};
+}
 }

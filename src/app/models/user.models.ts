@@ -158,7 +158,7 @@ export class UserModel {
       this.gqlErrors.setErrors(result.data.createOrUpdateUser.errors);
       this.error = result.error;
       if (this.user.authenticated) {
-        this.user.updateData(user, createNewUser);
+        this.user.updateUserData(user, createNewUser);
       }
       return this.user.authenticated;
     } catch

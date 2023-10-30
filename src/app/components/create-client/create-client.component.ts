@@ -60,7 +60,7 @@ export class CreateClientComponent implements OnInit {
         this.state = ComponentState.READY
       } else {
         this.user.addPermission(UserPermissions.CLIENT);
-        this.user.data.client = this.clientInput;
+        this.user.updateClientData(this.clientInput);
         this.clientInput = getEmptyClient();
         this.state = ComponentState.COMPLETED;
         this.router.navigate(['/']);

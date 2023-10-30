@@ -2,8 +2,8 @@ import {OrganiserType} from "../types";
 import { getEmptyAddress} from "./address.constants";
 
 const emptyOrganiser: OrganiserType = {
-    companyName: "",
-    registerNumber: "",
+    companyName: undefined,
+    registerNumber: undefined,
     contactPersons: [],
     address: getEmptyAddress()
 };

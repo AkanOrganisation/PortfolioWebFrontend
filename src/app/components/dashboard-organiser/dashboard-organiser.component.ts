@@ -3,7 +3,7 @@ import {OrganiserModel} from "../../models/organiser.models";
 import {ComponentState, LinksConstants} from "../../constants";
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {EventsFilterConnectionType} from "../../graphql/events/events.graphql";
+import {EventNodeType, EventsFilterConnectionType} from "../../graphql/events/events.graphql";
 
 @Component({
   selector: 'app-dashboard-organiser',
@@ -15,6 +15,13 @@ export class DashboardOrganiserComponent implements OnInit {
   sidenav!: MatSidenav;
 
   state = ComponentState.LOADING;
+
+  public eventsList : EventNodeType[] = [];
+
+  updateEventsList(eventsList: EventNodeType[]) {
+    this.eventsList = eventsList;
+  }
+
 
   constructor(
     private organiserModel: OrganiserModel,

@@ -2,12 +2,12 @@ import {AddressType} from "../types";
 import {AddressFilterType} from "../graphql/location/address.graphql";
 
 const emptyAddress: AddressType = {
-  streetName: "",
-  streetNumber: "",
-  city: "",
-  country: "",
-  zipCode: "",
-  additional: "",
+  streetName: undefined,
+  streetNumber: undefined,
+  city: undefined,
+  country: undefined,
+  zipCode: undefined,
+  additional: undefined,
 
 };
 

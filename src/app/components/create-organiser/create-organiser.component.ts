@@ -43,7 +43,7 @@ export class CreateOrganiserComponent implements OnInit {
       const result = await this.organiserModel.createOrUpdateOrganiser(this.organiserInput);
       if (result) {
         this.user.addPermission(UserPermissions.ORGANISER);
-        this.user.data.organiser = this.organiserInput;
+        this.user.updateOrganiserData(this.organiserInput);
         this.organiserInput = getEmptyOrganiser();
         this.contactPersonsInput = [getEmptyContactPerson()];
         this.state = ComponentState.COMPLETED;
