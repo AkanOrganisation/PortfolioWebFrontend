@@ -13,7 +13,7 @@ import {ComponentState} from "../../../../constants";
         style({opacity: 0, transform: 'translateY(-100px)'}),
         animate('0.3s ease-out', style({opacity: 1, transform: 'translateY(0)'})),
       ]),
-      transition(':leave', [
+      transition(':leave' , [
         style({opacity: 1, transform: 'translateY(0)'}),
         animate('0.3s ease-in', style({opacity: 0, transform: 'translateY(-100px)'})),
       ]),
