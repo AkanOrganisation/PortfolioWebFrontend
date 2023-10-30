@@ -7,7 +7,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {CsrfInterceptor, UserService} from "./services";
 import {CookieService} from 'ngx-cookie-service';
 import {UserModel} from "./models";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatButtonModule} from "@angular/material/button";
@@ -33,11 +33,15 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {appRoutes} from "./app.routes";
 import {LogoutUserComponent} from './components/logout-user/logout-user.component';
 import {AppInitializerService} from "./services/initializer/app.initializer";
-import {resolve} from "@angular/compiler-cli";
 import { EventsListComponent } from './components/dashboard-organiser/events-list/events-list.component';
 import { EventsFilterComponent } from './components/dashboard-organiser/events-filter/events-filter.component';
 import { EventDetailComponent } from './components/dashboard-organiser/events-list/event-detail/event-detail.component';
 import { AppEventDatetimeComponent } from './components/dashboard-organiser/events-list/event-detail/event-datetime/app-event-datetime.component';
+import { EventDescriptionComponent } from './components/dashboard-organiser/events-list/event-detail/event-description/event-description.component';
+import { EventLocationComponent } from './components/dashboard-organiser/events-list/event-detail/event-location/event-location.component';
+import { EventTitleComponent } from './components/dashboard-organiser/events-list/event-detail/event-title/event-title.component';
+import { EventCategoryComponent } from './components/dashboard-organiser/events-list/event-detail/event-category/event-category.component';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 
 const MATERIALMODULES = [
@@ -52,6 +56,8 @@ const MATERIALMODULES = [
   MatDividerModule,
   MatInputModule,
   MatFormFieldModule,
+  MatProgressSpinnerModule,
+
 ];
 
 const BROWSERMODULES = [
@@ -82,14 +88,17 @@ const FORMSMODULES = [
     EventsFilterComponent,
     EventDetailComponent,
     AppEventDatetimeComponent,
+    EventDescriptionComponent,
+    EventLocationComponent,
+    EventTitleComponent,
+    EventCategoryComponent,
   ],
   imports: [
     BROWSERMODULES,
     FORMSMODULES,
     MATERIALMODULES,
     FlexLayoutModule,
-
-    MatProgressSpinnerModule,
+    CKEditorModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true},

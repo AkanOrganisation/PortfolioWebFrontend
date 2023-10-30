@@ -1,0 +1,36 @@
+<ng-container *ngIf="state === ComponentState.LOADING">
+  <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+  <div class="error">
+    <mat-icon>error</mat-icon>
+    <span>Something went wrong</span>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+  <ng-container *ngIf="mode === ComponentMode.VIEW">
+    <h1 class="title">Event:</h1>
+    <h1 class="eventTitle">{{eventTitle}}</h1>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="toggle()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="mode === ComponentMode.UPDATE">
+    <mat-form-field>
+      <input matInput [(ngModel)]="eventTitleInput" placeholder="Event title">
+    </mat-form-field>
+    <button mat-icon-butto (click)="save()">
+      <mat-icon>
+        done
+      </mat-icon>
+    </button>
+    <button mat-icon-butto (click)="cancel()">
+      <mat-icon>
+        clear
+      </mat-icon>
+    </button>
+  </ng-container>
+</ng-container>
