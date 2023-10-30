@@ -1,1 +1,9 @@
-<p>events-list works!</p>
+<mat-spinner
+  *ngIf="state === ComponentState.LOADING; else loadEventsList"></mat-spinner>
+
+
+<ng-template #loadEventsList>
+  <ng-container *ngFor="let event of eventsList; trackBy: trackById" class="mat-elevation-z12">
+    <app-event-detail [event]="event"></app-event-detail>
+  </ng-container>
+</ng-template>

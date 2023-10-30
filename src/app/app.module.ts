@@ -36,6 +36,7 @@ import {AppInitializerService} from "./services/initializer/app.initializer";
 import {resolve} from "@angular/compiler-cli";
 import { EventsListComponent } from './components/dashboard-organiser/events-list/events-list.component';
 import { EventsFilterComponent } from './components/dashboard-organiser/events-filter/events-filter.component';
+import { EventDetailComponent } from './components/dashboard-organiser/events-list/event-detail/event-detail.component';
 
 
 const MATERIALMODULES = [
@@ -78,6 +79,7 @@ const FORMSMODULES = [
     LogoutUserComponent,
     EventsListComponent,
     EventsFilterComponent,
+    EventDetailComponent,
   ],
   imports: [
     BROWSERMODULES,

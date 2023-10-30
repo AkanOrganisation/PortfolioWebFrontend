@@ -6,7 +6,7 @@ import {EventNodeType} from "../../../graphql/events/events.graphql";
 @Component({
   selector: 'app-events-list',
   templateUrl: './events-list.component.html',
-  styleUrls: ['./events-list.component.css']
+  styleUrls: ['./events-list.component.css'],
 })
 export class EventsListComponent implements OnInit {
 
@@ -14,19 +14,25 @@ export class EventsListComponent implements OnInit {
 
   @Input() eventsList: EventNodeType[] = [];
 
-  constructor(
-    private organiserModel: OrganiserModel,
-  ) {
-  }
 
-  ngOnInit(): void {
+
+  ngOnInit() {
     this.state = ComponentState.READY;
   }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['eventsList']) {
       console.log("Received new data:", this.eventsList);
     }
   }
+
+  protected readonly ComponentState = ComponentState;
+
+
+  trackById(index: number, item: EventNodeType): any {
+  return item.id; // unique id corresponding to the item
+}
+
 
 }

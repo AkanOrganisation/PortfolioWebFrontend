@@ -24,7 +24,6 @@ export class DashboardOrganiserComponent implements OnInit {
 
 
   constructor(
-    private organiserModel: OrganiserModel,
     private observer: BreakpointObserver,
   ) {
   }

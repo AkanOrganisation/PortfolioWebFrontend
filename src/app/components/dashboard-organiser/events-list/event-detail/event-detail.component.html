@@ -1,0 +1,12 @@
+<mat-spinner *ngIf="state === ComponentState.LOADING; else showCard" class="spinner"></mat-spinner>
+
+<ng-template #showCard>
+  <mat-card @cardAnimation>
+    <mat-card-header>
+      <mat-card-title>{{ event.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Category: {{ event.category }}</p>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
