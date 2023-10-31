@@ -77,10 +77,6 @@ const BROWSERMODULES = [
     RouterModule.forRoot(appRoutes),
     GraphQLModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-        cookieName: 'CSRF_TOKEN',
-        headerName: 'X-CSRFToken',
-    })
 ];
 
 const FORMSMODULES = [
