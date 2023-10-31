@@ -1,6 +1,6 @@
 
 export enum LinksConstants {
-   API_ENDPOINT = 'http://127.0.0.1:8000/',
+   API_ENDPOINT = 'https://dhbw-mosbach-web-events-dcf5cbcab3e8.herokuapp.com/',
    API_GRAPHQL_ENDPOINT = LinksConstants.API_ENDPOINT + 'graphql/',
    API_CSRF_ENDPOINT = LinksConstants.API_ENDPOINT + 'api/get_csrf/',
    CSRF_COOKIE_NAME = 'csrftoken',
