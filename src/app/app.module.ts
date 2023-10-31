@@ -78,7 +78,7 @@ const BROWSERMODULES = [
     GraphQLModule,
     HttpClientModule,
     HttpClientXsrfModule.withOptions({
-        cookieName: 'csrftoken',
+        cookieName: 'CSRF_TOKEN',
         headerName: 'X-CSRFToken',
     })
 ];
