@@ -95,13 +95,13 @@
             <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
           </mat-form-field>
 
-          <!-- ZipCode -->
+          <!-- postalCode -->
           <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Zipcode" [(ngModel)]="clientInput.address.zipCode"
-                   name="address_zipcode" required>
-            <mat-error *ngIf="clientForm.controls?.['address_zipcode']?.errors?.['required']">ZipCode is required.
+            <input type="text" matInput placeholder="Enter your Postal Code" [(ngModel)]="clientInput.address.postalCode"
+                   name="address_postalCode" required>
+            <mat-error *ngIf="clientForm.controls?.['address_postalCode']?.errors?.['required']">Postal Code is required.
             </mat-error>
-            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_zipcode')">{{ error }}</mat-error>
+            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_postalCode')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- Submit Button -->

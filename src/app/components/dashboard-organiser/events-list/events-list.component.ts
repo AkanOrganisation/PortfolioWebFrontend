@@ -29,10 +29,4 @@ export class EventsListComponent implements OnInit {
 
   protected readonly ComponentState = ComponentState;
 
-
-  trackById(index: number, item: EventNodeType): any {
-  return item.id; // unique id corresponding to the item
-}
-
-
 }

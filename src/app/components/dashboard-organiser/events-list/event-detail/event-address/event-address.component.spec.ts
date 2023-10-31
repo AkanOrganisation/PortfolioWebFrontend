@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventLocationComponent } from './event-location.component';
+import { EventAddressComponent } from './event-address.component';
 
 describe('EventLocationComponent', () => {
-  let component: EventLocationComponent;
-  let fixture: ComponentFixture<EventLocationComponent>;
+  let component: EventAddressComponent;
+  let fixture: ComponentFixture<EventAddressComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EventLocationComponent]
+      declarations: [EventAddressComponent]
     });
-    fixture = TestBed.createComponent(EventLocationComponent);
+    fixture = TestBed.createComponent(EventAddressComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,7 +7,7 @@ import {LookupFilterType} from "../lookups.graphql";
 export type AddressFilterType = {
   city?: LookupFilterType<string>;
   country?: LookupFilterType<string>;
-  zipCode?: LookupFilterType<string>;
+  postalCode?: LookupFilterType<string>;
 };
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -18,8 +18,9 @@ export type AddressNodeType = {
   id: string | undefined;
   city: string | undefined;
   country: string | undefined;
-  zipCode: string | undefined;
+  postalCode: string | undefined;
   streetName: string | undefined;
   streetNumber: string | undefined;
+  additional?: string | undefined;
 }
 ////////////////////////////////////////////////////////////////////////////////////////

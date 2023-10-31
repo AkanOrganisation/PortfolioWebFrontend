@@ -46,9 +46,11 @@
           <app-event-description [eventDescription]="event.description"
                                  (eventDescriptionChange)="updateEventsDescription($event)"></app-event-description>
           <mat-divider></mat-divider>
-          <app-event-address></app-event-address>
+          <app-event-address  [eventAddress]="event['address']"
+                              (eventAddressChange)="updateEventsAddress($event)"
+                              (eventLocationChange)="updateEventsLocation($event)"   ></app-event-address>
           <mat-divider></mat-divider>
-          <ng-container *ngFor="let eventDateTime of getDates(); trackBy: trackById" class="mat-elevation-z14">
+          <ng-container *ngFor="let eventDateTime of getDates();" class="mat-elevation-z14">
             <app-event-datetime [eventDateTime]="eventDateTime"></app-event-datetime>
           </ng-container>
         </mat-card-content>

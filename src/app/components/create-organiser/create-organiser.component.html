@@ -77,14 +77,14 @@
               *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
           </mat-form-field>
 
-          <!-- ZipCode -->
+          <!-- Postal Code -->
           <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Zipcode" [(ngModel)]="organiserInput.address.zipCode"
-                   name="address_zipCode" required>
-            <mat-error *ngIf="organiserForm.controls?.['address_zipCode']?.errors?.['required']">ZipCode is required.
+            <input type="text" matInput placeholder="Enter your Postal Code" [(ngModel)]="organiserInput.address.postalCode"
+                   name="address_postalCode" required>
+            <mat-error *ngIf="organiserForm.controls?.['address_postalCode']?.errors?.['required']">PostalCode is required.
             </mat-error>
             <mat-error
-              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_zipCode')">{{ error }}</mat-error>
+              *ngFor="let error of organiserModel.gqlErrors.getErrorsForField('address_postalCode')">{{ error }}</mat-error>
           </mat-form-field>
 
           <!-- ContactPersons -->

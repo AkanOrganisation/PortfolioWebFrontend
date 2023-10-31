@@ -25,9 +25,9 @@
              name="eventAddressCity">
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <input type="text" matInput placeholder="Search by Zip Code"
-             [(ngModel)]="eventsFilter.ownedEvents?.filter.address.zipCode.exact"
-             name="eventAddressZipCode">
+      <input type="text" matInput placeholder="Search by Postal Code"
+             [(ngModel)]="eventsFilter.ownedEvents?.filter.address.postalCode.exact"
+             name="eventAddressPostalCode">
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit"

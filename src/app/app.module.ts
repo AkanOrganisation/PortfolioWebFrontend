@@ -38,10 +38,11 @@ import { EventsFilterComponent } from './components/dashboard-organiser/events-f
 import { EventDetailComponent } from './components/dashboard-organiser/events-list/event-detail/event-detail.component';
 import { AppEventDatetimeComponent } from './components/dashboard-organiser/events-list/event-detail/event-datetime/app-event-datetime.component';
 import { EventDescriptionComponent } from './components/dashboard-organiser/events-list/event-detail/event-description/event-description.component';
-import { EventLocationComponent } from './components/dashboard-organiser/events-list/event-detail/event-location/event-location.component';
+import { EventAddressComponent } from './components/dashboard-organiser/events-list/event-detail/event-address/event-address.component';
 import { EventTitleComponent } from './components/dashboard-organiser/events-list/event-detail/event-title/event-title.component';
 import { EventCategoryComponent } from './components/dashboard-organiser/events-list/event-detail/event-category/event-category.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {GeoService} from "./services/geo-services/geo.service";
 
 
 const MATERIALMODULES = [
@@ -89,7 +90,7 @@ const FORMSMODULES = [
     EventDetailComponent,
     AppEventDatetimeComponent,
     EventDescriptionComponent,
-    EventLocationComponent,
+    EventAddressComponent,
     EventTitleComponent,
     EventCategoryComponent,
   ],
@@ -121,6 +122,7 @@ const FORMSMODULES = [
     },
     CookieService,
     UserModel,
+    GeoService,
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,7 @@
 
 
 <ng-template #loadEventsList>
-  <ng-container *ngFor="let event of eventsList; trackBy: trackById" class="mat-elevation-z12">
+  <ng-container *ngFor="let event of eventsList" class="mat-elevation-z12">
     <app-event-detail [event]="event"></app-event-detail>
   </ng-container>
 </ng-template>

@@ -6,7 +6,7 @@ const emptyAddress: AddressType = {
   streetNumber: undefined,
   city: undefined,
   country: undefined,
-  zipCode: undefined,
+  postalCode: undefined,
   additional: undefined,
 
 };
@@ -23,7 +23,7 @@ const DEFAULT_ADDRESS_FILTER = {
   country: {
     exact: undefined,
   },
-  zipCode: {
+  postalCode: {
     exact: undefined,
   }
 }
@@ -31,4 +31,15 @@ const DEFAULT_ADDRESS_FILTER = {
 
 export function getDefaultAddressFilter(): AddressFilterType {
   return JSON.parse(JSON.stringify(DEFAULT_ADDRESS_FILTER));
+}
+
+
+
+const EmptyLocation = {
+  locationLat: undefined,
+  locationLng: undefined,
+}
+
+export function getEmptyLocation(): any {
+  return JSON.parse(JSON.stringify(EmptyLocation));
 }

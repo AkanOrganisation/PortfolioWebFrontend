@@ -54,10 +54,10 @@ export class OrganiserModel {
 
   getEventDetails(id: string) {
     return this.apollo
-      .watchQuery<eventPrivateQueryType>({
+      .query<eventPrivateQueryType>({
         query: EVENT_DETAILS_QUERY,
         variables: {id},
-      }).valueChanges;
+      });
 
   }
 }
@@ -111,7 +111,7 @@ const EVENT_DETAILS_QUERY: TypedDocumentNode<EventNodeType> = gql`
         id
         streetName
         streetNumber
-        zipCode
+        postalCode
       }
       category
       description

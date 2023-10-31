@@ -1,0 +1,55 @@
+<ng-container *ngIf="state === ComponentState.LOADING">
+  <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+  <div class="error">
+    <mat-icon>error</mat-icon>
+    <span>Something went wrong</span>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+  <ng-container *ngIf="mode === ComponentMode.VIEW">
+    <div>
+      <h1 class="eventAddress">{{addressToString(eventAddress)}}</h1>
+    </div>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="toggle()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="mode === ComponentMode.UPDATE">
+    <mat-form-field>
+      <input matInput [(ngModel)]="eventAddressInput.country" placeholder="Country">
+    </mat-form-field>
+        <mat-form-field>
+      <input matInput [(ngModel)]="eventAddressInput.postalCode" placeholder="Postal Code">
+    </mat-form-field>
+        <mat-form-field>
+      <input matInput [(ngModel)]="eventAddressInput.city" placeholder="City">
+    </mat-form-field>
+        <mat-form-field>
+      <input matInput [(ngModel)]="eventAddressInput.streetName" placeholder="Street Name">
+    </mat-form-field>
+        <mat-form-field>
+      <input matInput [(ngModel)]="eventAddressInput.streetNumber" placeholder="House Number">
+    </mat-form-field>
+        <mat-form-field>
+      <input matInput [(ngModel)]="eventAddressInput.additional" placeholder="Additional">
+    </mat-form-field>
+    <span class="spacer"></span>
+    <mat-card-actions>
+      <button mat-icon-butto (click)="save()">
+        <mat-icon>
+          done
+        </mat-icon>
+      </button>
+      <button mat-icon-butto (click)="cancel()">
+        <mat-icon>
+          clear
+        </mat-icon>
+      </button>
+    </mat-card-actions>
+  </ng-container>
+</ng-container>
