@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {GraphQLModule} from './services/graphql/graphql.module';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from '@angular/common/http';
 import {CsrfInterceptor, UserService} from "./services";
 import {CookieService} from 'ngx-cookie-service';
 import {UserModel} from "./models";
@@ -33,98 +33,116 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {appRoutes} from "./app.routes";
 import {LogoutUserComponent} from './components/logout-user/logout-user.component';
 import {AppInitializerService} from "./services/initializer/app.initializer";
-import { EventsListComponent } from './components/dashboard-organiser/events-list/events-list.component';
-import { EventsFilterComponent } from './components/dashboard-organiser/events-filter/events-filter.component';
-import { EventDetailComponent } from './components/dashboard-organiser/events-list/event-detail/event-detail.component';
-import { AppEventDatetimeComponent } from './components/dashboard-organiser/events-list/event-detail/event-datetime/app-event-datetime.component';
-import { EventDescriptionComponent } from './components/dashboard-organiser/events-list/event-detail/event-description/event-description.component';
-import { EventAddressComponent } from './components/dashboard-organiser/events-list/event-detail/event-address/event-address.component';
-import { EventTitleComponent } from './components/dashboard-organiser/events-list/event-detail/event-title/event-title.component';
-import { EventCategoryComponent } from './components/dashboard-organiser/events-list/event-detail/event-category/event-category.component';
+import {EventsListComponent} from './components/dashboard-organiser/events-list/events-list.component';
+import {EventsFilterComponent} from './components/dashboard-organiser/events-filter/events-filter.component';
+import {EventDetailComponent} from './components/dashboard-organiser/events-list/event-detail/event-detail.component';
+import {
+    AppEventDatetimeComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-datetime/app-event-datetime.component';
+import {
+    EventDescriptionComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-description/event-description.component';
+import {
+    EventAddressComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-address/event-address.component';
+import {
+    EventTitleComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-title/event-title.component';
+import {
+    EventCategoryComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-category/event-category.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {GeoService} from "./services/geo-services/geo.service";
 
 
 const MATERIALMODULES = [
-  MatButtonModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatCheckboxModule,
-  MatPaginatorModule,
-  MatCardModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatDividerModule,
-  MatInputModule,
-  MatFormFieldModule,
-  MatProgressSpinnerModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
 
 ];
 
 const BROWSERMODULES = [
-  BrowserModule,
-  BrowserAnimationsModule,
-  RouterModule.forRoot(appRoutes),
-  GraphQLModule,
-  HttpClientModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule.forRoot(appRoutes),
+    GraphQLModule,
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+        cookieName: 'csrftoken',
+        headerName: 'X-CSRFToken',
+    })
 ];
 
 const FORMSMODULES = [
-  FormsModule,
+    FormsModule,
 ];
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CreateUserComponent,
-    LoginUserComponent,
-    CreateClientComponent,
-    CreateOrganiserComponent,
-    DashboardClientComponent,
-    DashboardOrganiserComponent,
-    DashboardComponent,
-    LogoutUserComponent,
-    EventsListComponent,
-    EventsFilterComponent,
-    EventDetailComponent,
-    AppEventDatetimeComponent,
-    EventDescriptionComponent,
-    EventAddressComponent,
-    EventTitleComponent,
-    EventCategoryComponent,
-  ],
-  imports: [
-    BROWSERMODULES,
-    FORMSMODULES,
-    MATERIALMODULES,
-    FlexLayoutModule,
-    CKEditorModule,
-  ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: CsrfInterceptor, multi: true},
-    UserService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (userService: UserService) => () => {
-        userService;
-        return true;
-      },
-      deps: [UserService],
-      multi: true
-    },
-    AppInitializerService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (appInitializer: AppInitializerService) => () => appInitializer.init(),
-      deps: [AppInitializerService],
-      multi: true
-    },
-    CookieService,
-    UserModel,
-    GeoService,
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        CreateUserComponent,
+        LoginUserComponent,
+        CreateClientComponent,
+        CreateOrganiserComponent,
+        DashboardClientComponent,
+        DashboardOrganiserComponent,
+        DashboardComponent,
+        LogoutUserComponent,
+        EventsListComponent,
+        EventsFilterComponent,
+        EventDetailComponent,
+        AppEventDatetimeComponent,
+        EventDescriptionComponent,
+        EventAddressComponent,
+        EventTitleComponent,
+        EventCategoryComponent,
+    ],
+    imports: [
+        BROWSERMODULES,
+        FORMSMODULES,
+        MATERIALMODULES,
+        FlexLayoutModule,
+        CKEditorModule,
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: CsrfInterceptor,
+            multi: true
+        },
+        UserService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (userService: UserService) => () => {
+                userService;
+                return true;
+            },
+            deps: [UserService],
+            multi: true
+        },
+        AppInitializerService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (appInitializer: AppInitializerService) => () => appInitializer.init(),
+            deps: [AppInitializerService],
+            multi: true
+        },
+        CookieService,
+        UserModel,
+        GeoService,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }
