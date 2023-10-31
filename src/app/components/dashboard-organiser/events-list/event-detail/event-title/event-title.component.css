@@ -1,4 +1,7 @@
 :host{
-  display: flex;
   width: 95%;
+  overflow: auto;
+  word-wrap: break-word;
 }
+
+

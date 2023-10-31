@@ -31,10 +31,6 @@ mat-card:hover {
   cursor: pointer; /* Optional: Add cursor pointer on hover */
 }
 
-mat-card-title {
-  text-overflow: ellipsis; /* Adds an ellipsis when the text overflows */
-  overflow: hidden;    /* Hides the overflow */
-}
 
 .card-details {
   position: relative;
