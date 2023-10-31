@@ -13,11 +13,13 @@ export class CsrfInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.startsWith(LinksConstants.API_GRAPHQL_ENDPOINT)) {
+      console.log('intercepted');
       const token = this.cookieService.get(LinksConstants.CSRF_COOKIE_NAME);
       const clonedRequest = req.clone({
         withCredentials: true,
         headers: req.headers.set('X-CSRFToken', token)
       });
+      console.log(clonedRequest);
       return next.handle(clonedRequest);
     }
     return next.handle(req);
