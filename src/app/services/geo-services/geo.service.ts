@@ -10,7 +10,7 @@ import {AddressType, LocationType} from "../../types";
 })
 export class GeoService {
     private API_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-    private API_KEY = 'AIzaSyApWvivNYAkoI-ZhEf1v36N87zAnN9a53A';
+    private xyz = 'AIzaSyApWvivNYAkoI-ZhEf1v36N87zAnN9a53A';
 
     constructor(
         private http: HttpClient,
@@ -57,7 +57,7 @@ export class GeoService {
         if (address.additional) {
             url += address.additional + ',';
         }
-        url += '&key=' + this.API_KEY;
+        url += '&key=' + this.xyz;
         return url;
     }
 
