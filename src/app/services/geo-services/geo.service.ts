@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
-import {AddressNodeType} from "../../graphql/location/address.graphql";
-import {LocationNodeType} from "../../graphql/location/location.graphql";
 import {HttpClient} from "@angular/common/http";
 import {AddressType, LocationType} from "../../types";
+import {API_MAPS} from "../../constants/api-maps.constants";
 
 
 @Injectable({
@@ -10,7 +9,7 @@ import {AddressType, LocationType} from "../../types";
 })
 export class GeoService {
     private API_ENDPOINT = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-    private xyz = 'AIzaSyApWvivNYAkoI-ZhEf1v36N87zAnN9a53A';
+    private secretKey = API_MAPS.SECRET_KEY;
 
     constructor(
         private http: HttpClient,
@@ -57,7 +56,7 @@ export class GeoService {
         if (address.additional) {
             url += address.additional + ',';
         }
-        url += '&key=' + this.xyz;
+        url += '&key=' + this.secretKey;
         return url;
     }
 

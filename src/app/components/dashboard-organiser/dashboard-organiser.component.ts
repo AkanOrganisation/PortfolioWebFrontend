@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {OrganiserModel} from "../../models/organiser.models";
-import {ComponentState, LinksConstants} from "../../constants";
+import {ComponentState, API_ENDPOINTS, PROJECT} from "../../constants";
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {EventNodeType, EventsFilterConnectionType} from "../../graphql/events/events.graphql";
@@ -46,5 +46,6 @@ export class DashboardOrganiserComponent implements OnInit {
 
 
   protected readonly ComponentState = ComponentState;
-  protected readonly LinksConstants = LinksConstants;
+  protected readonly LinksConstants = API_ENDPOINTS;
+  protected readonly PROJECT = PROJECT;
 }

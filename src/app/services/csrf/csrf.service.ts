@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LinksConstants} from '../../constants/links-constants';
+import {API_ENDPOINTS} from '../../constants';
 import {CookieService} from 'ngx-cookie-service';
 
 interface CsrfResponse {
@@ -21,9 +21,9 @@ export class CsrfService {
 
   public async getAndSetCsrfToken(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.get(LinksConstants.API_CSRF_ENDPOINT).subscribe({
+      this.http.get(API_ENDPOINTS.API_CSRF_ENDPOINT).subscribe({
         next: (result: any) => {
-          this.cookieService.set(LinksConstants.CSRF_COOKIE_NAME, result.csrfToken);
+          this.cookieService.set(API_ENDPOINTS.CSRF_COOKIE_NAME, result.csrfToken);
           resolve(true);
         },
         error: (error) => {
