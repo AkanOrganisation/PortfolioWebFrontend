@@ -81,7 +81,7 @@ export class OrganiserModel {
                     }));
             this.gqlErrors.setErrors(result.data.createOrUpdateEvents.errors);
             this.error = result.error;
-            return result.data.createOrUpdateEvents.success;
+            return result.data.createOrUpdateEvents;
         } catch (error) {
             this.error = error;
             return false;
@@ -232,5 +232,26 @@ const CREATE_OR_UPDATE_EVENTS_MUTATION = gql`
                 field
                 messages
             }
+            events {
+                id
+                dates {
+                    edges {
+                        cursor
+                        node {
+                            id
+                            datetime
+                            maxMembers
+                            status
+                        }
+                    }
+                    pageInfo {
+                        startCursor
+                        hasPreviousPage
+                        hasNextPage
+                        endCursor
+                    }
+                }
+            }
         }
     }`
+

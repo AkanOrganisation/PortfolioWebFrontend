@@ -196,7 +196,13 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
         };
         const result = await this.organiserModel.createOrUpdateEvents([event])
-        if (result) {
+        if (result.success) {
+            if (this.event.id && this.event.id.startsWith(CreateConstants.CREATE_EVENT)) {
+                this.event.id = result.events[0].id;
+            }
+            this.event.dates = result.events[0].dates;
+            this.loaded = true;
+            this.mode = ComponentMode.LIST;
             this.state = ComponentState.READY;
             this.edited = {};
         } else {
