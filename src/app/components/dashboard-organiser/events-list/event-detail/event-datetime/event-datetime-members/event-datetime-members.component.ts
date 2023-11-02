@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ComponentState} from "../../../../../../constants";
 import {ComponentMode} from "../../../../../../constants/mode.components";
-import {EventMemberNodeType} from "../../../../../../graphql/events/events.graphql";
+import {EventMemberType} from "../../../../../../types/event.types";
 
 @Component({
     selector: 'app-event-datetime-members',
@@ -9,7 +9,7 @@ import {EventMemberNodeType} from "../../../../../../graphql/events/events.graph
     styleUrls: ['./event-datetime-members.component.css']
 })
 export class EventDatetimeMembersComponent {
-    @Input() eventMembers?: EventMemberNodeType[];
+    @Input() eventMembers?: EventMemberType[];
 
     state = ComponentState.LOADING;
     mode = ComponentMode.HIDE;

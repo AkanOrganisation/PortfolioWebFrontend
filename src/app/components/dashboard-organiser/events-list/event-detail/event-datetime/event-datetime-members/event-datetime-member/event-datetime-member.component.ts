@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {EventMemberNodeType} from "../../../../../../../graphql/events/events.graphql";
 import {ComponentState} from "../../../../../../../constants";
+import {EventMemberType} from "../../../../../../../types/event.types";
 
 @Component({
     selector: 'app-event-datetime-member',
@@ -9,7 +10,7 @@ import {ComponentState} from "../../../../../../../constants";
 })
 export class EventDatetimeMemberComponent implements OnInit {
 
-    @Input() member!: EventMemberNodeType;
+    @Input() member!: EventMemberType;
 
     state = ComponentState.LOADING;
 

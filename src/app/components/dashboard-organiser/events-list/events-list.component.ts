@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {ComponentState} from "../../../constants";
-import {OrganiserModel} from "../../../models/organiser.models";
+import {EventType} from "../../../types/event.types";
 import {EventNodeType} from "../../../graphql/events/events.graphql";
 
 @Component({

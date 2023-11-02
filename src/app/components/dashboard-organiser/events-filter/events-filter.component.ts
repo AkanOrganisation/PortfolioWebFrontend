@@ -7,6 +7,7 @@ import {OrganiserFilterType} from "../../../graphql/organiser/organiser.graphql"
 import {Subscription} from "rxjs";
 import {UserService} from "../../../services";
 import {EventNodeType} from "../../../graphql/events/events.graphql";
+import {EventType} from "../../../types/event.types";
 
 @Component({
     selector: 'app-events-filter',
@@ -44,10 +45,11 @@ export class EventsFilterComponent implements OnInit, OnDestroy {
 
         this.eventsEndCursor = result.data.organiserPrivate?.ownedEvents?.pageInfo.endCursor;
         this.hasNextPage = result.data.organiserPrivate?.ownedEvents?.pageInfo.hasNextPage;
-        this.state = ComponentState.READY;
+
 
         this.eventsList.emit(result.data.organiserPrivate?.ownedEvents?.edges.map((edge: any) => edge.node));
 
+        this.state = ComponentState.READY;
 
     }
 

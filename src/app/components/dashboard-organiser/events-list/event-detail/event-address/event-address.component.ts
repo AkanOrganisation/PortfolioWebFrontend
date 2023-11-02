@@ -3,6 +3,8 @@ import {ComponentState, getEmptyAddress} from "../../../../../constants";
 import {ComponentMode} from "../../../../../constants/mode.components";
 import {GeoService} from "../../../../../services/geo-services/geo.service";
 import {AddressType, LocationType} from "../../../../../types";
+import {LocationNodeType} from "../../../../../graphql/location/location.graphql";
+import {AddressNodeType} from "../../../../../graphql/location/address.graphql";
 
 @Component({
     selector: 'app-event-address',
@@ -11,11 +13,11 @@ import {AddressType, LocationType} from "../../../../../types";
 })
 export class EventAddressComponent {
 
-    @Input() eventAddress?: AddressType;
-    eventAddressInput!: AddressType;
-    locationInput!: LocationType;
-    @Output() eventAddressChange = new EventEmitter<AddressType>();
-    @Output() eventLocationChange = new EventEmitter<LocationType>();
+    @Input() eventAddress?: AddressNodeType;
+    eventAddressInput!: AddressNodeType;
+    locationInput!: LocationNodeType;
+    @Output() eventAddressChange = new EventEmitter<AddressNodeType>();
+    @Output() eventLocationChange = new EventEmitter<LocationNodeType>();
 
     state = ComponentState.LOADING;
     mode = ComponentMode.VIEW;
@@ -44,8 +46,10 @@ export class EventAddressComponent {
         this.state = ComponentState.PROCESSING;
         if (this.eventAddressInput === undefined) return;
         await this.geoServices.getGeoLocation(this.eventAddressInput).then((location) => {
-                this.locationInput = location;
-                this.eventLocationChange.emit(this.locationInput);
+                if (location && location.lat && location.lng) {
+                    this.locationInput = {location: [parseFloat(location.lat), parseFloat(location.lng)]}
+                    this.eventLocationChange.emit(this.locationInput);
+                }
             }
         ).catch((error) => {
             console.error(error);

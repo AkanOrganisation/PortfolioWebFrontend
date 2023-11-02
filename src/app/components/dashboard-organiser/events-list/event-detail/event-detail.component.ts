@@ -1,11 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from "@angular/core";
 import {ComponentState} from "../../../../constants";
 import {ComponentMode} from "../../../../constants/mode.components";
-import {EventDateTimeNodeType, EventNodeType} from "../../../../graphql/events/events.graphql";
 import {OrganiserModel} from "../../../../models/organiser.models";
 import {animate, style, transition, trigger} from "@angular/animations";
 
-import {AddressType, LocationType} from "../../../../types";
+import {EventDateTimeNodeType, EventNodeType} from "../../../../graphql/events/events.graphql";
+import {AddressNodeType} from "../../../../graphql/location/address.graphql";
+import {LocationNodeType} from "../../../../graphql/location/location.graphql";
 
 @Component({
     selector: 'app-event-detail',
@@ -31,7 +32,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     state = ComponentState.LOADING;
     mode = ComponentMode.LIST;
     loaded = false;
-    private edited = false;
+    private edited: { [key: string]: boolean } = {};
 
     @Input() event!: EventNodeType;
 
@@ -85,42 +86,49 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     }
 
     getDates() {
-        return this.event.dates?.edges.map((edge) => edge.node) || [];
+        return this.event.dates?.edges.map((edge) => edge.node);
     }
 
     protected readonly ComponentMode = ComponentMode;
 
-    updateEventsAddress(newAddress: AddressType) {
+    updateEventsAddress(newAddress: AddressNodeType) {
         if (this.event.address)
             Object.assign(this.event.address, newAddress);
-        this.edited = true;
+        this.edited['address'] = true;
     }
 
 
-    updateEventsLocation(newLocation: LocationType) {
+    updateEventsLocation(newLocation: LocationNodeType) {
         if (this.event.location)
             Object.assign(this.event.location, newLocation);
-        this.edited = true;
+        this.edited['location'] = true;
     }
 
     updateEventsTitle(newTitle: string) {
         this.event.title = newTitle;
-        this.edited = true;
+        this.edited['title'] = true;
     }
 
     updateEventsCategory(newCategory: string) {
         this.event.title = newCategory;
-        this.edited = true;
+        this.edited['category'] = true;
 
     }
 
     updateEventsDescription(newDescription: HTMLElement) {
         this.event.description = newDescription;
-        this.edited = true;
+        this.edited['description'] = true;
     }
 
     updateEventsDatetime(newEventDateTime: EventDateTimeNodeType) {
-        //TODO: implement
+        const index = this.event.dates?.edges.findIndex((edge) => edge.node.id === newEventDateTime.id);
+        if (index !== undefined && index !== -1) {
+            this.event.dates?.edges.push(
+                {
+                    node: newEventDateTime,
+                    cursor: ''
+                });
+        }
+        this.edited['dates'] = true;
     }
-
 }

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {EventDateTimeNodeType, EventMemberNodeType} from "../../../../../graphql/events/events.graphql";
 import {ComponentState} from "../../../../../constants";
+import {EventDateTimeType, EventMemberType} from "../../../../../types/event.types";
+import {EventDateTimeNodeType} from "../../../../../graphql/events/events.graphql";
 
 @Component({
     selector: 'app-event-datetime',
@@ -44,11 +45,11 @@ export class AppEventDatetimeComponent {
     }
 
     get membersCount(): number {
-        return this.eventDateTime.members?.edges?.length || 0;
+        return this.eventDateTime.members?.edges.length || 0;
     }
 
-    get membersList(): EventMemberNodeType[] {
-        return this.eventDateTime.members?.edges?.map((edge) => edge.node) || [];
+    get membersList(): EventMemberType[] {
+        return this.eventDateTime.members?.edges.map((edge: any) => edge.node) || [];
     }
 
 }
