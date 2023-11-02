@@ -24,7 +24,12 @@ export class EventDatetimeSlotsComponent {
     }
 
     ngOnInit() {
-        this.eventSlotsMaxInput = this.eventSlotsMax || 0;
+        if (this.eventSlotsMax) {
+            this.eventSlotsMaxInput = this.eventSlotsMax;
+        } else {
+            this.eventSlotsMaxInput = 0;
+            this.mode = ComponentMode.UPDATE;
+        }
         this.state = ComponentState.READY;
     }
 

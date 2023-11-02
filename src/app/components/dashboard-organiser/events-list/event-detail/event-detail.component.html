@@ -62,6 +62,8 @@
                                 class="mat-elevation-z2"></app-event-datetime>
                         <mat-divider></mat-divider>
                     </ng-container>
+                    <app-event-add-datetime
+                            (eventDateTimeCreate)="updateEventsDatetime($event)"></app-event-add-datetime>
                 </mat-card-content>
             </mat-card>
             <mat-card-actions>

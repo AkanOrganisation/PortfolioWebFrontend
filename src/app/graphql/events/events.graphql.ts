@@ -4,6 +4,7 @@ import {ConnectionFilterType, PagedQueryResultType} from "../filters.graphql";
 import {LocationFilterType, LocationMutationType, LocationNodeType} from "../location/location.graphql";
 import {OrganiserNodeType} from "../organiser/organiser.graphql";
 import {ClientNodeType} from "../client/client.graphql";
+import {StatusConstants} from "../../constants/status.constants";
 
 // Filter Types
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +57,7 @@ export type EventDateTimeNodeType = {
     freeSlotsAvailable?: boolean;
     freeSlotsCount?: number;
     maxMembers?: number;
-    status?: string;
+    status?: StatusConstants;
     eventDescription?: EventNodeType;
     members?: PagedQueryResultType<EventMemberNodeType>;
 
@@ -97,6 +98,6 @@ export type EventMutationType = {
 export type EventDateTimeMutationType = {
     datetimeId?: string;
     datetime?: Date;
-    status?: string;
+    status?: StatusConstants;
     maxMembers?: number;
 }

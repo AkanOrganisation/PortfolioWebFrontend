@@ -1,6 +1,7 @@
 import {ClientType} from "./client.types";
 import {AddressType, LocationType} from "./address.types";
 import {OrganiserType} from "./organiser.types";
+import {StatusConstants} from "../constants/status.constants";
 
 export type EventDateTimeType = {
     id?: string;
@@ -8,7 +9,7 @@ export type EventDateTimeType = {
     freeSlotsAvailable?: boolean;
     freeSlotsCount?: number;
     maxMembers?: number;
-    status?: string;
+    status?: StatusConstants;
     members?: EventMemberType[];
 }
 

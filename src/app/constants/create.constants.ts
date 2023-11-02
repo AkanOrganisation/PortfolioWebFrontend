@@ -1,0 +1,5 @@
+export enum CreateConstants {
+    CREATE = 'CREATE',
+    CREATE_EVENT = 'CREATE_EVENT',
+    CREATE_EVENT_DATETIME = 'CREATE_EVENT_DATETIME',
+}

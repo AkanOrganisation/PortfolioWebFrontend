@@ -70,6 +70,7 @@ import {
 } from './components/dashboard-organiser/events-list/event-detail/event-datetime/event-datetime-members/event-datetime-members.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { EventAddDatetimeComponent } from './components/dashboard-organiser/events-list/event-detail/event-add-datetime/event-add-datetime.component';
 
 
 const MATERIALMODULES = [
@@ -130,6 +131,7 @@ const FORMSMODULES = [
         EventDatetimeMemberComponent,
         EventDatetimeMembersComponent,
         EventDatetimeSlotsComponent,
+        EventAddDatetimeComponent,
     ],
     imports: [
         BROWSERMODULES,

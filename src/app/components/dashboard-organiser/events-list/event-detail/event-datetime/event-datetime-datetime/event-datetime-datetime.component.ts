@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ComponentState} from "../../../../../../constants";
 import {ComponentMode} from "../../../../../../constants/mode.components";
 
@@ -24,7 +24,12 @@ export class EventDatetimeDatetimeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.eventDateTime = this.eventDateTime ? new Date(this.eventDateTime) : new Date();
+        if (this.eventDateTime) {
+            this.eventDateTime = new Date(this.eventDateTime);
+        } else {
+            this.eventDateTime = new Date();
+            this.mode = ComponentMode.UPDATE;
+        }
 
         this.eventDateInput = new Date(this.eventDateTime);
         this.eventTimeInput = this.eventDateTime.toLocaleTimeString();

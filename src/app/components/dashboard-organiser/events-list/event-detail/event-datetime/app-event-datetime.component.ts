@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ComponentState} from "../../../../../constants";
 import {EventDateTimeType, EventMemberType} from "../../../../../types/event.types";
 import {EventDateTimeNodeType} from "../../../../../graphql/events/events.graphql";
+import {StatusConstants} from "../../../../../constants/status.constants";
 
 @Component({
     selector: 'app-event-datetime',
@@ -34,7 +35,7 @@ export class AppEventDatetimeComponent {
     protected readonly ComponentState = ComponentState;
 
 
-    updateStatus(newStatus: string) {
+    updateStatus(newStatus: StatusConstants) {
         this.eventDateTime.status = newStatus;
         if (this.eventDateTime.editedFields) {
             this.eventDateTime.editedFields['status'] = true;

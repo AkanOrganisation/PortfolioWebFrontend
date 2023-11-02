@@ -7,6 +7,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {EventDateTimeNodeType, EventNodeType} from "../../../../graphql/events/events.graphql";
 import {AddressNodeType} from "../../../../graphql/location/address.graphql";
 import {LocationNodeType} from "../../../../graphql/location/location.graphql";
+import {CreateConstants} from "../../../../constants/create.constants";
 
 
 @Component({
@@ -133,13 +134,14 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     updateEventsDatetime(newEventDateTime: EventDateTimeNodeType) {
         if (this.event.dates?.edges) {
             const index = this.event.dates?.edges.findIndex((edge) => edge.node.id === newEventDateTime.id);
-            if (index !== undefined || index !== -1) {
+            if (index !== undefined && index !== -1) {
                 this.event.dates?.edges.splice(index, 1,
                     {
                         node: {...newEventDateTime, edited: true},
                         cursor: ''
                     });
             } else {
+                console.log('new event date time', newEventDateTime.id);
                 this.event.dates?.edges.push({
                     node: {...newEventDateTime, edited: true},
                     cursor: ''
@@ -179,7 +181,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
                             return {
                                 node: {
-                                    id: edge.node.id ? edge.node.id : undefined,
+                                    id: edge.node.id && !edge.node.id.startsWith(CreateConstants.CREATE_EVENT_DATETIME) ? edge.node.id : undefined,
                                     datetime: edge.node.editedFields && edge.node.editedFields['datetime'] ? edge.node.datetime : undefined,
                                     status: edge.node.editedFields && edge.node.editedFields['status'] ? edge.node.status : undefined,
                                     maxMembers: edge.node.editedFields && edge.node.editedFields['maxMembers'] ? edge.node.maxMembers : undefined,

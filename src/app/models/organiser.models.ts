@@ -81,7 +81,7 @@ export class OrganiserModel {
                     }));
             this.gqlErrors.setErrors(result.data.createOrUpdateEvents.errors);
             this.error = result.error;
-            return !!result.data.createOrUpdateOrganiser.success;
+            return result.data.createOrUpdateEvents.success;
         } catch (error) {
             this.error = error;
             return false;
