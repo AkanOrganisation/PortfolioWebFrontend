@@ -28,10 +28,11 @@ mat-card {
 
 mat-card:hover {
   box-shadow: 0 8px 16px grey; /* Optional: Shadow on hover */
-  cursor: pointer; /* Optional: Add cursor pointer on hover */
 }
 
 
 .card-details {
   position: relative;
 }
+
+

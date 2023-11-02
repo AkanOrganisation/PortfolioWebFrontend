@@ -1,1 +1,31 @@
-<p>app-event-datetime works!</p>
+<ng-container *ngIf="state === ComponentState.LOADING">
+    <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+    <div class="error">
+        <mat-icon>error</mat-icon>
+        <span>Something went wrong</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+    <app-event-datetime-status
+            [eventDateTimeStatus]="eventDateTime.status"
+            (eventDateTimeStatusChange)="updateStatus($event)">
+    </app-event-datetime-status>
+    <app-event-datetime-datetime
+            [eventDateTime]="eventDateTime.datetime"
+            (eventDateTimeChange)="updateDateTime($event)">
+    </app-event-datetime-datetime>
+    <app-event-datetime-slots
+            [eventSlotsMax]="eventDateTime.maxMembers"
+            [eventSlotsBooked]="membersCount"
+            [eventSlotsAvailable]="eventDateTime.freeSlotsAvailable"
+            (eventMaxMemberChange)="updateSlots($event)">
+        >
+    </app-event-datetime-slots>
+    <app-event-datetime-members
+            [eventMembers]="membersList">
+    </app-event-datetime-members>
+</ng-container>

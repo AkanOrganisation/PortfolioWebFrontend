@@ -1,0 +1,56 @@
+<ng-container *ngIf="state === ComponentState.LOADING">
+    <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+    <div class="error">
+        <mat-icon>error</mat-icon>
+        <span>Something went wrong</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+    <ng-container *ngIf="mode === ComponentMode.VIEW">
+
+        <div (click)="toggle()" class="slots slots-max pointer">
+            <span>
+                max slots:  {{eventSlotsMax}}
+            </span>
+        </div>
+        <div class="slots slots-booked">
+            <span>
+                booked slots:  {{eventSlotsBooked}}
+            </span>
+        </div>
+        <div class="slots slots-available">
+            <mat-icon *ngIf="eventSlotsAvailable">event_available</mat-icon>
+            <mat-icon *ngIf="!eventSlotsAvailable">event_busy</mat-icon>
+        </div>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="toggle()">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </ng-container>
+
+    <ng-container *ngIf="mode === ComponentMode.UPDATE">
+        <mat-form-field>
+            <input matInput type="number" placeholder="max slots" [(ngModel)]="eventSlotsMaxInput">
+        </mat-form-field>
+
+        <span class="spacer"></span>
+        <mat-card-actions>
+
+            <button mat-icon-butto (click)="save()">
+                <mat-icon>
+                    done
+                </mat-icon>
+            </button>
+            <button mat-icon-butto (click)="cancel()">
+                <mat-icon>
+                    clear
+                </mat-icon>
+            </button>
+        </mat-card-actions>
+
+    </ng-container>
+</ng-container>

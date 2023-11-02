@@ -1,28 +1,40 @@
 <ng-container *ngIf="state === ComponentState.LOADING">
-  <mat-spinner class="spinner"></mat-spinner>
+    <mat-spinner class="spinner"></mat-spinner>
 </ng-container>
 
 <ng-container *ngIf="state === ComponentState.ERROR">
-  <div class="error">
-    <mat-icon>error</mat-icon>
-    <span>Something went wrong</span>
-  </div>
+    <div class="error">
+        <mat-icon>error</mat-icon>
+        <span>Something went wrong</span>
+    </div>
 </ng-container>
 
 <ng-container *ngIf="state === ComponentState.READY">
-
-  <p>Description:</p>
-
-  <ckeditor [(ngModel)]="eventDescriptionInput" [editor]="Editor"></ckeditor>
-  <span class="spacer"></span>
-  <mat-card-actions>
-    <button mat-icon-button [disabled]="!isEdited" (click)="save()">
-      <mat-icon>done</mat-icon>
-    </button>
-    <button mat-icon-butto [disabled]="!isEdited" (click)="cancel()">
-      <mat-icon>restore</mat-icon>
-    </button>
-  </mat-card-actions>
+    <ng-container *ngIf="mode == ComponentMode.VIEW">
+        <mat-card (click)="toggle()">
+            <mat-card-title>Description:</mat-card-title>
+            <div [innerHTML]="eventDescription"></div>
+            <span class="spacer"></span>
+            <mat-card-actions>
+                <button mat-icon-button (click)="toggle()">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </ng-container>
+    <ng-container *ngIf="mode == ComponentMode.UPDATE">
+        <mat-card-title>Update Description</mat-card-title>
+        <ckeditor [(ngModel)]="eventDescriptionInput" [editor]="Editor"></ckeditor>
+        <span class="spacer"></span>
+        <mat-card-actions>
+            <button mat-icon-button [disabled]="!isEdited" (click)="save()">
+                <mat-icon>done</mat-icon>
+            </button>
+            <button mat-icon-butto (click)="cancel()">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-card-actions>
+    </ng-container>
 
 
 </ng-container>

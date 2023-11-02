@@ -118,4 +118,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         this.event.description = newDescription;
         this.edited = true;
     }
+
+    updateEventsDatetime(newEventDateTime: EventDateTimeNodeType) {
+        //TODO: implement
+    }
+
 }

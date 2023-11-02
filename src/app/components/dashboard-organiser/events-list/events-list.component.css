@@ -12,13 +12,11 @@ app-event-detail {
   transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Added transform to the transition */
   min-width: 250px;
   overflow: hidden; /* Hides the content that is outside the card */
-  transform: scale(1.05);
+  transform: scale(0.95);
 }
 
 app-event-detail:hover {
   box-shadow: 0 8px 16px grey; /* Optional: Shadow on hover */
-  cursor: pointer; /* Optional: Add cursor pointer on hover */
   transform: scale(1);
-
 }
 

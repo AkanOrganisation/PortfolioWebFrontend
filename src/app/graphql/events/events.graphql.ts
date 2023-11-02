@@ -50,7 +50,7 @@ export type EventNodeType = {
 
 export type EventDateTimeNodeType = {
   id?: string;
-  datetime?: string;
+  datetime?: Date;
   freeSlotsAvailable?: boolean;
   freeSlotsCount?: number;
   maxMembers?: number;

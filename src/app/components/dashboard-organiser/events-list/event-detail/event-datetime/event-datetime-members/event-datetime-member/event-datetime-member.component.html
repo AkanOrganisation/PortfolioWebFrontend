@@ -1,0 +1,31 @@
+<ng-container *ngIf="state === ComponentState.LOADING">
+    <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+    <div class="error">
+        <mat-icon>error</mat-icon>
+        <span>Something went wrong</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+    <mat-card>
+        <mat-card-content>
+            <div>
+                <span>Display Name: {{member.client?.displayName}}</span>
+            </div>
+            <div>
+                <span>First Name: {{member.client?.firstName}}</span>
+            </div>
+            <div>
+                <span>Last Name: {{member.client?.lastName}}</span>
+            </div>
+            <div>
+                <span>
+                    Status: {{member.status}}
+                </span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

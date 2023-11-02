@@ -1,0 +1,42 @@
+<ng-container *ngIf="state === ComponentState.LOADING">
+    <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+    <div class="error">
+        <mat-icon>error</mat-icon>
+        <span>Something went wrong</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+    <ng-container *ngIf="mode === ComponentMode.HIDE">
+        <div (click)="toggle()" class="pointer">
+            <span>Show members</span>
+            <button mat-icon-button (click)="toggle()">
+                <mat-icon>visibility</mat-icon>
+            </button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="mode === ComponentMode.SHOW">
+
+        <div (click)="toggle()" class="pointer">
+            <span>Hide members</span>
+            <button mat-icon-button (click)="toggle()">
+                <mat-icon>visibility_off</mat-icon>
+            </button>
+        </div>
+        <div>
+            <ng-container *ngIf="eventMembers?.length === 0">
+                <div class="error">
+                    <mat-icon>error</mat-icon>
+                    <span>No members found</span>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let member of eventMembers">
+                <app-event-datetime-member [member]="member"></app-event-datetime-member>
+                <mat-divider></mat-divider>
+            </ng-container>
+        </div>
+    </ng-container>
+</ng-container>

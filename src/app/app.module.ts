@@ -53,6 +53,23 @@ import {
 } from './components/dashboard-organiser/events-list/event-detail/event-category/event-category.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {GeoService} from "./services/geo-services/geo.service";
+import {
+    EventDatetimeDatetimeComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-datetime/event-datetime-datetime/event-datetime-datetime.component';
+import {
+    EventDatetimeStatusComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-datetime/event-datetime-status/event-datetime-status.component';
+import {
+    EventDatetimeSlotsComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-datetime/event-datetime-slots/event-datetime-slots.component';
+import {
+    EventDatetimeMemberComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-datetime/event-datetime-members/event-datetime-member/event-datetime-member.component';
+import {
+    EventDatetimeMembersComponent
+} from './components/dashboard-organiser/events-list/event-detail/event-datetime/event-datetime-members/event-datetime-members.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 const MATERIALMODULES = [
@@ -68,6 +85,10 @@ const MATERIALMODULES = [
     MatInputModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
 
 ];
 
@@ -103,6 +124,12 @@ const FORMSMODULES = [
         EventAddressComponent,
         EventTitleComponent,
         EventCategoryComponent,
+        EventDatetimeDatetimeComponent,
+        EventDatetimeStatusComponent,
+        EventDatetimeSlotsComponent,
+        EventDatetimeMemberComponent,
+        EventDatetimeMembersComponent,
+        EventDatetimeSlotsComponent,
     ],
     imports: [
         BROWSERMODULES,
