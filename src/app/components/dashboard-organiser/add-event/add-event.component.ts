@@ -27,6 +27,15 @@ export class AddEventComponent implements OnInit {
         this.state = ComponentState.PROCESSING;
         this.eventCreate.emit({
             id: CreateConstants.CREATE_EVENT + this.counter++,
+            dates: {
+                edges: [],
+                pageInfo: {
+                    hasNextPage: false,
+                    hasPreviousPage: false,
+                    startCursor: "",
+                    endCursor: ""
+                }
+            }
         });
         this.state = ComponentState.READY;
     }
