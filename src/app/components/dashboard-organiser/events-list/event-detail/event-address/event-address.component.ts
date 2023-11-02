@@ -47,8 +47,9 @@ export class EventAddressComponent {
         if (this.eventAddressInput === undefined) return;
         await this.geoServices.getGeoLocation(this.eventAddressInput).then((location) => {
                 if (location && location.lat && location.lng) {
-                    this.locationInput = {location: [parseFloat(location.lat), parseFloat(location.lng)]}
+                    this.locationInput = {location: [location.lat, location.lng]}
                     this.eventLocationChange.emit(this.locationInput);
+                    console.log(this.locationInput);
                 }
             }
         ).catch((error) => {

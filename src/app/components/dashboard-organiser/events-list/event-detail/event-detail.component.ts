@@ -8,6 +8,7 @@ import {EventDateTimeNodeType, EventNodeType} from "../../../../graphql/events/e
 import {AddressNodeType} from "../../../../graphql/location/address.graphql";
 import {LocationNodeType} from "../../../../graphql/location/location.graphql";
 
+
 @Component({
     selector: 'app-event-detail',
     templateUrl: './event-detail.component.html',
@@ -32,7 +33,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     state = ComponentState.LOADING;
     mode = ComponentMode.LIST;
     loaded = false;
-    private edited: { [key: string]: boolean } = {};
+    private edited: {
+        [key: string]: boolean
+    } = {};
 
     @Input() event!: EventNodeType;
 
@@ -41,7 +44,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.event = {...this.event};
+        if (!this.event) {
+            this.event = {};
+        }
         this.mode = ComponentMode.LIST;
         this.state = ComponentState.READY;
     }
@@ -86,10 +91,15 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     }
 
     getDates() {
+
         return this.event.dates?.edges.map((edge) => edge.node);
     }
 
     protected readonly ComponentMode = ComponentMode;
+
+    get noChangesToSave(): boolean {
+        return Object.keys(this.edited).length === 0;
+    }
 
     updateEventsAddress(newAddress: AddressNodeType) {
         if (this.event.address)
@@ -121,14 +131,78 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     }
 
     updateEventsDatetime(newEventDateTime: EventDateTimeNodeType) {
-        const index = this.event.dates?.edges.findIndex((edge) => edge.node.id === newEventDateTime.id);
-        if (index !== undefined && index !== -1) {
-            this.event.dates?.edges.push(
-                {
-                    node: newEventDateTime,
+        if (this.event.dates?.edges) {
+            const index = this.event.dates?.edges.findIndex((edge) => edge.node.id === newEventDateTime.id);
+            if (index !== undefined || index !== -1) {
+                this.event.dates?.edges.splice(index, 1,
+                    {
+                        node: {...newEventDateTime, edited: true},
+                        cursor: ''
+                    });
+            } else {
+                this.event.dates?.edges.push({
+                    node: {...newEventDateTime, edited: true},
                     cursor: ''
                 });
+            }
+            this.edited['dates'] = true;
         }
-        this.edited['dates'] = true;
     }
+
+
+    async save() {
+        this.state = ComponentState.PROCESSING;
+        const event: EventNodeType = {
+            id: this.event.id ?
+                this.event.id
+                : undefined,
+            address: this.edited['address'] ?
+                this.event.address
+                : undefined,
+            location: this.edited['location'] ?
+                this.event.location
+                : undefined,
+            title: this.edited['title'] ?
+                this.event.title
+                : undefined,
+            category: this.edited['category'] ?
+                this.event.category
+                : undefined,
+            description: this.edited['description'] ?
+                this.event.description
+                : undefined,
+            dates: this.edited['dates'] && this.event.dates ?
+                {
+                    edges: this.event.dates.edges.filter((edge) => edge.node.edited).map(
+                        (edge) => {
+
+
+                            return {
+                                node: {
+                                    id: edge.node.id ? edge.node.id : undefined,
+                                    datetime: edge.node.editedFields && edge.node.editedFields['datetime'] ? edge.node.datetime : undefined,
+                                    status: edge.node.editedFields && edge.node.editedFields['status'] ? edge.node.status : undefined,
+                                    maxMembers: edge.node.editedFields && edge.node.editedFields['maxMembers'] ? edge.node.maxMembers : undefined,
+                                },
+                                cursor: edge.cursor
+                            }
+                        }
+                    ),
+                    pageInfo: this.event.dates.pageInfo
+                }
+                : undefined
+
+        };
+        const result = await this.organiserModel.createOrUpdateEvents([event])
+        if (result) {
+            this.state = ComponentState.READY;
+            this.edited = {};
+        } else {
+            this.state = ComponentState.ERROR;
+        }
+
+
+    }
+
+
 }

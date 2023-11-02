@@ -24,3 +24,15 @@ export type AddressNodeType = {
     additional?: string;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Mutation Types
+////////////////////////////////////////////////////////////////////////////////////////
+export type AddressMutationType = {
+    city?: string;
+    country?: string;
+    postalCode?: string;
+    streetName?: string;
+    streetNumber?: string;
+    additional?: string;
+}

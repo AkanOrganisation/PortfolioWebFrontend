@@ -9,6 +9,6 @@ export type AddressType = {
 
 
 export type LocationType = {
-  lat?: string
-  lng?: string
+  lat?: number
+  lng?: number
 }

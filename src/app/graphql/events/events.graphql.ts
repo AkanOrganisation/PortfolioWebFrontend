@@ -1,69 +1,75 @@
 import {LookupFilterType} from "../lookups.graphql";
-import {AddressFilterType, AddressNodeType} from "../location/address.graphql";
+import {AddressFilterType, AddressMutationType, AddressNodeType} from "../location/address.graphql";
 import {ConnectionFilterType, PagedQueryResultType} from "../filters.graphql";
-import {LocationFilterType, LocationNodeType} from "../location/location.graphql";
+import {LocationFilterType, LocationMutationType, LocationNodeType} from "../location/location.graphql";
 import {OrganiserNodeType} from "../organiser/organiser.graphql";
 import {ClientNodeType} from "../client/client.graphql";
 
-// Input Types
+// Filter Types
 ////////////////////////////////////////////////////////////////////////////////////////
 export type EventsDateTimeFilterType = {
-  datetime?: LookupFilterType<string>;
-  status?: LookupFilterType<string>;
-  freeSlotsAvailable?: LookupFilterType<boolean>;
-  freeSlotsMinCount?: LookupFilterType<number>;
-  maxMembers?: LookupFilterType<number>;
+    datetime?: LookupFilterType<string>;
+    status?: LookupFilterType<string>;
+    freeSlotsAvailable?: LookupFilterType<boolean>;
+    freeSlotsMinCount?: LookupFilterType<number>;
+    maxMembers?: LookupFilterType<number>;
 };
 
 export type EventsFilterType = {
-  address?: AddressFilterType;
-  category?: LookupFilterType<string>;
-  description?: LookupFilterType<string>;
-  title?: LookupFilterType<string>;
-  datetime?: EventsDateTimeFilterType;
-  location?: LocationFilterType;
+    address?: AddressFilterType;
+    category?: LookupFilterType<string>;
+    description?: LookupFilterType<string>;
+    title?: LookupFilterType<string>;
+    datetime?: EventsDateTimeFilterType;
+    location?: LocationFilterType;
 };
 
 
 export type EventsFilterConnectionType = ConnectionFilterType & {
-  filter?: EventsFilterType;
+    filter?: EventsFilterType;
 };
 
 export type EventsDateTimeFilterConnectionType = ConnectionFilterType & {
-  filter?: EventsDateTimeFilterType;
+    filter?: EventsDateTimeFilterType;
 }
 
 
 // Node Types
 ////////////////////////////////////////////////////////////////////////////////////////
 export type EventNodeType = {
-  category?: string;
-  title?: string;
-  id?: string;
-  description?: HTMLElement;
-  address?: AddressNodeType;
-  dates?: PagedQueryResultType<EventDateTimeNodeType>;
-  organiser?: OrganiserNodeType;
-  location?: LocationNodeType;
+    category?: string;
+    title?: string;
+    id?: string;
+    description?: HTMLElement;
+    address?: AddressNodeType;
+    dates?: PagedQueryResultType<EventDateTimeNodeType>;
+    organiser?: OrganiserNodeType;
+    location?: LocationNodeType;
+
+    edited?: boolean;
 }
 
 
 export type EventDateTimeNodeType = {
-  id?: string;
-  datetime?: Date;
-  freeSlotsAvailable?: boolean;
-  freeSlotsCount?: number;
-  maxMembers?: number;
-  status?: string;
-  eventDescription?: EventNodeType;
-  members?: PagedQueryResultType<EventMemberNodeType>;
+    id?: string;
+    datetime?: Date;
+    freeSlotsAvailable?: boolean;
+    freeSlotsCount?: number;
+    maxMembers?: number;
+    status?: string;
+    eventDescription?: EventNodeType;
+    members?: PagedQueryResultType<EventMemberNodeType>;
+
+    // editedFields
+    edited?: boolean;
+    editedFields?: { [key: string]: boolean };
 }
 
 
 export type EventMemberNodeType = {
-  id?: string;
-  client?: ClientNodeType;
-  status?: string;
+    id?: string;
+    client?: ClientNodeType;
+    status?: string;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,7 +77,26 @@ export type EventMemberNodeType = {
 // Query Types
 ////////////////////////////////////////////////////////////////////////////////////////
 export type eventPrivateQueryType = {
-  eventOrganiserPrivate?: EventNodeType;
+    eventOrganiserPrivate?: EventNodeType;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
+
+// Mutation Types
+////////////////////////////////////////////////////////////////////////////////////////
+export type EventMutationType = {
+    eventId?: string;
+    title?: string;
+    category?: string;
+    description?: HTMLElement;
+    address?: AddressMutationType;
+    location?: LocationMutationType;
+    dateTimes?: EventDateTimeMutationType[];
+}
+
+export type EventDateTimeMutationType = {
+    datetimeId?: string;
+    datetime?: Date;
+    status?: string;
+    maxMembers?: number;
+}

@@ -16,10 +16,17 @@ export class AppEventDatetimeComponent {
 
     state = ComponentState.LOADING;
 
+
     constructor() {
     }
 
     ngOnInit() {
+        if (!this.eventDateTime) {
+            this.eventDateTime = {};
+        }
+        if (!this.eventDateTime.editedFields) {
+            this.eventDateTime.editedFields = {};
+        }
         this.state = ComponentState.READY;
     }
 
@@ -29,16 +36,25 @@ export class AppEventDatetimeComponent {
 
     updateStatus(newStatus: string) {
         this.eventDateTime.status = newStatus;
+        if (this.eventDateTime.editedFields) {
+            this.eventDateTime.editedFields['status'] = true;
+        }
         this.eventDateTimeChange.emit(this.eventDateTime);
     }
 
     updateDateTime(newDateTime: Date) {
         this.eventDateTime.datetime = newDateTime;
+        if (this.eventDateTime.editedFields) {
+            this.eventDateTime.editedFields['datetime'] = true;
+        }
         this.eventDateTimeChange.emit(this.eventDateTime);
     }
 
     updateSlots(newMaxMembers: number) {
         this.eventDateTime.maxMembers = newMaxMembers;
+        if (this.eventDateTime.editedFields) {
+            this.eventDateTime.editedFields['maxMembers'] = true;
+        }
         this.eventDateTime.freeSlotsCount = this.eventDateTime.maxMembers - this.membersCount;
         this.eventDateTime.freeSlotsAvailable = this.eventDateTime.freeSlotsCount > 0;
         this.eventDateTimeChange.emit(this.eventDateTime);

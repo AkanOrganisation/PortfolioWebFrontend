@@ -64,6 +64,11 @@
                     </ng-container>
                 </mat-card-content>
             </mat-card>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="save()" [disabled]="noChangesToSave">Save Changes
+                </button>
+                <button mat-raised-button color="warn">Delete</button>
+            </mat-card-actions>
         </ng-container>
     </div>
 </ng-container>

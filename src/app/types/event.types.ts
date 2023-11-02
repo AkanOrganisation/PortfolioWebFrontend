@@ -21,11 +21,10 @@ export type EventMemberType = {
 export type EventType = {
     category?: string;
     title?: string;
-    id?: string;
+    eventId?: string;
     description?: HTMLElement;
     address?: AddressType;
     location?: LocationType;
-    dates?: EventDateTimeType[];
+    datesTimes?: EventDateTimeType[];
     organiser?: OrganiserType;
-
 }
