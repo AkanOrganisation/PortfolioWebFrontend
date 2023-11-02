@@ -99,9 +99,7 @@ export class UserModel {
     //   return false;
     // }
     try {
-      const result
-      :
-      any = await firstValueFrom(
+      const result : any = await firstValueFrom(
         this.apollo.watchQuery({
           query: gql`
             query {
