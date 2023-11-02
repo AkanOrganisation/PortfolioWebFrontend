@@ -28,13 +28,13 @@ export class EventDatetimeSlotsComponent {
             this.eventSlotsMaxInput = this.eventSlotsMax;
         } else {
             this.eventSlotsMaxInput = 0;
-            this.mode = ComponentMode.UPDATE;
+            this.mode = ComponentMode.EDIT;
         }
         this.state = ComponentState.READY;
     }
 
     toggle() {
-        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.UPDATE : ComponentMode.VIEW;
+        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.EDIT : ComponentMode.VIEW;
     }
 
     save() {

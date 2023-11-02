@@ -1,7 +1,6 @@
 export enum ComponentMode {
     VIEW = 'VIEW',
-    UPDATE = 'UPDATE',
-    CREATE = 'CREATE',
+    EDIT = 'EDIT',
 
     LIST = 'LIST',
     DETAIL = 'DETAIL',

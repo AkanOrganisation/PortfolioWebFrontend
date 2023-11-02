@@ -28,7 +28,7 @@ export class EventDatetimeDatetimeComponent implements OnInit {
             this.eventDateTime = new Date(this.eventDateTime);
         } else {
             this.eventDateTime = new Date();
-            this.mode = ComponentMode.UPDATE;
+            this.mode = ComponentMode.EDIT;
         }
 
         this.eventDateInput = new Date(this.eventDateTime);
@@ -40,7 +40,7 @@ export class EventDatetimeDatetimeComponent implements OnInit {
     }
 
     toggle() {
-        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.UPDATE : ComponentMode.VIEW;
+        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.EDIT : ComponentMode.VIEW;
     }
 
     save() {

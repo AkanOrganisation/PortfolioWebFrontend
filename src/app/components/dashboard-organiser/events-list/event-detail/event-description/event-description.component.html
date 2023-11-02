@@ -22,7 +22,7 @@
             </mat-card-actions>
         </mat-card>
     </ng-container>
-    <ng-container *ngIf="mode == ComponentMode.UPDATE">
+    <ng-container *ngIf="mode == ComponentMode.EDIT">
         <mat-card-title>Update Description</mat-card-title>
         <ckeditor [(ngModel)]="eventDescriptionInput" [editor]="Editor"></ckeditor>
         <span class="spacer"></span>

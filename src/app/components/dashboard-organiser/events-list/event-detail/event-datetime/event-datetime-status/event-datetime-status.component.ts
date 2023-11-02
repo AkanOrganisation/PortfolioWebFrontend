@@ -24,13 +24,13 @@ export class EventDatetimeStatusComponent {
             this.eventDateTimeStatusInput = this.eventDateTimeStatus;
         } else {
             this.eventDateTimeStatusInput = StatusConstants.SCHEDULED;
-            this.mode = ComponentMode.UPDATE;
+            this.mode = ComponentMode.EDIT;
         }
         this.state = ComponentState.READY;
     }
 
     toggle() {
-        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.UPDATE : ComponentMode.VIEW;
+        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.EDIT : ComponentMode.VIEW;
     }
 
     save() {

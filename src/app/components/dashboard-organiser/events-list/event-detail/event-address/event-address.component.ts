@@ -28,8 +28,16 @@ export class EventAddressComponent {
     }
 
     ngOnInit() {
-        if (this.eventAddress === undefined) {
-            this.eventAddress = getEmptyAddress();
+        if (!this.eventAddress) {
+            this.eventAddress = {
+                streetName: '',
+                streetNumber: '',
+                city: '',
+                country: '',
+                postalCode: '',
+                additional: '',
+            }
+            this.mode = ComponentMode.EDIT;
         }
         this.eventAddressInput = {...this.eventAddress};
 
@@ -39,12 +47,12 @@ export class EventAddressComponent {
     }
 
     toggle() {
-        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.UPDATE : ComponentMode.VIEW;
+        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.EDIT : ComponentMode.VIEW;
     }
 
     async save() {
         this.state = ComponentState.PROCESSING;
-        if (this.eventAddressInput === undefined) return;
+        if (!this.eventAddressInput) return;
         await this.geoServices.getGeoLocation(this.eventAddressInput).then((location) => {
                 if (location && location.lat && location.lng) {
                     this.locationInput = {location: [location.lat, location.lng]}
@@ -55,6 +63,7 @@ export class EventAddressComponent {
         ).catch((error) => {
             console.error(error);
         });
+        console.log(123)
         this.eventAddressChange.emit(this.eventAddressInput);
         this.mode = ComponentMode.VIEW;
         this.state = ComponentState.READY;

@@ -45,10 +45,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (!this.event) {
-            this.event = {};
+        if (!this.event || !this.event.id || this.event.id.startsWith(CreateConstants.CREATE_EVENT)) {
+            this.mode = ComponentMode.DETAIL;
+            this.loaded = true;
+        } else {
+            this.mode = ComponentMode.LIST;
         }
-        this.mode = ComponentMode.LIST;
         this.state = ComponentState.READY;
     }
 
@@ -103,15 +105,13 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     }
 
     updateEventsAddress(newAddress: AddressNodeType) {
-        if (this.event.address)
-            Object.assign(this.event.address, newAddress);
+        this.event.address = {...newAddress}
         this.edited['address'] = true;
     }
 
 
     updateEventsLocation(newLocation: LocationNodeType) {
-        if (this.event.location)
-            Object.assign(this.event.location, newLocation);
+        this.event.location = {...newLocation}
         this.edited['location'] = true;
     }
 
@@ -121,7 +121,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     }
 
     updateEventsCategory(newCategory: string) {
-        this.event.title = newCategory;
+        this.event.category = newCategory;
         this.edited['category'] = true;
 
     }
@@ -155,7 +155,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     async save() {
         this.state = ComponentState.PROCESSING;
         const event: EventNodeType = {
-            id: this.event.id ?
+            id: this.event.id && !this.event.id.startsWith(CreateConstants.CREATE_EVENT) ?
                 this.event.id
                 : undefined,
             address: this.edited['address'] ?
@@ -195,6 +195,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
                 : undefined
 
         };
+        console.log('event', event);
         const result = await this.organiserModel.createOrUpdateEvents([event])
         if (result.success) {
             if (this.event.id && this.event.id.startsWith(CreateConstants.CREATE_EVENT)) {

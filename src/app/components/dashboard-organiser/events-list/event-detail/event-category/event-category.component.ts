@@ -3,41 +3,45 @@ import {ComponentState} from "../../../../../constants";
 import {ComponentMode} from "../../../../../constants/mode.components";
 
 @Component({
-  selector: 'app-event-category',
-  templateUrl: './event-category.component.html',
-  styleUrls: ['./event-category.component.css']
+    selector: 'app-event-category',
+    templateUrl: './event-category.component.html',
+    styleUrls: ['./event-category.component.css']
 })
 export class EventCategoryComponent {
-  @Input() eventCategory: string | undefined;
-  eventCategoryInput: string | undefined;
-  @Output() eventCategoryChange = new EventEmitter<string>();
+    @Input() eventCategory: string | undefined;
+    eventCategoryInput: string | undefined;
+    @Output() eventCategoryChange = new EventEmitter<string>();
 
-  state = ComponentState.LOADING;
-  mode = ComponentMode.VIEW;
+    state = ComponentState.LOADING;
+    mode = ComponentMode.VIEW;
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  ngOnInit() {
-    this.eventCategoryInput = this.eventCategory;
-    this.state = ComponentState.READY;
-  }
+    ngOnInit() {
+        if (!this.eventCategory) {
+            this.eventCategory = '';
+            this.mode = ComponentMode.EDIT;
+        }
+        this.eventCategoryInput = this.eventCategory;
+        this.state = ComponentState.READY;
+    }
 
-  toggle() {
-    this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.UPDATE : ComponentMode.VIEW;
-  }
+    toggle() {
+        this.mode = this.mode === ComponentMode.VIEW ? ComponentMode.EDIT : ComponentMode.VIEW;
+    }
 
-  save() {
-    this.eventCategory = this.eventCategoryInput;
-    this.eventCategoryChange.emit(this.eventCategory);
-    this.mode = ComponentMode.VIEW;
-  }
+    save() {
+        this.eventCategory = this.eventCategoryInput;
+        this.eventCategoryChange.emit(this.eventCategory);
+        this.mode = ComponentMode.VIEW;
+    }
 
-  cancel() {
-    this.eventCategoryInput = this.eventCategory;
-    this.mode = ComponentMode.VIEW;
-  }
+    cancel() {
+        this.eventCategoryInput = this.eventCategory;
+        this.mode = ComponentMode.VIEW;
+    }
 
-  protected readonly ComponentState = ComponentState;
-  protected readonly ComponentMode = ComponentMode;
+    protected readonly ComponentState = ComponentState;
+    protected readonly ComponentMode = ComponentMode;
 }

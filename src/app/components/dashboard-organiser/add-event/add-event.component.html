@@ -1,0 +1,18 @@
+<ng-container *ngIf="state === ComponentState.LOADING">
+    <mat-spinner class="spinner"></mat-spinner>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.ERROR">
+    <div class="error">
+        <mat-icon>error</mat-icon>
+        <span>Something went wrong</span>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="state === ComponentState.READY">
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary" (click)="createEvent()">
+        <span>Add new Event</span>
+        <mat-icon>add</mat-icon>
+    </button>
+</ng-container>
