@@ -66,7 +66,11 @@ export class ClientEventsFilterComponent {
         if (cursorKey && cursorValue) {
             this.eventsFilter[cursorKey] = cursorValue;
         }
-        this.eventDateTimesFilter.filter.datetime.range = [this.datesFilter.from, this.datesFilter.to];
+        console.log(this.datesFilter)
+        this.eventDateTimesFilter.filter.datetime.range = [
+            new Date(Date.UTC(this.datesFilter.from.getFullYear(), this.datesFilter.from.getMonth(), this.datesFilter.from.getDate())),
+            new Date(Date.UTC(this.datesFilter.to.getFullYear(), this.datesFilter.to.getMonth(), this.datesFilter.to.getDate() + 1))
+        ];
         this.subscription = this.eventModel.getEventsList(
             this.eventsFilter,
             this.eventDateTimesFilter

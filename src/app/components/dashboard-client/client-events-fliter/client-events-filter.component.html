@@ -29,30 +29,19 @@
                    [(ngModel)]="eventsFilter.filter.address.postalCode.exact"
                    name="eventAddressPostalCode">
         </mat-form-field>
-        <div>
-            <p>Search By Dates</p>
-            <mat-form-field appearance="fill">
-                <input type="text" matInput placeholder="Search by Day"
-                       [(ngModel)]="eventsFilter.filter.dates.datetime.exact"
-                       name="eventDateExact">
-            </mat-form-field>
 
 
-            <mat-form-field appearance="fill">
-                <mat-label>Search by Date From</mat-label>
-                <input matInput [matDatepicker]="fromPicker" [(ngModel)]="datesFilter.from" name="eventDateFrom">
-                <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromPicker></mat-datepicker>
-            </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Search by Date</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" [(ngModel)]="datesFilter.from" name="eventDateFrom">
+                <input matEndDate placeholder="End date" [(ngModel)]="datesFilter.to" name="eventDateTo">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Search by Date To</mat-label>
-                <input matInput [matDatepicker]="toPicker" [(ngModel)]="datesFilter.to" name="eventDateTo">
-                <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-                <mat-datepicker #toPicker></mat-datepicker>
-            </mat-form-field>
 
-        </div>
         <button mat-raised-button color="primary" type="submit"
                 [disabled]="state === ComponentState.PROCESSING">
             <span *ngIf="state !== ComponentState.PROCESSING">Search</span>
