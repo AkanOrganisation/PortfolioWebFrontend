@@ -2,49 +2,57 @@
 <mat-spinner *ngIf="state === ComponentState.LOADING; else loginForm"></mat-spinner>
 
 <ng-template #loginForm>
-  <mat-card *ngIf="state !== ComponentState.COMPLETED; else alreadyLogged">
-    <mat-card-content class="mat-card-content">
-      <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
+    <mat-card *ngIf="state !== ComponentState.COMPLETED; else alreadyLogged">
+        <mat-card-content class="mat-card-content">
+            <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
 
-        <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+                <mat-error
+                        *ngFor="let error of userModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
-        <!-- Email -->
-        <mat-form-field appearance="fill">
-          <input type="email" matInput placeholder="Enter your email" [(ngModel)]="userInput.email" name="user_email"
-                 required email>
-          <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['required']">Email is required.</mat-error>
-          <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['email']">Enter a valid email.</mat-error>
-          <mat-error *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_email')">{{ error }}</mat-error>
-        </mat-form-field>
+                <!-- Email -->
+                <mat-form-field appearance="fill" floatLabel="auto">
+                    <mat-label>Enter your email</mat-label>
+                    <input type="email" matInput  [(ngModel)]="userInput.email"
+                           name="user_email"
+                           required email>
+                    <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['required']">Email is required.
+                    </mat-error>
+                    <mat-error *ngIf="userForm.controls?.['user_email']?.errors?.['email']">Enter a valid email.
+                    </mat-error>
+                    <mat-error
+                            *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_email')">{{ error }}</mat-error>
+                </mat-form-field>
 
-        <!-- Password -->
-        <mat-form-field appearance="fill">
-          <input type="password" matInput placeholder="Enter a password" [(ngModel)]="userInput.password"
-                 name="user_password" required>
-          <mat-error *ngIf="userForm.controls?.['user_password']?.errors?.['required']">Password is required.
-          </mat-error>
-          <mat-error
-            *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
-        </mat-form-field>
+                <!-- Password -->
+                <mat-form-field appearance="fill" floatLabel="auto">
+                    <mat-label>Enter a password</mat-label>
+                    <input type="password" matInput [(ngModel)]="userInput.password"
+                           name="user_password" required>
+                    <mat-error *ngIf="userForm.controls?.['user_password']?.errors?.['required']">Password is required.
+                    </mat-error>
+                    <mat-error
+                            *ngFor="let error of userModel.gqlErrors.getErrorsForField('user_password')">{{ error }}</mat-error>
+                </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit"
-                [disabled]="!userForm.valid || state === ComponentState.PROCESSING">
-          <span *ngIf="state !== ComponentState.PROCESSING">Login</span>
-          <mat-spinner *ngIf="state === ComponentState.PROCESSING" diameter="20" mode="indeterminate"></mat-spinner>
-        </button>
-      </form>
-    </mat-card-content>
-    <mat-card-content>
-      <a routerLink="/register">Don't have an account? Register here.</a>
-    </mat-card-content>
-  </mat-card>
+                <button mat-raised-button color="primary" type="submit"
+                        [disabled]="!userForm.valid || state === ComponentState.PROCESSING">
+                    <span *ngIf="state !== ComponentState.PROCESSING">Login</span>
+                    <mat-spinner *ngIf="state === ComponentState.PROCESSING" diameter="20"
+                                 mode="indeterminate"></mat-spinner>
+                </button>
+            </form>
+        </mat-card-content>
+        <mat-card-content>
+            <a routerLink="/register">Don't have an account? Register here.</a>
+        </mat-card-content>
+    </mat-card>
 </ng-template>
 
 <ng-template #alreadyLogged>
-  <mat-card>
-    <mat-card-content>
-      <h2>You are already logged in.</h2>
-    </mat-card-content>
-  </mat-card>
+    <mat-card>
+        <mat-card-content>
+            <h2>You are already logged in.</h2>
+        </mat-card-content>
+    </mat-card>
 </ng-template>
 

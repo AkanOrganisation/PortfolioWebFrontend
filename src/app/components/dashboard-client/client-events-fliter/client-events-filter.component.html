@@ -4,34 +4,38 @@
 
 <ng-template #loadEventsFilterForm>
     <form #eventsFilterForm="ngForm" (ngSubmit)="applyFilter(eventsFilterForm)">
-        <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Search by Category"
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by Category</mat-label>
+            <input type="text" matInput
                    [(ngModel)]="eventsFilter.filter.category.exact"
                    name="eventCategory">
         </mat-form-field>
-        <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Search by Title"
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>search by Title</mat-label>
+            <input type="text" matInput
                    [(ngModel)]="eventsFilter.filter.title.icontains"
                    name="eventTitle">
         </mat-form-field>
-        <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Search by Description"
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by Description</mat-label>
+            <input type="text" matInput
                    [(ngModel)]="eventsFilter.filter.description.icontains"
                    name="eventDescription">
         </mat-form-field>
-        <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Search by City"
-                   [(ngModel)]="eventsFilter.filter.address.city.exact"
-                   name="eventAddressCity">
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by City or Postal Code</mat-label>
+            <input type="text" matInput
+                   [(ngModel)]="addressSearch" name="eventSearch">
         </mat-form-field>
-        <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Search by Postal Code"
-                   [(ngModel)]="eventsFilter.filter.address.postalCode.exact"
-                   name="eventAddressPostalCode">
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search Radius</mat-label>
+            <input type="text" matInput
+                   [(ngModel)]="eventsFilter.filter.location.radius.exact"
+                   name="radiusSearch">
         </mat-form-field>
 
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Search by Date</mat-label>
             <mat-date-range-input [rangePicker]="picker">
                 <input matStartDate placeholder="Start date" [(ngModel)]="datesFilter.from" name="eventDateFrom">

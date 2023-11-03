@@ -1,43 +1,48 @@
 <mat-spinner
-  *ngIf="state === ComponentState.LOADING; else loadEventsFilterForm"></mat-spinner>
+        *ngIf="state === ComponentState.LOADING; else loadEventsFilterForm"></mat-spinner>
 
 
 <ng-template #loadEventsFilterForm>
-  <form #eventsFilterForm="ngForm" (ngSubmit)="applyFilter(eventsFilterForm)">
-    <mat-form-field appearance="fill">
-      <input type="text" matInput placeholder="Search by Category"
-             [(ngModel)]="eventsFilter.ownedEvents?.filter.category.exact"
-             name="eventCategory">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <input type="text" matInput placeholder="Search by Title"
-             [(ngModel)]="eventsFilter.ownedEvents?.filter.title.icontains"
-             name="eventTitle">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <input type="text" matInput placeholder="Search by Description"
-             [(ngModel)]="eventsFilter.ownedEvents?.filter.description.icontains"
-             name="eventDescription">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <input type="text" matInput placeholder="Search by City"
-             [(ngModel)]="eventsFilter.ownedEvents?.filter.address.city.exact"
-             name="eventAddressCity">
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <input type="text" matInput placeholder="Search by Postal Code"
-             [(ngModel)]="eventsFilter.ownedEvents?.filter.address.postalCode.exact"
-             name="eventAddressPostalCode">
-    </mat-form-field>
+    <form #eventsFilterForm="ngForm" (ngSubmit)="applyFilter(eventsFilterForm)">
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by Category</mat-label>
+            <input type="text" matInput
+                   [(ngModel)]="eventsFilter.ownedEvents?.filter.category.exact"
+                   name="eventCategory">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by Title</mat-label>
+            <input type="text" matInput
+                   [(ngModel)]="eventsFilter.ownedEvents?.filter.title.icontains"
+                   name="eventTitle">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by Description</mat-label>
+            <input type="text" matInput
+                   [(ngModel)]="eventsFilter.ownedEvents?.filter.description.icontains"
+                   name="eventDescription">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by City</mat-label>
+            <input type="text" matInput
+                   [(ngModel)]="eventsFilter.ownedEvents?.filter.address.city.exact"
+                   name="eventAddressCity">
+        </mat-form-field>
+        <mat-form-field appearance="fill" floatLabel="auto">
+            <mat-label>Search by Postal Code</mat-label>
+            <input type="text" matInput
+                   [(ngModel)]="eventsFilter.ownedEvents?.filter.address.postalCode.exact"
+                   name="eventAddressPostalCode">
+        </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit"
-            [disabled]="state === ComponentState.PROCESSING">
-      <span *ngIf="state !== ComponentState.PROCESSING">Search</span>
-      <mat-spinner *ngIf="state === ComponentState.PROCESSING" diameter="20" mode="indeterminate"></mat-spinner>
-    </button>
-    <button mat-raised-button color="warn" type="button" (click)="nextPage()"
-            [disabled]="state === ComponentState.PROCESSING || hasNextPage === false">
-      <span>Load More</span>
-    </button>
-  </form>
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="state === ComponentState.PROCESSING">
+            <span *ngIf="state !== ComponentState.PROCESSING">Search</span>
+            <mat-spinner *ngIf="state === ComponentState.PROCESSING" diameter="20" mode="indeterminate"></mat-spinner>
+        </button>
+        <button mat-raised-button color="warn" type="button" (click)="nextPage()"
+                [disabled]="state === ComponentState.PROCESSING || hasNextPage === false">
+            <span>Load More</span>
+        </button>
+    </form>
 </ng-template>

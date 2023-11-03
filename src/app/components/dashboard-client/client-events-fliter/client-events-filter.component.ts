@@ -31,6 +31,23 @@ export class ClientEventsFilterComponent {
         to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     }
 
+    _addressSearch: any;
+
+    get addressSearch() {
+        return this._addressSearch;
+    }
+
+    set addressSearch(value: any) {
+        this._addressSearch = value;
+        if (isNumeric(value)) {
+            this.eventsFilter.filter.address.postalCode.exact = value;
+            this.eventsFilter.filter.address.city.exact = undefined;
+        } else {
+            this.eventsFilter.filter.address.city.exact = value;
+            this.eventsFilter.filter.address.postalCode.exact = undefined;
+        }
+    }
+
     protected eventsEndCursor = undefined;
     protected hasNextPage = false;
 
@@ -66,7 +83,6 @@ export class ClientEventsFilterComponent {
         if (cursorKey && cursorValue) {
             this.eventsFilter[cursorKey] = cursorValue;
         }
-        console.log(this.datesFilter)
         this.eventDateTimesFilter.filter.datetime.range = [
             new Date(Date.UTC(this.datesFilter.from.getFullYear(), this.datesFilter.from.getMonth(), this.datesFilter.from.getDate())),
             new Date(Date.UTC(this.datesFilter.to.getFullYear(), this.datesFilter.to.getMonth(), this.datesFilter.to.getDate() + 1))
@@ -107,4 +123,10 @@ export class ClientEventsFilterComponent {
     }
 
     protected readonly ComponentState = ComponentState;
+
+}
+
+
+function isNumeric(value: string): boolean {
+    return /^\d+$/.test(value);
 }

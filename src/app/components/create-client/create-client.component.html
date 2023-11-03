@@ -1,127 +1,157 @@
 <div class="component-container">
 
-  <!-- Display spinner if loading, otherwise display form -->
-  <mat-spinner *ngIf="state === ComponentState.LOADING; else createClientForm"></mat-spinner>
+    <!-- Display spinner if loading, otherwise display form -->
+    <mat-spinner *ngIf="state === ComponentState.LOADING; else createClientForm"></mat-spinner>
 
-  <ng-template #createClientForm>
+    <ng-template #createClientForm>
 
-    <mat-card *ngIf="state == ComponentState.READY || state == ComponentState.PROCESSING; else alreadyClient">
-      <mat-card-content>
-        <form #clientForm="ngForm" (ngSubmit)="createClient(clientForm)">
+        <mat-card *ngIf="state == ComponentState.READY || state == ComponentState.PROCESSING; else alreadyClient">
+            <mat-card-content>
+                <form #clientForm="ngForm" (ngSubmit)="createClient(clientForm)">
 
-          <mat-error
-            *ngFor="let error of clientModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
+                    <mat-error
+                            *ngFor="let error of clientModel.gqlErrors.getErrorsForField('nonFieldErrors')">{{ error }}</mat-error>
 
-          <!-- FirstName -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your First Name" [(ngModel)]="clientInput.firstName"
-                   name="client_firstname" required>
-            <mat-error *ngIf="clientForm.controls?.['client_firstname']?.errors?.['required']">First name is required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_firstname')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- FirstName -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your First Name</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.firstName"
+                               name="client_firstname" required>
+                        <mat-error *ngIf="clientForm.controls?.['client_firstname']?.errors?.['required']">First name is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_firstname')">{{ error }}</mat-error>
+                    </mat-form-field>
 
 
-          <!-- LastName -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Last Name" [(ngModel)]="clientInput.lastName"
-                   name="client_lastname" required>
-            <mat-error *ngIf="clientForm.controls?.['client_lastname']?.errors?.['required']">Last name is required.
-            </mat-error>
-            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_lastname')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- LastName -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your Last Name</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.lastName"
+                               name="client_lastname" required>
+                        <mat-error *ngIf="clientForm.controls?.['client_lastname']?.errors?.['required']">Last name is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_lastname')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- DisplayName -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Display-name" [(ngModel)]="clientInput.displayName"
-                   name="client_displayname" required>
-            <mat-error *ngIf="clientForm.controls?.['client_displayname']?.errors?.['required']">Display-name is
-              required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_displayname')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- DisplayName -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your Display-name</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.displayName"
+                               name="client_displayname" required>
+                        <mat-error *ngIf="clientForm.controls?.['client_displayname']?.errors?.['required']">
+                            Display-name is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_displayname')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- PhoneNumber -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Phone number" [(ngModel)]="clientInput.phoneNumber"
-                   name="client_phonenumber" required>
-            <mat-error *ngIf="clientForm.controls?.['client_phonenumber']?.errors?.['required']">Phone number is
-              required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_phonenumber')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- PhoneNumber -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your Phone number</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.phoneNumber"
+                               name="client_phonenumber" required>
+                        <mat-error *ngIf="clientForm.controls?.['client_phonenumber']?.errors?.['required']">Phone
+                            number is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('client_phonenumber')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- Address -->
-          <!-- StreetName -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Street name"
-                   [(ngModel)]="clientInput.address.streetName"
-                   name="address_streetname" required>
-            <mat-error *ngIf="clientForm.controls?.['address_streetname']?.errors?.['required']">Street name is
-              required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_streetname')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- Address -->
+                    <!-- StreetName -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your Street name</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.address.streetName"
+                               name="address_streetname" required>
+                        <mat-error *ngIf="clientForm.controls?.['address_streetname']?.errors?.['required']">Street name
+                            is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_streetname')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- StreetNumber -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Street number"
-                   [(ngModel)]="clientInput.address.streetNumber" name="address_streetnumber" required>
-            <mat-error *ngIf="clientForm.controls?.['address_streetnumber']?.errors?.['required']">Street number is
-              required.
-            </mat-error>
-            <mat-error
-              *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_streetnumber')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- StreetNumber -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your Street number</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.address.streetNumber" name="address_streetnumber" required>
+                        <mat-error *ngIf="clientForm.controls?.['address_streetnumber']?.errors?.['required']">Street
+                            number is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_streetnumber')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- City -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your City" [(ngModel)]="clientInput.address.city"
-                   name="address_city" required>
-            <mat-error *ngIf="clientForm.controls?.['address_city']?.errors?.['required']">City is required.</mat-error>
-            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- City -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your City</mat-label>
+                        <input type="text" matInput  [(ngModel)]="clientInput.address.city"
+                               name="address_city" required>
+                        <mat-error *ngIf="clientForm.controls?.['address_city']?.errors?.['required']">City is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_city')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- Country -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Country" [(ngModel)]="clientInput.address.country"
-                   name="address_country" required>
-            <mat-error *ngIf="clientForm.controls?.['address_country']?.errors?.['required']">Country is required.
-            </mat-error>
-            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- Country -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your Country</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.address.country"
+                               name="address_country" required>
+                        <mat-error *ngIf="clientForm.controls?.['address_country']?.errors?.['required']">Country is
+                            required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_country')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- postalCode -->
-          <mat-form-field appearance="fill">
-            <input type="text" matInput placeholder="Enter your Postal Code" [(ngModel)]="clientInput.address.postalCode"
-                   name="address_postalCode" required>
-            <mat-error *ngIf="clientForm.controls?.['address_postalCode']?.errors?.['required']">Postal Code is required.
-            </mat-error>
-            <mat-error *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_postalCode')">{{ error }}</mat-error>
-          </mat-form-field>
+                    <!-- postalCode -->
+                    <mat-form-field appearance="fill" floatLabel="auto">
+                        <mat-label>Enter your Postal Code</mat-label>
+                        <input type="text" matInput
+                               [(ngModel)]="clientInput.address.postalCode"
+                               name="address_postalCode" required>
+                        <mat-error *ngIf="clientForm.controls?.['address_postalCode']?.errors?.['required']">Postal Code
+                            is required.
+                        </mat-error>
+                        <mat-error
+                                *ngFor="let error of clientModel.gqlErrors.getErrorsForField('address_postalCode')">{{ error }}</mat-error>
+                    </mat-form-field>
 
-          <!-- Submit Button -->
-          <button mat-raised-button color="primary"
-                  [disabled]="!clientForm.valid ||  state === ComponentState.PROCESSING">
-            <span *ngIf="state !== ComponentState.PROCESSING">Finish Registration</span>
-            <mat-spinner *ngIf="state === ComponentState.PROCESSING" diameter="20" mode="indeterminate"></mat-spinner>
-          </button>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </ng-template>
+                    <!-- Submit Button -->
+                    <button mat-raised-button color="primary"
+                            [disabled]="!clientForm.valid ||  state === ComponentState.PROCESSING">
+                        <span *ngIf="state !== ComponentState.PROCESSING">Finish Registration</span>
+                        <mat-spinner *ngIf="state === ComponentState.PROCESSING" diameter="20"
+                                     mode="indeterminate"></mat-spinner>
+                    </button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
 
-  <ng-template #alreadyClient>
-    <mat-card>
-      <mat-card-content>
-        <h1>You are already a client</h1>
-      </mat-card-content>
-    </mat-card>
-  </ng-template>
+    <ng-template #alreadyClient>
+        <mat-card>
+            <mat-card-content>
+                <h1>You are already a client</h1>
+            </mat-card-content>
+        </mat-card>
+    </ng-template>
 
 
 </div>
