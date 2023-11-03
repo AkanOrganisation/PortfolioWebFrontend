@@ -29,7 +29,7 @@ export class ClientEventsFilterComponent {
 
     datesFilter = {
         from: new Date(),
-        to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+        to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
     }
 
     searchByLocation = false;
