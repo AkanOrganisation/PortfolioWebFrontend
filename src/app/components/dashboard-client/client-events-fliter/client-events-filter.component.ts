@@ -10,6 +10,7 @@ import {NgForm} from "@angular/forms";
 import {ComponentState} from "../../../constants";
 import {ClientModel} from "../../../models";
 import {EventModel} from "../../../models/event.models";
+import {GeoService} from "../../../services/geo-services/geo.service";
 
 @Component({
     selector: 'app-client-events-filter',
@@ -31,6 +32,7 @@ export class ClientEventsFilterComponent {
         to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     }
 
+    searchByLocation = false;
     _addressSearch: any;
 
     get addressSearch() {
@@ -54,6 +56,7 @@ export class ClientEventsFilterComponent {
     constructor(
         protected clientModel: ClientModel,
         protected eventModel: EventModel,
+        protected geoService: GeoService,
     ) {
         this.initializeEventsFilter();
     }
@@ -124,6 +127,55 @@ export class ClientEventsFilterComponent {
 
     protected readonly ComponentState = ComponentState;
 
+    async searchMyLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    console.log('Geolocation retrieved successfully:', position);
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    // Use the latitude and longitude for your purpose, like:
+                    const postalCode = await this.geoService.getPostalCodeFromLocation(lat, lng);
+                    if (postalCode) {
+                        this.searchByLocation = true;
+                        this.clearAddressSearch();
+                        this._addressSearch = postalCode;
+                        this.eventsFilter.filter.location.lat.exact = lat;
+                        this.eventsFilter.filter.location.lng.exact = lng;
+                    }
+                },
+                (error) => {
+                    console.error('Error retrieving location:', error);
+                    // Handle location errors here
+                },
+                {
+                    timeout: 10000,  // 10 seconds
+                    maximumAge: 3600000,  // 1 hour
+                    enableHighAccuracy: true
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }
+
+    searchByAddress() {
+        this.searchByLocation = false;
+        this.clearLocationSearch();
+        this.addressSearch = undefined;
+
+    }
+
+    clearAddressSearch() {
+        this.eventsFilter.filter.address.postalCode.exact = undefined;
+        this.eventsFilter.filter.address.city.exact = undefined;
+    }
+
+    clearLocationSearch() {
+        this.eventsFilter.filter.location.lat.exact = undefined;
+        this.eventsFilter.filter.location.lng.exact = undefined;
+    }
 }
 
 

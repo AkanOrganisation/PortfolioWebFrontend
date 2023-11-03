@@ -25,10 +25,24 @@
         <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Search by City or Postal Code</mat-label>
             <input type="text" matInput
-                   [(ngModel)]="addressSearch" name="eventSearch">
+                   [(ngModel)]="addressSearch" name="eventSearch" [disabled]="searchByLocation">
+
+            <!-- If searchByLocation is true, show this button -->
+            <button *ngIf="searchByLocation" type="button" matSuffix mat-icon-button aria-label="Search"
+                    (click)="searchByAddress()">
+                <mat-icon>clear</mat-icon>
+            </button>
+
+            <!-- If searchByLocation is false, show this button -->
+            <button *ngIf="!searchByLocation" type="button" matSuffix mat-icon-button aria-label="Search"
+                    (click)="searchMyLocation()">
+                <mat-icon>search</mat-icon>
+            </button>
+
+
         </mat-form-field>
-        <mat-form-field appearance="fill" floatLabel="auto">
-            <mat-label>Search Radius</mat-label>
+        <mat-form-field appearance="fill" floatLabel="always">
+            <mat-label>Search Radius in Meters</mat-label>
             <input type="text" matInput
                    [(ngModel)]="eventsFilter.filter.location.radius.exact"
                    name="radiusSearch">
