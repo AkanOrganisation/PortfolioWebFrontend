@@ -1,3 +1,9 @@
+:host {
+  height: 100%;
+  width: 100%;
+}
+
+
 mat-toolbar {
   background: #004a9f;
   color: white;
@@ -18,8 +24,7 @@ mat-sidenav {
   background-color: #333333;
   height: calc(100vh - 98px);
   border-radius: 10px;
-  margin: 16px;
-  margin-left: 32px;
+  margin: 16px 16px 16px 32px;
 
   display: flex;
   justify-content: center;
@@ -31,6 +36,8 @@ mat-sidenav {
 
 mat-sidenav-container {
   height: calc(100vh - 65px);
+  background-color: #333333;
+
 }
 
 .menu-button {
@@ -63,7 +70,4 @@ mat-divider {
   margin-bottom: 16px;
   background-color: rgba(255, 255, 255, 0.5);
 }
-
-
-
 

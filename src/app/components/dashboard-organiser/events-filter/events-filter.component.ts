@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, EventEmitter, Output} from '@angular/core'
 import {ComponentState} from "../../../constants";
 import {NgForm} from "@angular/forms";
 import {OrganiserModel} from "../../../models/organiser.models";
-import {getDefaultEventsFilter} from "../../../constants/events-filter.constants";
+import {getDefaultOrganiserEventsFilter} from "../../../constants/events-filter.constants";
 import {OrganiserFilterType} from "../../../graphql/organiser/organiser.graphql";
 import {Subscription} from "rxjs";
 import {UserService} from "../../../services";
@@ -22,7 +22,7 @@ export class EventsFilterComponent implements OnInit, OnDestroy {
     @Output() eventsList = new EventEmitter<EventNodeType[]>();
 
     state = ComponentState.LOADING;
-    eventsFilter: OrganiserFilterType = {ownedEvents: getDefaultEventsFilter()};
+    eventsFilter: OrganiserFilterType = {ownedEvents: getDefaultOrganiserEventsFilter()};
 
     protected eventsEndCursor = undefined;
     protected hasNextPage = false;

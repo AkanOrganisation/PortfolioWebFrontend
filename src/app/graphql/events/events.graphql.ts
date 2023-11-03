@@ -9,7 +9,7 @@ import {StatusConstants} from "../../constants/status.constants";
 // Filter Types
 ////////////////////////////////////////////////////////////////////////////////////////
 export type EventsDateTimeFilterType = {
-    datetime?: LookupFilterType<string>;
+    datetime?: LookupFilterType<Date>;
     status?: LookupFilterType<string>;
     freeSlotsAvailable?: LookupFilterType<boolean>;
     freeSlotsMinCount?: LookupFilterType<number>;
@@ -21,7 +21,7 @@ export type EventsFilterType = {
     category?: LookupFilterType<string>;
     description?: LookupFilterType<string>;
     title?: LookupFilterType<string>;
-    datetime?: EventsDateTimeFilterType;
+    dates?: EventsDateTimeFilterType;
     location?: LocationFilterType;
 };
 
@@ -79,6 +79,10 @@ export type EventMemberNodeType = {
 ////////////////////////////////////////////////////////////////////////////////////////
 export type eventPrivateQueryType = {
     eventOrganiserPrivate?: EventNodeType;
+}
+
+export type eventPublicQueryType = {
+    allEventsClientPublic?: PagedQueryResultType<EventNodeType>;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////

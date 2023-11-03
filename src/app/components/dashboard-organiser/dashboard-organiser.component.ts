@@ -1,17 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {OrganiserModel} from "../../models/organiser.models";
-import {ComponentState, API_ENDPOINTS, PROJECT} from "../../constants";
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {ComponentState, PROJECT} from "../../constants";
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {EventNodeType, EventsFilterConnectionType} from "../../graphql/events/events.graphql";
-import {EventType} from "../../types/event.types";
+import {EventNodeType, } from "../../graphql/events/events.graphql";
 
 @Component({
     selector: 'app-dashboard-organiser',
     templateUrl: './dashboard-organiser.component.html',
     styleUrls: ['./dashboard-organiser.component.css']
 })
-export class DashboardOrganiserComponent implements OnInit {
+export class DashboardOrganiserComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSidenav)
     sidenav!: MatSidenav;
 

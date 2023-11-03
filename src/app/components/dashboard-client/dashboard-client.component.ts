@@ -1,48 +1,30 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSidenav} from "@angular/material/sidenav";
-import {CsrfService, UserService} from "../../services";
-import {ClientModel, UserModel} from "../../models";
-import {BreakpointObserver} from "@angular/cdk/layout";
-import {API_ENDPOINTS, PROJECT} from "../../constants";
+import {Component, OnInit} from '@angular/core';
+import {ComponentState, PROJECT} from "../../constants";
+import {EventNodeType} from "../../graphql/events/events.graphql";
 
 @Component({
-  selector: 'app-dashboard-client',
-  templateUrl: './dashboard-client.component.html',
-  styleUrls: ['./dashboard-client.component.css']
+    selector: 'app-dashboard-client',
+    templateUrl: './dashboard-client.component.html',
+    styleUrls: ['./dashboard-client.component.css']
 })
-export class DashboardClientComponent implements OnInit{
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
+export class DashboardClientComponent implements OnInit {
+    state = ComponentState.LOADING;
 
-  loading = true;
-  ready = false;
-  error: any;
+    public eventsList: EventNodeType[] = [];
 
-  constructor(
-    public clientModel: ClientModel,
-    public userModel: UserModel,
-    public user: UserService,
-    private observer: BreakpointObserver,
-  ) {
-  }
+    updateEventsList(eventsList: EventNodeType[]) {
+        this.eventsList = eventsList;
+    }
 
-  async ngOnInit() {
-    this.ready = this.user.authenticated;
-    this.loading = false;
-  }
 
-  ngAfterViewInit() {
-    this.observer.observe(["(max-width: 800px)"]).subscribe((res) => {
-      if (res.matches) {
-        this.sidenav.mode = "over";
-        this.sidenav.close();
-      } else {
-        this.sidenav.mode = "side";
-        this.sidenav.open();
-      }
-    });
-  }
+    constructor(
+    ) {
+    }
 
-  protected readonly LinksConstants = API_ENDPOINTS;
+    ngOnInit(): void {
+        this.state = ComponentState.READY;
+    }
+
+    protected readonly ComponentState = ComponentState;
     protected readonly PROJECT = PROJECT;
 }
