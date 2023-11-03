@@ -23,7 +23,7 @@
         <!-- Date Picker -->
         <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Select Date</mat-label>
-            <input matInput [matDatepicker]="datePicker" [(ngModel)]="eventDateInput">
+            <input matInput [matDatepicker]="datePicker" [(ngModel)]="eventDateInput" required>
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker></mat-datepicker>
         </mat-form-field>
@@ -31,7 +31,7 @@
         <!-- Time Picker -->
         <mat-form-field appearance="fill" floatLabel="auto">
             <mat-label>Select Time</mat-label>
-            <input matInput type="time" [(ngModel)]="eventTimeInput">
+            <input matInput type="time" [(ngModel)]="eventTimeInput" required>
         </mat-form-field>
 
 

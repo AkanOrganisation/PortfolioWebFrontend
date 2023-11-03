@@ -34,7 +34,7 @@
 
     <ng-container *ngIf="mode === ComponentMode.EDIT">
         <mat-form-field>
-            <input matInput type="number" placeholder="max slots" [(ngModel)]="eventSlotsMaxInput">
+            <input matInput type="number" placeholder="max slots" [(ngModel)]="eventSlotsMaxInput" required>
         </mat-form-field>
 
         <span class="spacer"></span>

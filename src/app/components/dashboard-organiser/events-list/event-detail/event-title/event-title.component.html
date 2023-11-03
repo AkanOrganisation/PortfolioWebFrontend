@@ -21,7 +21,7 @@
     </ng-container>
     <ng-container *ngIf="mode === ComponentMode.EDIT">
         <mat-form-field>
-            <input matInput [(ngModel)]="eventTitleInput" placeholder="Event title">
+            <input matInput [(ngModel)]="eventTitleInput" placeholder="Event title" required>
         </mat-form-field>
         <span class="spacer"></span>
         <mat-card-actions>
