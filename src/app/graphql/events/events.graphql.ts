@@ -21,7 +21,7 @@ export type EventsFilterType = {
     category?: LookupFilterType<string>;
     description?: LookupFilterType<string>;
     title?: LookupFilterType<string>;
-    dates?: EventsDateTimeFilterType;
+    // dates?: EventsDateTimeFilterType;
     location?: LocationFilterType;
 };
 

@@ -1,6 +1,10 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {Subscription} from "rxjs";
-import {EventNodeType, EventsFilterConnectionType} from "../../../graphql/events/events.graphql";
+import {
+    EventNodeType,
+    EventsDateTimeFilterConnectionType,
+    EventsFilterConnectionType
+} from "../../../graphql/events/events.graphql";
 import {getDefaultDateTimesFilter, getDefaultEventsFilter} from "../../../constants/events-filter.constants";
 import {NgForm} from "@angular/forms";
 import {ComponentState} from "../../../constants";
@@ -20,11 +24,11 @@ export class ClientEventsFilterComponent {
 
     state = ComponentState.LOADING;
     eventsFilter: EventsFilterConnectionType = getDefaultEventsFilter();
-    eventDateTimesFilter: EventsFilterConnectionType = getDefaultDateTimesFilter();
+    eventDateTimesFilter: EventsDateTimeFilterConnectionType = getDefaultDateTimesFilter();
 
     datesFilter = {
         from: new Date(),
-        to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 5),
+        to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     }
 
     protected eventsEndCursor = undefined;
@@ -62,8 +66,7 @@ export class ClientEventsFilterComponent {
         if (cursorKey && cursorValue) {
             this.eventsFilter[cursorKey] = cursorValue;
         }
-        this.eventsFilter.filter.dates.datetime.range = [this.datesFilter.from, this.datesFilter.to];
-        console.log(this.eventsFilter)
+        this.eventDateTimesFilter.filter.datetime.range = [this.datesFilter.from, this.datesFilter.to];
         this.subscription = this.eventModel.getEventsList(
             this.eventsFilter,
             this.eventDateTimesFilter

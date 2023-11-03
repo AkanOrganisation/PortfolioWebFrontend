@@ -18,13 +18,19 @@ export class EventModel {
     ) {
     }
 
-    getEventsList(eventsFilter: EventsFilterConnectionType, eventsDateTimeFilter: EventsFilterConnectionType) {
+    getEventsList(eventsFilter: EventsFilterConnectionType, datesFilter: EventsFilterConnectionType) {
+        const {first: datesFirst, last: datesLast, after: datesAfter, before: datesBefore, filter: datesFilterFilter} = datesFilter;
+
         return this.apollo
             .watchQuery<eventPublicQueryType>({
                 query: EVENTS_LIST_QUERY,
                 variables: {
                     ...eventsFilter,
-                    // ...eventsDateTimeFilter
+                    datesFirst,
+                    datesLast,
+                    datesAfter,
+                    datesBefore,
+                    datesFilter: datesFilterFilter
                 },
             }).valueChanges;
     }
@@ -39,7 +45,13 @@ const EVENTS_LIST_QUERY = gql`
         $after: String,
         $before: String,
         $last: Int,
-        $filter: EventDetailPublicEventDetailFilterPublicFilterInputType) {
+        $filter: EventDetailPublicEventDetailFilterPublicFilterInputType,
+        $datesFirst: Int,
+        $datesAfter: String,
+        $datesBefore: String,
+        $datesLast: Int,
+        $datesFilter: EventDateTimePublicEventDateTimeFilterPublicFilterInputType
+    ) {
         allEventsClientPublic(
             first: $first,
             after: $after,
@@ -67,7 +79,13 @@ const EVENTS_LIST_QUERY = gql`
                         id
                         registerNumber
                     }
-                    dates {
+                    dates(
+                        first: $datesFirst,
+                        after: $datesAfter,
+                        before: $datesBefore,
+                        last: $datesLast,
+                        filter: $datesFilter
+                    ) {
                         edges {
                             cursor
                             node {
@@ -98,3 +116,5 @@ const EVENTS_LIST_QUERY = gql`
         }
     }
 `;
+
+
