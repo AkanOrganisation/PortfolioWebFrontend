@@ -30,7 +30,7 @@
             <button mat-icon-button [disabled]="!isEdited" (click)="save()">
                 <mat-icon>done</mat-icon>
             </button>
-            <button mat-icon-button (click)="cancel()" type="button">
+            <button mat-icon-button (click)="cancel()" [disabled]="!eventDescription" type="button">
                 <mat-icon>cancel</mat-icon>
             </button>
         </mat-card-actions>

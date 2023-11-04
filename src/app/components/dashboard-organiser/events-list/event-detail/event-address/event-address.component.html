@@ -40,12 +40,25 @@
     </mat-form-field>
     <span class="spacer"></span>
     <mat-card-actions>
-      <button mat-icon-button (click)="save()" type="button">
+      <button mat-icon-button (click)="save()"
+              [disabled]="!eventAddressInput ||
+               !eventAddressInput.country ||
+               !eventAddressInput.city ||
+               !eventAddressInput.postalCode ||
+               !eventAddressInput.streetName ||
+               !eventAddressInput.streetNumber"
+                type="button">
         <mat-icon>
           done
         </mat-icon>
       </button>
-      <button mat-icon-button (click)="cancel()" type="button">
+      <button mat-icon-button (click)="cancel()"
+              [disabled]="!eventAddress ||
+               !eventAddress.country ||
+               !eventAddress.city ||
+               !eventAddress.postalCode ||
+               !eventAddress.streetName ||
+               !eventAddress.streetNumber" type="button">
         <mat-icon>
           clear
         </mat-icon>

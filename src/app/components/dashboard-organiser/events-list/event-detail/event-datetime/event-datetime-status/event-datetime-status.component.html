@@ -35,12 +35,12 @@
         <span class="spacer"></span>
         <mat-card-actions>
 
-            <button mat-icon-button (click)="save()" type="button">
+            <button mat-icon-button (click)="save()" [disabled]="!eventDateTimeStatusInput" type="button">
                 <mat-icon>
                     done
                 </mat-icon>
             </button>
-            <button mat-icon-button (click)="cancel()" type="button">
+            <button mat-icon-button (click)="cancel()" [disabled]="!eventDateTimeStatus" type="button">
                 <mat-icon>
                     clear
                 </mat-icon>
