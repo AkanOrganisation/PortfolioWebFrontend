@@ -82,7 +82,6 @@ export class ClientEventsFilterComponent implements OnInit, OnDestroy {
         .map((edge: any) => edge.node)  // Map to the node which contains the event information
     );
 
-    this.eventsList.emit(result.data.allEventsClientPublic?.edges.map((edge: any) => edge.node));
 
     this.state = ComponentState.READY;
 
