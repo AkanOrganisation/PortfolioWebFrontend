@@ -1,5 +1,7 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 30px;
   padding: 5px;
   overflow: hidden;
