@@ -35,8 +35,12 @@
 
             <!-- If searchByLocation is false, show this button -->
             <button *ngIf="!searchByLocation" type="button" matSuffix mat-icon-button aria-label="Search"
-                    (click)="searchMyLocation()">
+                    (click)="searchAddress()">
                 <mat-icon>search</mat-icon>
+            </button>
+            <button *ngIf="!searchByLocation" type="button" matSuffix mat-icon-button aria-label="Search"
+                    (click)="searchMyLocation()">
+                <mat-icon>my_location</mat-icon>
             </button>
 
 

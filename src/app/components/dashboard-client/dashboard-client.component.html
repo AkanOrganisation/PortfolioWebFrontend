@@ -20,10 +20,10 @@
 
     <mat-sidenav-container>
         <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z16">
-            <app-client-events-filter (eventsList)="updateEventsList($event)"></app-client-events-filter>
+            <app-client-events-filter (eventsList)="updateEventsList($event)" (mapLocation)="updateMapLocation($event)"></app-client-events-filter>
         </mat-sidenav>
         <mat-sidenav-content>
-            <app-client-events-map [eventsList]="eventsList"></app-client-events-map>
+            <app-client-events-map [eventsList]="eventsList" [mapLocation]="mapLocation"></app-client-events-map>
         </mat-sidenav-content>
 
     </mat-sidenav-container>
