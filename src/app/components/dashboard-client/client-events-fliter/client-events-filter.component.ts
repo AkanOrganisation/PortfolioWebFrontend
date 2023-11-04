@@ -76,6 +76,11 @@ export class ClientEventsFilterComponent implements OnInit, OnDestroy {
     this.eventsEndCursor = result.data.allEventsClientPublic?.pageInfo.endCursor;
     this.hasNextPage = result.data.allEventsClientPublic?.pageInfo.hasNextPage;
 
+    this.eventsList.emit(
+      result.data.allEventsClientPublic?.edges
+        .filter((edge: any) => edge.node.dates?.edges)  // Filter out events with no dates
+        .map((edge: any) => edge.node)  // Map to the node which contains the event information
+    );
 
     this.eventsList.emit(result.data.allEventsClientPublic?.edges.map((edge: any) => edge.node));
 
@@ -88,10 +93,12 @@ export class ClientEventsFilterComponent implements OnInit, OnDestroy {
     if (cursorKey && cursorValue) {
       this.eventsFilter[cursorKey] = cursorValue;
     }
-    this.eventDateTimesFilter.filter.datetime.range = [
+    this.eventsFilter.filter.dates.datetime.range = [
       new Date(Date.UTC(this.datesFilter.from.getFullYear(), this.datesFilter.from.getMonth(), this.datesFilter.from.getDate())),
       new Date(Date.UTC(this.datesFilter.to.getFullYear(), this.datesFilter.to.getMonth(), this.datesFilter.to.getDate() + 1))
     ];
+    // the above filter delivers all event date-times whose one of the dates is in the range, api design bug
+    this.eventDateTimesFilter.filter.datetime.range = this.eventsFilter.filter.dates.datetime.range;
     this.subscription = this.eventModel.getEventsList(
       this.eventsFilter,
       this.eventDateTimesFilter
