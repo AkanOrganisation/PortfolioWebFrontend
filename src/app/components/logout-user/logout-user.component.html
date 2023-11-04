@@ -14,7 +14,8 @@
 
 
   <ng-template #logoutDialog>
-    <mat-card *ngIf="state === ComponentState.PROCESSING; else notLoggedIn">
+    <div class="backdrop"></div>
+    <mat-card class="log-out-dialog" *ngIf="state === ComponentState.PROCESSING; else notLoggedIn">
       <mat-card-title>Logout</mat-card-title>
       <mat-card-content>
         <p>Are you sure you want to logout?</p>
