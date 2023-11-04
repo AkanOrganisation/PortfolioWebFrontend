@@ -74,6 +74,7 @@ import { EventAddDatetimeComponent } from './components/dashboard-organiser/even
 import { AddEventComponent } from './components/dashboard-organiser/add-event/add-event.component';
 import { ClientEventsFilterComponent } from './components/dashboard-client/client-events-fliter/client-events-filter.component';
 import { ClientEventsMapComponent } from './components/dashboard-client/client-events-map/client-events-map.component';
+import {GoogleMapsModule} from "@angular/google-maps";
 
 
 const MATERIALMODULES = [
@@ -145,6 +146,7 @@ const FORMSMODULES = [
         MATERIALMODULES,
         FlexLayoutModule,
         CKEditorModule,
+        GoogleMapsModule,
     ],
     providers: [
         {

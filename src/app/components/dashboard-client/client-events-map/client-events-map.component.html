@@ -1,1 +1,26 @@
-<p>client-events-map works!</p>
+<!-- Show spinner when loading -->
+<mat-spinner *ngIf="state === ComponentState.LOADING; else content"></mat-spinner>
+
+<!-- Show content when ready -->
+<ng-template #content>
+    <div class="map">
+        <google-map *ngIf="state === ComponentState.READY"
+                    [center]="defaultLocation"
+                    [zoom]="zoom"
+                    height="100%"
+                    width="100%"
+        >
+            <map-marker *ngFor="let event of eventsList"
+                        [position]="locationTupleToLatLngLiteral(event.location)"
+                        [label]="event.category || 'Default Category'"
+                        [title]="event.title || 'Default Title'"
+            >
+            </map-marker>
+        </google-map>
+    </div>
+</ng-template>
+
+<!-- Show error message when error -->
+<ng-template #error>
+    <p>Something went wrong</p>
+</ng-template>
