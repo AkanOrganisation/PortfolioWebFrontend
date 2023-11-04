@@ -1,7 +1,12 @@
 import {Apollo, gql} from "apollo-angular";
 import {GraphQLErrorsService} from "../services/graphql/graphql.errors";
 import {Injectable} from "@angular/core";
-import {eventPublicQueryType, EventsFilterConnectionType, EventsFilterType} from "../graphql/events/events.graphql";
+import {
+  eventPublicQueryType,
+  EventsDateTimeFilterConnectionType,
+  EventsFilterConnectionType,
+  EventsFilterType
+} from "../graphql/events/events.graphql";
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +23,7 @@ export class EventModel {
     ) {
     }
 
-    getEventsList(eventsFilter: EventsFilterConnectionType, datesFilter: EventsFilterConnectionType) {
+    getEventsList(eventsFilter: EventsFilterConnectionType, datesFilter: EventsDateTimeFilterConnectionType) {
         const {first: datesFirst, last: datesLast, after: datesAfter, before: datesBefore, filter: datesFilterFilter} = datesFilter;
 
         return this.apollo
