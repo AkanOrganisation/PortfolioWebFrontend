@@ -1,15 +1,16 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {EventNodeType} from "../../../graphql/events/events.graphql";
 import {API_MAPS} from "../../../constants/api-maps.constants";
 import {ComponentState} from "../../../constants";
 import {LocationNodeType} from "../../../graphql/location/location.graphql";
+import {GoogleMap} from "@angular/google-maps";
 
 @Component({
   selector: 'app-client-events-map',
   templateUrl: './client-events-map.component.html',
   styleUrls: ['./client-events-map.component.css']
 })
-export class ClientEventsMapComponent {
+export class ClientEventsMapComponent implements OnInit, AfterViewInit {
   @Input() eventsList: EventNodeType[] = [];
   zoom = 12;
   @Input() mapLocation: google.maps.LatLngLiteral = {lat: 49.3538, lng: 9.1439};
@@ -28,8 +29,14 @@ export class ClientEventsMapComponent {
 
   }
 
+  ngAfterViewInit() {
+
+
+  }
+
   public onGoogleMapsScriptLoad() {
     this.state = this.ComponentState.READY;
+    console.log('Google Maps API loaded.');
   }
 
 
