@@ -7,23 +7,28 @@ import {API_ENDPOINTS} from "../../constants";
 const uri = API_ENDPOINTS.API_GRAPHQL_ENDPOINT;
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
-    return {
-        cache: new InMemoryCache(),
-        link: httpLink.create({
-            uri: uri,
-        }),
-    };
+  return {
+    cache: new InMemoryCache(),
+    link: httpLink.create({
+      uri: uri,
+    }),
+    credentials: 'include',
+    headers: {
+      'X-CSRFToken': API_ENDPOINTS.CSRF_HEADER_NAME,
+
+    }
+  };
 }
 
 @NgModule({
-    exports: [ApolloModule],
-    providers: [
-        {
-            provide: APOLLO_OPTIONS,
-            useFactory: createApollo,
-            deps: [HttpLink],
-        },
-    ],
+  exports: [ApolloModule],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: createApollo,
+      deps: [HttpLink],
+    },
+  ],
 })
 export class GraphQLModule {
 }
