@@ -32,6 +32,7 @@ export function createApollo(httpLink: HttpLink, cookieService: CookieService): 
   return {
     cache: new InMemoryCache(),
     link: authLink.concat(http),
+    credentials: 'include'
   };
 }
 
