@@ -149,11 +149,6 @@ const FORMSMODULES = [
         GoogleMapsModule,
     ],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: CsrfInterceptor,
-            multi: true
-        },
         UserService,
         {
             provide: APP_INITIALIZER,
