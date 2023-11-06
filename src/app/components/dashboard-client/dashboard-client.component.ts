@@ -3,6 +3,7 @@ import {ComponentState, PROJECT} from "../../constants";
 import {EventNodeType} from "../../graphql/events/events.graphql";
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {ClientEventsDetailComponent} from "./client-events-detail/client-events-detail.component";
 
 @Component({
   selector: 'app-dashboard-client',
@@ -13,6 +14,7 @@ export class DashboardClientComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
+  @ViewChild(ClientEventsDetailComponent) selectedEventComponent!: ClientEventsDetailComponent;
 
   @Input() mapLocation: google.maps.LatLngLiteral = {lat: 49.3538, lng: 9.1439};
 
@@ -54,4 +56,9 @@ export class DashboardClientComponent implements OnInit, AfterViewInit {
     this.mapLocation = $event;
 
   }
+
+  selectEvent(event: EventNodeType) {
+    this.selectedEventComponent.loadEvent(event);
+  }
+
 }

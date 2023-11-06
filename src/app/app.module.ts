@@ -75,6 +75,7 @@ import { AddEventComponent } from './components/dashboard-organiser/add-event/ad
 import { ClientEventsFilterComponent } from './components/dashboard-client/client-events-fliter/client-events-filter.component';
 import { ClientEventsMapComponent } from './components/dashboard-client/client-events-map/client-events-map.component';
 import {GoogleMapsModule} from "@angular/google-maps";
+import { ClientEventsDetailComponent } from './components/dashboard-client/client-events-detail/client-events-detail.component';
 
 
 const MATERIALMODULES = [
@@ -139,6 +140,7 @@ const FORMSMODULES = [
         AddEventComponent,
         ClientEventsFilterComponent,
         ClientEventsMapComponent,
+        ClientEventsDetailComponent,
     ],
     imports: [
         BROWSERMODULES,

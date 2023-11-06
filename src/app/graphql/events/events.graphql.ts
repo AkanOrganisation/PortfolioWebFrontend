@@ -83,7 +83,9 @@ export type eventPrivateQueryType = {
 
 export type eventPublicQueryType = {
     allEventsClientPublic?: PagedQueryResultType<EventNodeType>;
+    eventClientPublic?: EventNodeType;
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 

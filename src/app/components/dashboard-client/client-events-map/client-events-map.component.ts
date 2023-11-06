@@ -1,9 +1,10 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {EventNodeType} from "../../../graphql/events/events.graphql";
 import {API_MAPS} from "../../../constants/api-maps.constants";
 import {ComponentState} from "../../../constants";
 import {LocationNodeType} from "../../../graphql/location/location.graphql";
 import {GoogleMap} from "@angular/google-maps";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-client-events-map',
@@ -16,6 +17,8 @@ export class ClientEventsMapComponent implements OnInit, AfterViewInit {
   @Input() mapLocation: google.maps.LatLngLiteral = {lat: 49.3538, lng: 9.1439};
 
   state = ComponentState.LOADING;
+
+  @Output() selectedEvent = new EventEmitter<EventNodeType>();
 
   ngOnInit() {
 
@@ -46,6 +49,10 @@ export class ClientEventsMapComponent implements OnInit, AfterViewInit {
   locationTupleToLatLngLiteral(location: LocationNodeType | undefined): google.maps.LatLngLiteral {
     if (!location?.location) return this.mapLocation;
     return {lat: location.location[0], lng: location.location[1]};
+  }
+
+  selectEvent(event: EventNodeType) {
+    this.selectedEvent.emit(event);
   }
 
 }

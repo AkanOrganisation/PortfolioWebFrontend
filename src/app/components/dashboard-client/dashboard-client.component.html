@@ -2,31 +2,40 @@
 <mat-spinner *ngIf="state === ComponentState.LOADING; else content"></mat-spinner>
 <ng-template #content>
 
-    <mat-toolbar class="mat-elevation-z8">
-        <button
-                mat-icon-button
-                *ngIf="sidenav.mode === 'over'"
-                (click)="sidenav.toggle()"
-        >
-            <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>
-            <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
-        </button>
-        <span class="spacer"></span>
-        <app-logout-user></app-logout-user>
-        <span id="titleOfProject">{{PROJECT.TITLE}}
-            <mat-icon>events</mat-icon></span>
+  <mat-toolbar class="mat-elevation-z8">
+    <button
+      mat-icon-button
+      *ngIf="sidenav.mode === 'over'"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>
+      <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
+    </button>
+    <span class="spacer"></span>
+    <app-logout-user></app-logout-user>
+    <span id="titleOfProject">{{PROJECT.TITLE}}
+      <mat-icon>events</mat-icon></span>
 
-    </mat-toolbar>
+  </mat-toolbar>
 
-    <mat-sidenav-container>
-        <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z16">
-            <app-client-events-filter (eventsList)="updateEventsList($event)" (mapLocation)="updateMapLocation($event)"></app-client-events-filter>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <app-client-events-map [eventsList]="eventsList" [mapLocation]="mapLocation"></app-client-events-map>
-        </mat-sidenav-content>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z16">
+      <app-client-events-filter
+        (eventsList)="updateEventsList($event)"
+        (mapLocation)="updateMapLocation($event)">
+      </app-client-events-filter>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-client-events-map
+        [eventsList]="eventsList"
+        [mapLocation]="mapLocation"
+        (selectedEvent)="selectEvent($event)">
+      </app-client-events-map>
+      <app-client-events-detail
+      ></app-client-events-detail>
+    </mat-sidenav-content>
 
-    </mat-sidenav-container>
+  </mat-sidenav-container>
 
 
 </ng-template>

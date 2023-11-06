@@ -31,7 +31,7 @@ export class ClientEventsFilterComponent implements OnInit, OnDestroy {
 
   datesFilter = {
     from: new Date(),
-    to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
+    to: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
   }
 
   searchByLocation = false;
