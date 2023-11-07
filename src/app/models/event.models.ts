@@ -81,24 +81,10 @@ const EVENTS_LIST_QUERY = gql`
     ){
       edges {
         node {
-          description
           location
           title
           category
           id
-          address {
-            additional
-            city
-            country
-            postalCode
-            streetName
-            streetNumber
-          }
-          organiser {
-            companyName
-            id
-            registerNumber
-          }
           dates(
             first: $datesFirst,
             after: $datesAfter,
@@ -109,12 +95,7 @@ const EVENTS_LIST_QUERY = gql`
             edges {
               cursor
               node {
-                datetime
-                freeSlotsAvailable
-                freeSlotsCount
-                maxMembers
                 id
-                status
               }
             }
             pageInfo {
@@ -146,9 +127,18 @@ const EVENT_DETAIL_QUERY = gql`
             id: $id
         ) {
             description
+            address{
+                city
+                streetName
+                streetNumber
+                postalCode
+                country
+                additional
+            }
             dates {
                 edges {
                     node {
+                        id
                         datetime
                         freeSlotsCount
                         maxMembers

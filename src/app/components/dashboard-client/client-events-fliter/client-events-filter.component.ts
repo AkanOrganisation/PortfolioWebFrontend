@@ -197,6 +197,10 @@ export class ClientEventsFilterComponent implements OnInit, OnDestroy {
       this.mapLocation.emit({lat: geoLocation.lat as number, lng: geoLocation.lng as number});
     }
   }
+
+  get minDate(): Date {
+    return new Date();
+  }
 }
 
 

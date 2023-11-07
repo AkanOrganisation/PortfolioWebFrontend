@@ -19,6 +19,7 @@ export class DashboardClientComponent implements OnInit, AfterViewInit {
   @Input() mapLocation: google.maps.LatLngLiteral = {lat: 49.3538, lng: 9.1439};
 
   state = ComponentState.LOADING;
+  eventVisible: boolean = false;
 
   public eventsList: EventNodeType[] = [];
 
@@ -57,8 +58,14 @@ export class DashboardClientComponent implements OnInit, AfterViewInit {
 
   }
 
-  selectEvent(event: EventNodeType) {
-    this.selectedEventComponent.loadEvent(event);
+  showEvent(event: EventNodeType) {
+    this.eventVisible = true;
+    this.selectedEventComponent.loadEvent(event)
   }
+
+  closeEvent() {
+    this.eventVisible = false;
+  }
+
 
 }

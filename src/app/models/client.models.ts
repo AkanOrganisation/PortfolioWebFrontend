@@ -53,4 +53,40 @@ export class ClientModel {
     }
 
 
+    takeEvent(id: string) {
+        console.log(id)
+        return this.apollo.mutate({
+                mutation: TAKE_OR_EXIT_EVENT_MUTATION,
+                variables: {
+                    id: id
+                }
+            }
+        )
+    }
+
+    exitEvent(id: string) {
+        return this.apollo.mutate({
+                mutation: TAKE_OR_EXIT_EVENT_MUTATION,
+                variables: {
+                    id: id,
+                    exit: true
+                }
+            }
+        )
+    }
 }
+
+
+const TAKE_OR_EXIT_EVENT_MUTATION = gql`
+    mutation takeEvent(
+        $id: ID!
+        $exit: Boolean! = false
+    ){
+        clientTakeOrExitEvent(
+            eventDatetimeId: $id
+            exitEvent: $exit
+        ) {
+            success
+        }
+    }
+`;

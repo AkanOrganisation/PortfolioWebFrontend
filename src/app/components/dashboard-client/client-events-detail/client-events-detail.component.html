@@ -1,1 +1,38 @@
-<p>client-events-detail works!</p>
+<mat-spinner *ngIf="state === ComponentState.PROCESSING; else showEvent"></mat-spinner>
+
+<ng-template #showEvent>
+  <mat-card *ngIf="state === ComponentState.READY">
+    <mat-icon (click)="toggle()" class="pointer">clear</mat-icon>
+    <mat-card-header>
+      <mat-card-title>{{ event?.title }}</mat-card-title>
+      <mat-card-subtitle>{{ event?.category }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div [innerHTML]="event?.description"></div>
+    </mat-card-content>
+    <mat-card-actions>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput
+               [matDatepickerFilter]="eventDatesFilter"
+               [matDatepicker]="picker"
+               [min]="minDate"
+               [(ngModel)]="selectedDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill" *ngIf="selectedDate">
+        <mat-label>Choose a time</mat-label>
+        <mat-select [(value)]="selectedDateTime">
+          <mat-option *ngFor="let dateTimeNode of eventTimes(selectedDate)" [value]="dateTimeNode">
+            {{ dateTimeNode.datetime | date: 'shortTime' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <button mat-raised-button color="primary" (click)="takeEvent()" >Book</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>

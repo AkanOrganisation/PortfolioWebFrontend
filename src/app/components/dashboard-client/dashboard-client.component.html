@@ -26,13 +26,16 @@
       </app-client-events-filter>
     </mat-sidenav>
     <mat-sidenav-content>
+      <app-client-events-detail [class.hidden]="!eventVisible"
+                                (close)="closeEvent()">
+        >
+      </app-client-events-detail>
       <app-client-events-map
         [eventsList]="eventsList"
         [mapLocation]="mapLocation"
-        (selectedEvent)="selectEvent($event)">
+        (selectedEvent)="showEvent($event)">
       </app-client-events-map>
-      <app-client-events-detail
-      ></app-client-events-detail>
+
     </mat-sidenav-content>
 
   </mat-sidenav-container>
