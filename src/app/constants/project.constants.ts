@@ -1,5 +1,3 @@
-
-
-export enum PROJECT{
-    TITLE = 'PortfolioWebFrontend',
+export enum PROJECT {
+    TITLE = 'IɘventƧ',
 }

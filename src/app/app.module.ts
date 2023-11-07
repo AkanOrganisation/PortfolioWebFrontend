@@ -76,6 +76,8 @@ import { ClientEventsFilterComponent } from './components/dashboard-client/clien
 import { ClientEventsMapComponent } from './components/dashboard-client/client-events-map/client-events-map.component';
 import {GoogleMapsModule} from "@angular/google-maps";
 import { ClientEventsDetailComponent } from './components/dashboard-client/client-events-detail/client-events-detail.component';
+import { ClientEventsListComponent } from './components/dashboard-client/client-events-list/client-events-list.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 const MATERIALMODULES = [
@@ -95,6 +97,7 @@ const MATERIALMODULES = [
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+    MatSnackBarModule,
 
 ];
 
@@ -141,6 +144,7 @@ const FORMSMODULES = [
         ClientEventsFilterComponent,
         ClientEventsMapComponent,
         ClientEventsDetailComponent,
+        ClientEventsListComponent,
     ],
     imports: [
         BROWSERMODULES,

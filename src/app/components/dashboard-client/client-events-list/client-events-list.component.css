@@ -1,0 +1,32 @@
+:host {
+    display: flex;
+    flex-direction: column; /* Stack cards vertically */
+    align-items: center; /* Center cards horizontally */
+    justify-content: flex-start; /* Align cards to the start of the flex container */
+    padding: 20px; /* Add some padding around */
+}
+
+mat-spinner {
+    margin-top: 50px; /* Add margin at the top */
+    margin-bottom: 50px; /* Add margin at the bottom */
+}
+
+.mat-card {
+    display: block; /* Cards are block-level so they stack vertically */
+    width: 90%; /* Card width is 90% of the container */
+    max-width: 800px; /* Maximum width for large screens */
+    margin-top: 15px; /* Margin at the top of each card */
+    margin-bottom: 15px; /* Margin at the bottom of each card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
+}
+
+/* This ensures the "No upcoming Events" card is styled similarly to the event cards */
+.mat-card-empty {
+    display: block;
+    width: 90%;
+    max-width: 800px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center; /* Centers the text inside the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

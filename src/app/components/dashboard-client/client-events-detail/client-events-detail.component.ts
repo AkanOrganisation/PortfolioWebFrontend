@@ -6,6 +6,7 @@ import {ComponentMode} from "../../../constants/mode.components";
 import {EventModel} from "../../../models/event.models";
 import {UserService} from "../../../services";
 import {ClientModel} from "../../../models";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'app-client-events-detail',
@@ -20,6 +21,7 @@ export class ClientEventsDetailComponent implements OnInit {
     mode: ComponentMode = ComponentMode.HIDE;
 
     @Output() close = new EventEmitter<void>();
+    @Output() success = new EventEmitter<void>();
 
 
     minDate: Date = new Date();
@@ -115,7 +117,9 @@ export class ClientEventsDetailComponent implements OnInit {
         this.clientModel.takeEvent(this.selectedDateTime.id as string).subscribe({
             next: (result: any) => {
                 this.state = ComponentState.COMPLETED;
-                console.log(result)
+                if (result.data.clientTakeOrExitEvent.success) {
+                    this.success.emit()
+                }
                 this.toggle();
             },
             error: (error: any) => {

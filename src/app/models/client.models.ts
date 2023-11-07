@@ -52,9 +52,27 @@ export class ClientModel {
         }
     }
 
+    getUpcomingEvents() {
+        return this.apollo.watchQuery({
+            query: CLIENT_EVENTS_QUERY,
+            variables: {
+                first: 100,
+                filter: {
+                    eventDatetime: {
+                        datetime: {
+                            gte: new Date().toISOString()
+                        }
+                    },
+                    status: {
+                        in: ['booked_confirmed', 'booked_unconfirmed']
+                    }
+                }
+            }
+        }).valueChanges;
+    }
+
 
     takeEvent(id: string) {
-        console.log(id)
         return this.apollo.mutate({
                 mutation: TAKE_OR_EXIT_EVENT_MUTATION,
                 variables: {
@@ -87,6 +105,46 @@ const TAKE_OR_EXIT_EVENT_MUTATION = gql`
             exitEvent: $exit
         ) {
             success
+        }
+    }
+`;
+
+const CLIENT_EVENTS_QUERY = gql`
+    query client(
+        $first: Int! = 100
+        $last: Int
+        $after: String
+        $before: String
+        $filter: EventMemberPrivateEventMemberFilterFilterInputType
+    ) {
+        clientPrivate {
+            events(
+                first: $first
+                last: $last
+                after: $after
+                before: $before
+                filter: $filter
+            ) {
+                edges {
+                    node {
+                        eventDatetime {
+                            datetime
+                            id
+                            eventDescription {
+                                title
+                                category
+                            }
+                        }
+                    }
+                    cursor
+                }
+                pageInfo {
+                    endCursor
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                }
+            }
         }
     }
 `;

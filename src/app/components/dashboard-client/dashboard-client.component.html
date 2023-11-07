@@ -2,43 +2,58 @@
 <mat-spinner *ngIf="state === ComponentState.LOADING; else content"></mat-spinner>
 <ng-template #content>
 
-  <mat-toolbar class="mat-elevation-z8">
-    <button
-      mat-icon-button
-      *ngIf="sidenav.mode === 'over'"
-      (click)="sidenav.toggle()"
-    >
-      <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>
-      <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
-    </button>
-    <span class="spacer"></span>
-    <app-logout-user></app-logout-user>
-    <span id="titleOfProject">{{PROJECT.TITLE}}
-      <mat-icon>events</mat-icon></span>
-
-  </mat-toolbar>
-
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z16">
-      <app-client-events-filter
-        (eventsList)="updateEventsList($event)"
-        (mapLocation)="updateMapLocation($event)">
-      </app-client-events-filter>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <app-client-events-detail [class.hidden]="!eventVisible"
-                                (close)="closeEvent()">
+    <mat-toolbar class="mat-elevation-z8">
+        <button
+                mat-icon-button
+                *ngIf="mode === ComponentMode.SEARCH && sidenav && sidenav.mode === 'over'"
+                (click)="sidenav.toggle()"
         >
-      </app-client-events-detail>
-      <app-client-events-map
-        [eventsList]="eventsList"
-        [mapLocation]="mapLocation"
-        (selectedEvent)="showEvent($event)">
-      </app-client-events-map>
+            <mat-icon *ngIf="!sidenav.opened"> menu</mat-icon>
+            <mat-icon *ngIf="sidenav.opened"> close</mat-icon>
+        </button>
+        <span class="spacer"></span>
+        <button mat-button type="button" (click)="toggle()">
+            <div *ngIf="mode === ComponentMode.SEARCH">
+                <mat-icon>filter_list</mat-icon>
+                <span class="mat-hidden-sm-down">Upcoming Events</span>
+            </div>
+            <div *ngIf="mode === ComponentMode.LIST">
+                <mat-icon>map</mat-icon>
+                <span>Search Events</span>
+            </div>
+        </button>
+        <app-logout-user></app-logout-user>
+        <span id="titleOfProject">{{PROJECT.TITLE}}
+            <mat-icon>events</mat-icon>
+        </span>
 
-    </mat-sidenav-content>
+    </mat-toolbar>
+    <mat-sidenav-container *ngIf="mode === ComponentMode.SEARCH">
+        <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z16">
+            <app-client-events-filter
+                    (eventsList)="updateEventsList($event)"
+                    (mapLocation)="updateMapLocation($event)">
+            </app-client-events-filter>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <app-client-events-detail [class.hidden]="!eventVisible"
+                                      (success)="showSuccessfullyBookedMessage()"
+                                      (close)="closeEvent()">
+                >
+            </app-client-events-detail>
+            <app-client-events-map
+                    [eventsList]="eventsList"
+                    [mapLocation]="mapLocation"
+                    (selectedEvent)="showEvent($event)">
+            </app-client-events-map>
+        </mat-sidenav-content>
 
-  </mat-sidenav-container>
+    </mat-sidenav-container>
 
-
+    <mat-sidenav-container *ngIf="mode === ComponentMode.LIST">
+        <app-client-events-list
+        (success)="showSuccessfullyExitedEvent()"
+        >
+        </app-client-events-list>
+    </mat-sidenav-container>
 </ng-template>
