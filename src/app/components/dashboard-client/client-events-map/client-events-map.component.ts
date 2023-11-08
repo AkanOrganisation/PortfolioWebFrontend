@@ -98,8 +98,8 @@ export class ClientEventsMapComponent implements OnInit, OnChanges {
 
 
   locationTupleToLatLngLiteral(location: LocationNodeType | undefined): google.maps.LatLngLiteral {
-    if (!location?.location) return this.mapLocation;
-    return {lat: location.location[1], lng: location.location[0]};
+    if (!location?.coordinates) return this.mapLocation;
+    return {lat: location.coordinates[1], lng: location.coordinates[0]};
   }
 
   selectEvent(event: EventNodeType) {

@@ -103,7 +103,7 @@ export class OrganiserModel {
                         postalCode: event.address?.postalCode,
                         additional: event.address?.additional,
                     },
-                    location: event.location?.location ? {lat: event.location?.location[0], lng: event.location?.location[1]} : undefined,
+                    location: event.location?.coordinates ? {lat: event.location?.coordinates[0], lng: event.location?.coordinates[1]} : undefined,
                     dateTimes: event.dates?.edges.map((edge) : EventDateTimeMutationType => {
                         return {
                             datetimeId: edge.node.id,
