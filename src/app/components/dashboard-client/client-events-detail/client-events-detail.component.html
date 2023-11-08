@@ -6,6 +6,7 @@
     <mat-card-header>
       <mat-card-title>{{ event?.title }}</mat-card-title>
       <mat-card-subtitle>{{ event?.category }}</mat-card-subtitle>
+      <mat-card-subtitle>{{ formatAddress(event?.address) }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <div [innerHTML]="event?.description"></div>
