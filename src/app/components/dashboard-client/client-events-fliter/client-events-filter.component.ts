@@ -195,6 +195,11 @@ export class ClientEventsFilterComponent implements OnInit, OnDestroy {
     const geoLocation = await this.geoService.getGeoLocation(address);
     if (geoLocation) {
       this.mapLocation.emit({lat: geoLocation.lat as number, lng: geoLocation.lng as number});
+      this.clearAddressSearch();
+      this.searchByLocation = true;
+      this.eventsFilter.filter.location.lat.exact = geoLocation.lat;
+      this.eventsFilter.filter.location.lng.exact = geoLocation.lng;
+
     }
   }
 
