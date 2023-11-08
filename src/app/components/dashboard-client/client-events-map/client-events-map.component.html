@@ -10,13 +10,6 @@
                 height="100%"
                 width="100%"
     >
-      <map-marker *ngFor="let event of eventsList"
-                  [position]="locationTupleToLatLngLiteral(event.location)"
-                  [label]="event.category || 'Default Category'"
-                  [title]="event.title || 'Default Title'"
-                  (mapClick)="selectEvent(event)"
-      >
-      </map-marker>
     </google-map>
   </div>
 </ng-template>
