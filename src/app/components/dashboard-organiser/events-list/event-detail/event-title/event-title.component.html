@@ -1,40 +1,41 @@
 <ng-container *ngIf="state === ComponentState.LOADING">
-    <mat-spinner class="spinner"></mat-spinner>
+  <mat-spinner class="spinner"></mat-spinner>
 </ng-container>
 
 <ng-container *ngIf="state === ComponentState.ERROR">
-    <div class="error">
-        <mat-icon>error</mat-icon>
-        <span>Something went wrong</span>
-    </div>
+  <div class="error">
+    <mat-icon>error</mat-icon>
+    <span>Something went wrong</span>
+  </div>
 </ng-container>
 
 <ng-container *ngIf="state === ComponentState.READY">
-    <ng-container *ngIf="mode === ComponentMode.VIEW">
+  <ng-container *ngIf="mode === ComponentMode.VIEW">
 
-        <h1 class="eventTitle">{{eventTitle}}</h1>
+    <h1 class="eventTitle">{{eventTitle}}</h1>
 
-        <span class="spacer"></span>
-        <button mat-icon-button (click)="toggle()">
-            <mat-icon>edit</mat-icon>
-        </button>
-    </ng-container>
-    <ng-container *ngIf="mode === ComponentMode.EDIT">
-        <mat-form-field>
-            <input matInput [(ngModel)]="eventTitleInput" placeholder="Event title" required>
-        </mat-form-field>
-        <span class="spacer"></span>
-        <mat-card-actions>
-            <button mat-icon-button (click)="save()" [disabled]="!eventTitleInput" type="button">
-                <mat-icon>
-                    done
-                </mat-icon>
-            </button>
-            <button mat-icon-button (click)="cancel()" [disabled]="!eventTitle" type="button">
-                <mat-icon>
-                    clear
-                </mat-icon>
-            </button>
-        </mat-card-actions>
-    </ng-container>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="toggle()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="mode === ComponentMode.EDIT">
+    <mat-form-field floatLabel="auto">
+      <mat-label>Event title</mat-label>
+      <input matInput [(ngModel)]="eventTitleInput" required>
+    </mat-form-field>
+    <span class="spacer"></span>
+    <mat-card-actions>
+      <button mat-icon-button (click)="save()" [disabled]="!eventTitleInput" type="button">
+        <mat-icon>
+          done
+        </mat-icon>
+      </button>
+      <button mat-icon-button (click)="cancel()" [disabled]="!eventTitle" type="button">
+        <mat-icon>
+          clear
+        </mat-icon>
+      </button>
+    </mat-card-actions>
+  </ng-container>
 </ng-container>

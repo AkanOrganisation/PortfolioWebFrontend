@@ -20,23 +20,29 @@
     </button>
   </ng-container>
   <ng-container *ngIf="mode === ComponentMode.EDIT">
-    <mat-form-field>
-      <input matInput [(ngModel)]="eventAddressInput.country" placeholder="Country" required>
+    <mat-form-field floatLabel="auto">
+      <mat-label>Country</mat-label>
+      <input matInput [(ngModel)]="eventAddressInput.country" required>
     </mat-form-field>
-        <mat-form-field>
-      <input matInput [(ngModel)]="eventAddressInput.postalCode" placeholder="Postal Code" required>
+    <mat-form-field floatLabel="auto">
+      <mat-label>Postal Code</mat-label>
+      <input matInput [(ngModel)]="eventAddressInput.postalCode" required>
     </mat-form-field>
-        <mat-form-field>
-      <input matInput [(ngModel)]="eventAddressInput.city" placeholder="City" required>
+    <mat-form-field floatLabel="auto">
+      <mat-label>City</mat-label>
+      <input matInput [(ngModel)]="eventAddressInput.city" required>
     </mat-form-field>
-        <mat-form-field>
-      <input matInput [(ngModel)]="eventAddressInput.streetName" placeholder="Street Name" required>
+    <mat-form-field floatLabel="auto">
+      <mat-label>Street Name</mat-label>
+      <input matInput [(ngModel)]="eventAddressInput.streetName" required>
     </mat-form-field>
-        <mat-form-field>
-      <input matInput [(ngModel)]="eventAddressInput.streetNumber" placeholder="House Number" required>
+    <mat-form-field floatLabel="auto">
+      <mat-label>House Number</mat-label>
+      <input matInput [(ngModel)]="eventAddressInput.streetNumber" required>
     </mat-form-field>
-        <mat-form-field>
-      <input matInput [(ngModel)]="eventAddressInput.additional" placeholder="Additional">
+    <mat-form-field floatLabel="auto">
+      <mat-label>Additional</mat-label>
+      <input matInput [(ngModel)]="eventAddressInput.additional">
     </mat-form-field>
     <span class="spacer"></span>
     <mat-card-actions>
@@ -47,7 +53,7 @@
                !eventAddressInput.postalCode ||
                !eventAddressInput.streetName ||
                !eventAddressInput.streetNumber"
-                type="button">
+              type="button">
         <mat-icon>
           done
         </mat-icon>

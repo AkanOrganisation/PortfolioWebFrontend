@@ -1,56 +1,57 @@
 <ng-container *ngIf="state === ComponentState.LOADING">
-    <mat-spinner class="spinner"></mat-spinner>
+  <mat-spinner class="spinner"></mat-spinner>
 </ng-container>
 
 <ng-container *ngIf="state === ComponentState.ERROR">
-    <div class="error">
-        <mat-icon>error</mat-icon>
-        <span>Something went wrong</span>
-    </div>
+  <div class="error">
+    <mat-icon>error</mat-icon>
+    <span>Something went wrong</span>
+  </div>
 </ng-container>
 
 <ng-container *ngIf="state === ComponentState.READY">
-    <ng-container *ngIf="mode === ComponentMode.VIEW">
+  <ng-container *ngIf="mode === ComponentMode.VIEW">
 
-        <div (click)="toggle()" class="slots slots-max pointer">
+    <div (click)="toggle()" class="slots slots-max pointer">
             <span>
                 max slots:  {{eventSlotsMax}}
             </span>
-        </div>
-        <div class="slots slots-booked">
+    </div>
+    <div class="slots slots-booked">
             <span>
                 booked slots:  {{eventSlotsBooked}}
             </span>
-        </div>
-        <div class="slots slots-available">
-            <mat-icon *ngIf="eventSlotsAvailable">event_available</mat-icon>
-            <mat-icon *ngIf="!eventSlotsAvailable">event_busy</mat-icon>
-        </div>
-        <span class="spacer"></span>
-        <button mat-icon-button (click)="toggle()">
-            <mat-icon>edit</mat-icon>
-        </button>
-    </ng-container>
+    </div>
+    <div class="slots slots-available">
+      <mat-icon *ngIf="eventSlotsAvailable">event_available</mat-icon>
+      <mat-icon *ngIf="!eventSlotsAvailable">event_busy</mat-icon>
+    </div>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="toggle()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </ng-container>
 
-    <ng-container *ngIf="mode === ComponentMode.EDIT">
-        <mat-form-field>
-            <input matInput type="number" placeholder="max slots" [(ngModel)]="eventSlotsMaxInput" required>
-        </mat-form-field>
+  <ng-container *ngIf="mode === ComponentMode.EDIT">
+    <mat-form-field floatLabel="auto">
+      <mat-label>max slots</mat-label>
+      <input matInput type="number" [(ngModel)]="eventSlotsMaxInput" required>
+    </mat-form-field>
 
-        <span class="spacer"></span>
-        <mat-card-actions>
+    <span class="spacer"></span>
+    <mat-card-actions>
 
-            <button mat-icon-button (click)="save()" [disabled]="!eventSlotsMaxInput" type="button">
-                <mat-icon>
-                    done
-                </mat-icon>
-            </button>
-            <button mat-icon-button (click)="cancel()" [disabled]="!eventSlotsMax" type="button">
-                <mat-icon>
-                    clear
-                </mat-icon>
-            </button>
-        </mat-card-actions>
+      <button mat-icon-button (click)="save()" [disabled]="!eventSlotsMaxInput" type="button">
+        <mat-icon>
+          done
+        </mat-icon>
+      </button>
+      <button mat-icon-button (click)="cancel()" [disabled]="!eventSlotsMax" type="button">
+        <mat-icon>
+          clear
+        </mat-icon>
+      </button>
+    </mat-card-actions>
 
-    </ng-container>
+  </ng-container>
 </ng-container>

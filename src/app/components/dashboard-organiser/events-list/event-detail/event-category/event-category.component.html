@@ -20,8 +20,9 @@
     </button>
   </ng-container>
   <ng-container *ngIf="mode === ComponentMode.EDIT">
-    <mat-form-field>
-      <input matInput [(ngModel)]="eventCategoryInput" placeholder="Event Category" required>
+    <mat-form-field floatLabel="auto">
+      <mat-label>Event Category</mat-label>
+      <input matInput [(ngModel)]="eventCategoryInput" required>
     </mat-form-field>
 
     <span class="spacer"></span>
