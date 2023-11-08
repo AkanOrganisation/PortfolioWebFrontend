@@ -49,6 +49,7 @@
       <mat-label>Search Radius in Meters</mat-label>
       <input type="text" matInput
              [(ngModel)]="eventsFilter.filter.location.radius.exact"
+             [disabled]="!searchByLocation"
              name="radiusSearch">
     </mat-form-field>
 
