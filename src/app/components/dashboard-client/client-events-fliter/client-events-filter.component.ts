@@ -78,7 +78,7 @@ export class ClientEventsFilterComponent implements OnInit, OnDestroy {
 
     this.eventsList.emit(
       result.data.allEventsClientPublic?.edges
-        .filter((edge: any) => edge.node.dates?.edges)  // Filter out events with no dates
+        .filter((edge: any) => edge.node.dates?.edges.length > 0)  // Filter out events with no dates
         .map((edge: any) => edge.node)  // Map to the node which contains the event information
     );
 
